@@ -6,6 +6,7 @@ import Reader from './features/flashcards/Reader';
 import FullLibrary from './features/library/FullLibrary';
 import FeedbackModal from './components/ui/FeedbackModal';
  import MoodRecommender from './components/ui/MoodRecommender';
+ import HeroFlashcards from './components/ui/HeroFlashcards';
 import { HERO_BOOKS } from './lib/data';
 
 function App() {
@@ -39,7 +40,7 @@ function App() {
                   </h1>
                   <MoodRecommender />
                 </div>
-
+<HeroFlashcards />
                 {/* Most Used Section Heading */}
                 <div className="flex items-center justify-between mb-8 border-b border-white/5 pb-4">
                   <h2 className="font-serif text-2xl text-parchment">Start with what most people found helpful</h2>

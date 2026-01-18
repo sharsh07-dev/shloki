@@ -13,7 +13,7 @@ export default function Flashcard({ data, total }) {
       // Headers
       if (line.includes('Shloka Insight:') || line.includes('Gita Solution:')) {
         return (
-          <h4 key={index} className="font-serif text-saffron text-lg font-bold mt-4 mb-2 border-b border-white/10 pb-1">
+          <h4 key={index} className="font-serif text-saffron text-base md:text-lg font-bold mt-3 md:mt-4 mb-2 border-b border-white/10 pb-1">
             {line.replace(':', '')}
           </h4>
         );
@@ -21,9 +21,9 @@ export default function Flashcard({ data, total }) {
       // Bullets
       if (line.trim().startsWith('•')) {
         return (
-          <div key={index} className="flex items-start gap-2 mb-2 pl-2">
+          <div key={index} className="flex items-start gap-2 mb-2 pl-1 md:pl-2">
             <span className="text-saffron mt-1.5 text-[6px]">●</span>
-            <p className="text-stone-300 text-sm leading-relaxed text-left">
+            <p className="text-stone-300 text-xs md:text-sm leading-relaxed text-left">
               {line.replace('•', '').trim()}
             </p>
           </div>
@@ -32,7 +32,7 @@ export default function Flashcard({ data, total }) {
       // Regular
       if (line.trim() === '') return <div key={index} className="h-2" />;
       return (
-        <p key={index} className="text-stone-200 text-sm mb-2 text-left">
+        <p key={index} className="text-stone-200 text-xs md:text-sm mb-2 text-left">
           {line}
         </p>
       );
@@ -40,8 +40,11 @@ export default function Flashcard({ data, total }) {
   };
 
   return (
+    // RESPONSIVE CONTAINER:
+    // Mobile: w-[90vw] to fit screen width, min-h-[60vh] to fit height
+    // Desktop: max-w-3xl, fixed height 500px
     <div 
-      className="perspective-1000 w-full max-w-3xl h-[500px] relative mt-4 cursor-pointer group mx-auto" 
+      className="perspective-1000 w-[90vw] md:w-full md:max-w-3xl min-h-[55vh] md:h-[500px] relative mt-4 cursor-pointer group mx-auto" 
       onClick={() => setIsFlipped(!isFlipped)}
     >
       <motion.div
@@ -52,60 +55,56 @@ export default function Flashcard({ data, total }) {
       >
         {/* ==============================
             FRONT SIDE (Sanskrit) 
-            Fix: Added solid bg-[#f5f5f0] to prevent bleed-through
            ============================== */}
         <div 
-          className="absolute inset-0 backface-hidden rounded-2xl bg-[#f5f5f0] text-stone-900 p-8 flex flex-col items-center justify-center shadow-2xl border-r-8 border-b-4 border-stone-300 overflow-hidden"
+          className="absolute inset-0 backface-hidden rounded-2xl bg-[#f5f5f0] text-stone-900 p-6 md:p-8 flex flex-col items-center justify-center shadow-2xl border-r-4 md:border-r-8 border-b-4 border-stone-300 overflow-hidden"
           style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
         >
            
-           {/* Texture Overlay */}
            <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/aged-paper.png')] pointer-events-none" />
            
            {/* Card Number */}
-           <div className="absolute top-6 right-6 flex items-center gap-2 px-3 py-1 rounded-full border border-stone-300 bg-stone-100/50">
-              <span className="text-[10px] font-bold text-stone-500 uppercase tracking-widest">
+           <div className="absolute top-4 right-4 md:top-6 md:right-6 flex items-center gap-2 px-2 md:px-3 py-1 rounded-full border border-stone-300 bg-stone-100/50">
+              <span className="text-[9px] md:text-[10px] font-bold text-stone-500 uppercase tracking-widest">
                 Card {data.id}
               </span>
            </div>
 
-           {/* Icon */}
-           <div className="absolute top-6 left-6 text-stone-400 opacity-50">
-              <BookOpen size={20} />
+           <div className="absolute top-4 left-4 md:top-6 md:left-6 text-stone-400 opacity-50">
+              <BookOpen size={18} className="md:w-6 md:h-6" />
            </div>
 
-           {/* Sanskrit Content */}
-           <div className="text-center z-10 relative w-full px-4">
-             <span className="text-amber-600 text-[10px] font-bold tracking-[0.3em] uppercase mb-6 block">
+           {/* Sanskrit Content - Responsive Text Sizes */}
+           <div className="text-center z-10 relative w-full px-2 md:px-4">
+             <span className="text-amber-600 text-[9px] md:text-[10px] font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase mb-4 md:mb-6 block">
                {data.chapter}
              </span>
              
-             <h2 className="font-serif text-2xl md:text-4xl leading-relaxed font-bold text-stone-800 mb-8 drop-shadow-sm whitespace-pre-line">
+             {/* Text scales: text-xl (Mobile) -> text-2xl (Tablet) -> text-3xl (Desktop) */}
+             <h2 className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-relaxed font-bold text-stone-800 mb-6 md:mb-8 drop-shadow-sm whitespace-pre-line">
                {data.sanskrit}
              </h2>
              
-             <div className="flex items-center justify-center gap-2 text-stone-400 text-[10px] uppercase tracking-widest animate-pulse">
-                <RotateCw size={14} />
-                <span>Tap for Wisdom</span>
+             <div className="flex items-center justify-center gap-2 text-stone-400 text-[9px] md:text-[10px] uppercase tracking-widest animate-pulse">
+                <RotateCw size={12} className="md:w-4 md:h-4" />
+                <span>Tap to Flip</span>
              </div>
            </div>
         </div>
 
         {/* ==============================
             BACK SIDE (Meaning)
-            Fix: Added solid bg-stone-900 to ensure opacity
            ============================== */}
         <div 
-          className="absolute inset-0 backface-hidden rounded-2xl bg-stone-900 p-8 flex flex-col shadow-glow border border-white/10 overflow-hidden"
+          className="absolute inset-0 backface-hidden rounded-2xl bg-stone-900 p-6 md:p-8 flex flex-col shadow-glow border border-white/10 overflow-hidden"
           style={{ 
             transform: 'rotateY(180deg)', 
             backfaceVisibility: 'hidden', 
             WebkitBackfaceVisibility: 'hidden' 
           }}
         >
-          {/* Scrollable Content */}
           <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar text-left">
-            <div className="mb-6">
+            <div className="mb-4 md:mb-6">
                {formatContent(data.translation)}
             </div>
 
@@ -113,14 +112,13 @@ export default function Flashcard({ data, total }) {
                <div className="inline-flex items-center justify-center gap-2 mb-2 opacity-70">
                  <Sparkles size={12} className="text-saffron" />
                </div>
-               <p className="font-serif text-stone-300 text-base italic leading-relaxed">
+               <p className="font-serif text-stone-300 text-sm md:text-base italic leading-relaxed">
                  {data.nuance}
                </p>
             </div>
           </div>
           
-          {/* Footer */}
-          <div className="pt-4 mt-auto border-t border-white/5 flex justify-between items-center text-[9px] text-stone-500 uppercase tracking-widest">
+          <div className="pt-3 md:pt-4 mt-auto border-t border-white/5 flex justify-between items-center text-[8px] md:text-[9px] text-stone-500 uppercase tracking-widest">
             <span>Shloki Wisdom</span>
             <span>Tap to flip back</span>
           </div>

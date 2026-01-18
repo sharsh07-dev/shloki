@@ -1,23 +1,21 @@
+// (Keep imports the same)
 import { useState, useEffect } from 'react';
 import { Star, User, Send, MessageSquarePlus, Loader2, Quote, ChevronDown, ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { subscribeToReviews, postReview } from '../../lib/firebase';
 
 export default function BookReviews({ bookId, bookTitle }) {
-  // === STATE ===
+  // (Keep all State & Handlers exactly the same)
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isWriting, setIsWriting] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showAll, setShowAll] = useState(false); // <--- New State for View All
-  
-  // Form State
+  const [showAll, setShowAll] = useState(false);
   const [name, setName] = useState('');
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [text, setText] = useState('');
 
-  // === REAL-TIME CONNECTION ===
   useEffect(() => {
     setLoading(true);
     const unsubscribe = subscribeToReviews(bookId, (data) => {
@@ -27,12 +25,9 @@ export default function BookReviews({ bookId, bookTitle }) {
     return () => unsubscribe();
   }, [bookId]);
 
-  // Calculate Stats
   const avgRating = reviews.length 
     ? (reviews.reduce((acc, curr) => acc + curr.rating, 0) / reviews.length).toFixed(1)
     : 0;
-
-  // Logic to show limited reviews or all
   const visibleReviews = showAll ? reviews : reviews.slice(0, 3);
 
   const handleSubmit = async (e) => {
@@ -46,49 +41,43 @@ export default function BookReviews({ bookId, bookTitle }) {
       setName('');
       setRating(0);
       setText('');
-      setShowAll(true); // Auto-expand to show their new review
+      setShowAll(true);
     } else {
-      alert("Failed to post review. Connection error.");
+      alert("Failed to post review.");
     }
   };
 
   return (
-    // CHANGED: Reduced vertical padding (py-12) so it takes less space
-    <section className="relative mt-12 pt-8 pb-16 px-4 border-t border-white/5">
-      
-      {/* CHANGED: Increased max-width to 5xl so it looks WIDER */}
+    <section className="relative mt-8 md:mt-12 pt-8 pb-16 px-4 border-t border-white/5">
       <div className="max-w-5xl mx-auto relative z-10">
         
-        {/* === HEADER SECTION === */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+        {/* HEADER - Stack on mobile, Row on desktop */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6 mb-8">
           <div className="text-center md:text-left">
-            <h3 className="font-serif text-2xl text-parchment font-bold mb-1">Community Insights</h3>
-            <p className="text-parchment-dim text-xs">
-              Thoughts on {bookTitle || "this text"}
-            </p>
+            <h3 className="font-serif text-xl md:text-2xl text-parchment font-bold mb-1">Community Insights</h3>
+            <p className="text-parchment-dim text-xs">Thoughts on {bookTitle || "this text"}</p>
           </div>
-          
           <div className="flex items-center gap-4 bg-white/5 border border-white/10 rounded-xl px-4 py-2">
-             <div className="text-3xl font-serif font-bold text-saffron">{avgRating}</div>
+             <div className="text-2xl md:text-3xl font-serif font-bold text-saffron">{avgRating}</div>
              <div className="flex flex-col">
                <div className="flex text-saffron text-xs">
                  {[...Array(5)].map((_, i) => (
                    <Star key={i} size={12} fill={i < Math.round(Number(avgRating)) ? "currentColor" : "none"} />
                  ))}
                </div>
-               <span className="text-[10px] text-parchment-dim uppercase tracking-wider font-bold">
+               <span className="text-[9px] md:text-[10px] text-parchment-dim uppercase tracking-wider font-bold">
                  {reviews.length} Ratings
                </span>
              </div>
           </div>
         </div>
 
-        {/* === ACTION BUTTON === */}
+        {/* BUTTON */}
         {!isWriting && (
-          <div className="mb-8">
+          <div className="mb-8 text-center md:text-left">
             <button 
               onClick={() => setIsWriting(true)}
-              className="w-full md:w-auto px-6 py-3 rounded-lg border border-saffron/30 text-saffron hover:bg-saffron/10 hover:border-saffron transition-all flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-widest"
+              className="w-full md:w-auto px-6 py-3 rounded-lg border border-saffron/30 text-saffron hover:bg-saffron/10 hover:border-saffron transition-all flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-widest active:scale-95"
             >
               <MessageSquarePlus size={18} />
               <span>Write a Review</span>
@@ -96,7 +85,7 @@ export default function BookReviews({ bookId, bookTitle }) {
           </div>
         )}
 
-        {/* === WRITE REVIEW FORM === */}
+        {/* FORM */}
         <AnimatePresence>
           {isWriting && (
             <motion.div 
@@ -105,12 +94,12 @@ export default function BookReviews({ bookId, bookTitle }) {
               exit={{ opacity: 0, height: 0 }}
               className="overflow-hidden mb-8"
             >
-              <form onSubmit={handleSubmit} className="bg-black/40 border border-white/10 rounded-xl p-6 relative">
-                <button type="button" onClick={() => setIsWriting(false)} className="absolute top-4 right-4 text-stone-500 hover:text-white">
+              <form onSubmit={handleSubmit} className="bg-black/40 border border-white/10 rounded-xl p-4 md:p-6 relative">
+                <button type="button" onClick={() => setIsWriting(false)} className="absolute top-4 right-4 text-stone-500 hover:text-white p-2">
                     <span className="text-xs font-bold uppercase">Cancel</span>
                 </button>
                 
-                <div className="flex gap-2 mb-4">
+                <div className="flex gap-2 mb-4 justify-center md:justify-start">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
                       key={star}
@@ -118,7 +107,7 @@ export default function BookReviews({ bookId, bookTitle }) {
                       onMouseEnter={() => setHoverRating(star)}
                       onMouseLeave={() => setHoverRating(0)}
                       onClick={() => setRating(star)}
-                      className="focus:outline-none"
+                      className="focus:outline-none p-1"
                     >
                       <Star 
                         size={28} 
@@ -129,13 +118,13 @@ export default function BookReviews({ bookId, bookTitle }) {
                   ))}
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div className="mb-4">
                     <input 
                         type="text"
                         placeholder="Your Name"
                         value={name}
                         onChange={e => setName(e.target.value)}
-                        className="bg-black/30 border border-white/10 rounded-lg p-3 text-sm text-parchment focus:border-saffron/50 outline-none"
+                        className="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-sm text-parchment focus:border-saffron/50 outline-none"
                     />
                 </div>
                 
@@ -151,7 +140,7 @@ export default function BookReviews({ bookId, bookTitle }) {
                 <button 
                   type="submit" 
                   disabled={isSubmitting}
-                  className="bg-saffron text-white px-6 py-2 rounded-lg font-bold text-xs uppercase tracking-wide shadow-glow hover:bg-saffron-light flex items-center gap-2 disabled:opacity-50"
+                  className="w-full md:w-auto bg-saffron text-white px-6 py-3 rounded-lg font-bold text-xs uppercase tracking-wide shadow-glow hover:bg-saffron-light flex items-center justify-center gap-2 disabled:opacity-50"
                 >
                   {isSubmitting ? <Loader2 className="animate-spin" size={14} /> : <Send size={14} />}
                   <span>Post Review</span>
@@ -161,8 +150,8 @@ export default function BookReviews({ bookId, bookTitle }) {
           )}
         </AnimatePresence>
 
-        {/* === REVIEW LIST (Wide & Compact) === */}
-        <div className="space-y-3"> {/* Reduced gap from 8 to 3 for compactness */}
+        {/* LIST */}
+        <div className="space-y-3">
           {loading ? (
             <div className="text-center py-10">
                <Loader2 className="animate-spin mx-auto text-saffron mb-2" size={24} />
@@ -175,15 +164,14 @@ export default function BookReviews({ bookId, bookTitle }) {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   key={review.id} 
-                  // CHANGED: Wider layout, less padding (p-5), flex-row for compactness
-                  className="bg-white/5 rounded-xl p-5 border border-white/5 hover:border-white/10 transition-colors flex flex-col md:flex-row gap-4 md:items-start"
+                  className="bg-white/5 rounded-xl p-4 md:p-5 border border-white/5 hover:border-white/10 transition-colors flex flex-col md:flex-row gap-3 md:gap-4 md:items-start"
                 >
-                  {/* User Profile Side */}
+                  {/* User Profile */}
                   <div className="flex items-center gap-3 md:w-48 flex-shrink-0">
-                    <div className="w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center text-stone-400 border border-white/5">
+                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-stone-800 flex items-center justify-center text-stone-400 border border-white/5">
                       <User size={16} />
                     </div>
-                    <div>
+                    <div className="overflow-hidden">
                       <h4 className="font-bold text-sm text-parchment truncate">{review.user}</h4>
                       <div className="flex text-saffron text-[10px]">
                         {[...Array(5)].map((_, i) => (
@@ -193,8 +181,8 @@ export default function BookReviews({ bookId, bookTitle }) {
                     </div>
                   </div>
                   
-                  {/* Review Text Side */}
-                  <div className="flex-1 relative pl-3 md:pl-4 md:border-l border-white/10">
+                  {/* Text */}
+                  <div className="flex-1 relative pl-0 md:pl-4 md:border-l border-white/10">
                      <Quote size={16} className="absolute -top-1 -left-1 text-white/5 -scale-x-100 hidden md:block" />
                      <p className="text-parchment-dim text-sm leading-relaxed">
                        {review.text}
@@ -204,12 +192,11 @@ export default function BookReviews({ bookId, bookTitle }) {
                 </motion.div>
               ))}
 
-              {/* === VIEW ALL BUTTON (Only if more than 3) === */}
               {reviews.length > 3 && (
                 <div className="text-center pt-4">
                   <button 
                     onClick={() => setShowAll(!showAll)}
-                    className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-stone-400 hover:text-saffron transition-colors"
+                    className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-stone-400 hover:text-saffron transition-colors p-2"
                   >
                     {showAll ? (
                       <>Show Less <ChevronUp size={14} /></>
