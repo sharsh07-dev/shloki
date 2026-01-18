@@ -10,7 +10,7 @@ const generateShlokas = (count, prefix) => {
       ? "You have a right to perform your prescribed duty, but you are not entitled to the fruits of action."
       : `This is the hidden wisdom of Verse ${i + 1}. Swipe to reveal the divine meaning.`,
     nuance: "Ancient wisdom requires patience.",
-    locked: false // <--- CHANGED: ALL FREE
+    locked: false 
   }));
 };
 
@@ -22,7 +22,7 @@ export const HERO_BOOKS = [
     subtitle: 'The Song of God',
     description: 'The eternal message of spiritual wisdom.',
     cover: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=800&auto=format&fit=crop', 
-    totalCards: 27, 
+    totalCards: 29, 
     isPopular: true
   },
   {
@@ -66,10 +66,19 @@ const MOCK_BOOKS = Array.from({ length: 22 }, (_, i) => ({
 // === 3. EXPORT COMBINED LISTS ===
 export const ALL_BOOKS = [...HERO_BOOKS, ...MOCK_BOOKS];
 
-// === 4. REAL GITA DATA (Unlocked) ===
+// === 4. REAL GITA DATA (Corrected Mappings) ===
 const GITA_DATA = [
   {
     id: 'anger',
+    chapter: "Chapter 2, Shloka 62–63",
+    sanskrit: "ध्यायतो विषयान् पुंसः संगस्तेषूपजायते।\nसंगात्संजायते कामः कामात्क्रोधोऽभिजायते॥\nक्रोधाद्भवति सम्मोहः सम्मोहात्स्मृतिविभ्रमः।\nस्मृतिभ्रंशाद् बुद्धिनाशो बुद्धिनाशात्प्रणश्यति॥",
+    translation: "Shloka Insight:\n• Thinking repeatedly about fears or desires creates attachment.\n• Attachment slowly turns into ego, anger, and frustration.\n• When anger and fear take control, clarity and right judgment are lost.\n\nGita Solution:\n• Anger and ego are born from fear and uncontrolled thinking, not from situations.\n• Stepping back, observing your thoughts, and choosing calm action restores balance.",
+    nuance: "“Pause, breathe, and respond with awareness instead of reacting with emotion.”",
+    locked: false 
+  },
+  // NEW: Dedicated Ego Card (Same Content, Correct ID)
+  {
+    id: 'ego',
     chapter: "Chapter 2, Shloka 62–63",
     sanskrit: "ध्यायतो विषयान् पुंसः संगस्तेषूपजायते।\nसंगात्संजायते कामः कामात्क्रोधोऽभिजायते॥\nक्रोधाद्भवति सम्मोहः सम्मोहात्स्मृतिविभ्रमः।\nस्मृतिभ्रंशाद् बुद्धिनाशो बुद्धिनाशात्प्रणश्यति॥",
     translation: "Shloka Insight:\n• Thinking repeatedly about fears or desires creates attachment.\n• Attachment slowly turns into ego, anger, and frustration.\n• When anger and fear take control, clarity and right judgment are lost.\n\nGita Solution:\n• Anger and ego are born from fear and uncontrolled thinking, not from situations.\n• Stepping back, observing your thoughts, and choosing calm action restores balance.",
@@ -130,6 +139,15 @@ const GITA_DATA = [
     sanskrit: "यतो यतो निश्चरति मनश्चञ्चलमस्थिरम्।\nततस्ततो नियम्यैतदात्मन्येव वशं नयेत्॥",
     translation: "Shloka Insight:\n• The mind naturally wanders and avoids effort.\n• Discipline is not force; it is gentle, repeated redirection.\n• Consistent practice slowly builds self-control.\n\nGita Solution:\n• Lack of discipline comes from an untrained mind, not laziness.\n• Regular small routines create stability and inner strength.",
     nuance: "“Bring the mind back gently each time — this is discipline.”",
+    locked: false
+  },
+  // NEW: Dedicated Fear Card (Based on "Fear and Anxiety")
+  {
+    id: 'fear',
+    chapter: "Chapter 6, Shloka 15",
+    sanskrit: "शान्तिं निर्वाणपरमां मत्संस्थामधिगच्छति।",
+    translation: "Shloka Insight:\n• Fear and anxiety arise when the mind lives in the future.\n• Constant worry disturbs inner peace and balance.\n• A calm and centered mind naturally feels safe and steady.\n\nGita Solution:\n• Fear grows from imagining outcomes, not from the present moment.\n• Returning attention to the present restores clarity and calm.",
+    nuance: "“Stay rooted in the present — peace replaces fear.”",
     locked: false
   },
   {
@@ -301,8 +319,8 @@ MOCK_BOOKS.forEach(book => {
 export const GITA_EMOTIONS = [
   // ROW 1
   { id: 'anger', label: 'Anger', icon: '🔥', shlokaId: 'anger' },
-  { id: 'fear', label: 'Fear', icon: '😨', shlokaId: 'anger' }, // Maps to same card as Anger
-  { id: 'ego', label: 'Ego', icon: '🦁', shlokaId: 'anger' }, // Maps to same card as Anger
+  { id: 'fear', label: 'Fear', icon: '😨', shlokaId: 'fear' }, // <--- CHANGED: Now points to dedicated Fear card
+  { id: 'ego', label: 'Ego', icon: '🦁', shlokaId: 'ego' }, // <--- CHANGED: Now points to dedicated Ego card
   { id: 'desire', label: 'Power of Desire', icon: '🍷', shlokaId: 'desire' },
   // ROW 2
   { id: 'depression', label: 'Depression', icon: '🌧️', shlokaId: 'depression' },
