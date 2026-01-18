@@ -21,7 +21,7 @@ export const HERO_BOOKS = [
     title: 'Bhagavad Gita',
     subtitle: 'The Song of God',
     description: 'The eternal message of spiritual wisdom.',
-    cover: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=800&auto=format&fit=crop', 
+    cover: 'https://res.cloudinary.com/do0rlgy7c/image/upload/v1768768264/gita_cpncew.png', 
     totalCards: 29, 
     isPopular: true
   },

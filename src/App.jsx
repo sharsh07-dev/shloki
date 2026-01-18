@@ -5,7 +5,7 @@ import BookCard from './components/ui/BookCard';
 import Reader from './features/flashcards/Reader';
 import FullLibrary from './features/library/FullLibrary';
 import FeedbackModal from './components/ui/FeedbackModal';
- // <--- NEW IMPORT
+ import MoodRecommender from './components/ui/MoodRecommender';
 import { HERO_BOOKS } from './lib/data';
 
 function App() {
@@ -37,6 +37,7 @@ function App() {
                     Ancient Texts, <br />
                     <span className="text-saffron text-glow">Modern Spirit.</span>
                   </h1>
+                  <MoodRecommender />
                 </div>
 
                 {/* Most Used Section Heading */}
