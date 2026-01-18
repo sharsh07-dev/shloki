@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-spiritual-bg text-parchment font-sans antialiased;
+  overflow-x: hidden;
+}
+
+/* Elegant Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0c0a09; 
+}
+::-webkit-scrollbar-thumb {
+  background: #292524; 
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d97706; 
+}
