@@ -1,145 +1,128 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Lock, PlayCircle, RotateCw, CheckCircle2, BookOpen } from 'lucide-react';
-import useStore from '../../store/useStore';
+import { RotateCw, BookOpen, Sparkles } from 'lucide-react';
 
-export default function Flashcard({ data, bookId, total }) {
+export default function Flashcard({ data, total }) {
   const [isFlipped, setIsFlipped] = useState(false);
-  const [loadingAd, setLoadingAd] = useState(false);
-  
-  const { isUnlocked, unlockCard, watchAd } = useStore();
-  
-  // Unique ID for every single card (e.g. "gita-5")
-  const cardId = `${bookId}-${data.id}`;
-  const unlocked = isUnlocked(cardId);
 
-  const handleUnlock = async (e) => {
-    e.stopPropagation();
-    if (window.confirm(`Watch an ad to unlock Shloka ${data.id}?`)) {
-      setLoadingAd(true);
-      await watchAd(); // Wait for 3s mock ad
-      unlockCard(cardId);
-      setLoadingAd(false);
-    }
-  };
-
-  const handleFlip = () => {
-    if (unlocked && !loadingAd) {
-      setIsFlipped(!isFlipped);
-    }
+  // === HELPER: Format the text properly ===
+  const formatContent = (text) => {
+    if (!text) return null;
+    const lines = text.split('\n');
+    return lines.map((line, index) => {
+      // Headers
+      if (line.includes('Shloka Insight:') || line.includes('Gita Solution:')) {
+        return (
+          <h4 key={index} className="font-serif text-saffron text-lg font-bold mt-4 mb-2 border-b border-white/10 pb-1">
+            {line.replace(':', '')}
+          </h4>
+        );
+      }
+      // Bullets
+      if (line.trim().startsWith('•')) {
+        return (
+          <div key={index} className="flex items-start gap-2 mb-2 pl-2">
+            <span className="text-saffron mt-1.5 text-[6px]">●</span>
+            <p className="text-stone-300 text-sm leading-relaxed text-left">
+              {line.replace('•', '').trim()}
+            </p>
+          </div>
+        );
+      }
+      // Regular
+      if (line.trim() === '') return <div key={index} className="h-2" />;
+      return (
+        <p key={index} className="text-stone-200 text-sm mb-2 text-left">
+          {line}
+        </p>
+      );
+    });
   };
 
   return (
-    // CHANGED: Reduced height from h-[60vh] to h-80 md:h-96 for a horizontal, compact look
-    <div className="perspective-1000 w-full max-w-3xl h-80 md:h-96 relative mt-4 cursor-pointer group mx-auto" onClick={handleFlip}>
+    <div 
+      className="perspective-1000 w-full max-w-3xl h-[500px] relative mt-4 cursor-pointer group mx-auto" 
+      onClick={() => setIsFlipped(!isFlipped)}
+    >
       <motion.div
-        className="w-full h-full relative preserve-3d transition-all duration-500"
+        className="w-full h-full relative preserve-3d transition-all duration-700"
         animate={{ rotateY: isFlipped ? 180 : 0 }}
-        transition={{ duration: 0.6, type: "spring", stiffness: 260, damping: 20 }}
+        transition={{ type: "spring", stiffness: 260, damping: 20 }}
         style={{ transformStyle: 'preserve-3d' }}
       >
         {/* ==============================
-            FRONT SIDE (Sanskrit / Locked) 
+            FRONT SIDE (Sanskrit) 
+            Fix: Added solid bg-[#f5f5f0] to prevent bleed-through
            ============================== */}
-        {/* CHANGED: Reduced padding from p-8 to p-6 */}
-        <div className="absolute inset-0 backface-hidden rounded-r-2xl rounded-l-md bg-parchment text-spiritual-bg p-6 flex flex-col items-center justify-center shadow-2xl border-r-8 border-b-4 border-stone-300">
+        <div 
+          className="absolute inset-0 backface-hidden rounded-2xl bg-[#f5f5f0] text-stone-900 p-8 flex flex-col items-center justify-center shadow-2xl border-r-8 border-b-4 border-stone-300 overflow-hidden"
+          style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
+        >
            
-           {/* Paper Texture Overlay */}
+           {/* Texture Overlay */}
            <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/aged-paper.png')] pointer-events-none" />
            
-           {/* === CARD COUNTER BADGE (Top Right) === */}
-           <div className="absolute top-4 right-4 flex items-center gap-2 px-2 py-1 rounded-full border border-stone-300 bg-stone-100/50">
-              <span className="text-[9px] font-bold text-stone-500 uppercase tracking-widest">
-                Card {data.id} of {total}
+           {/* Card Number */}
+           <div className="absolute top-6 right-6 flex items-center gap-2 px-3 py-1 rounded-full border border-stone-300 bg-stone-100/50">
+              <span className="text-[10px] font-bold text-stone-500 uppercase tracking-widest">
+                Card {data.id}
               </span>
            </div>
 
-           {/* === BOOK ICON (Top Left) === */}
-           <div className="absolute top-4 left-4 text-stone-400 opacity-50">
-              <BookOpen size={16} />
+           {/* Icon */}
+           <div className="absolute top-6 left-6 text-stone-400 opacity-50">
+              <BookOpen size={20} />
            </div>
 
-           {!unlocked ? (
-             <div className="text-center z-10 animate-fade-in w-full">
-                {/* Lock Icon - Scaled down */}
-                <div className="w-14 h-14 bg-stone-200 rounded-full flex items-center justify-center mx-auto mb-3 text-stone-500 shadow-inner ring-4 ring-white">
-                  <Lock size={24} />
-                </div>
-                
-                <h3 className="font-serif text-xl font-bold mb-2 text-stone-800">
-                  Locked Verse
-                </h3>
-                <p className="text-stone-500 text-xs mb-4 max-w-[200px] mx-auto leading-relaxed">
-                  The wisdom of Card {data.id} is hidden. <br/> Watch to reveal.
-                </p>
-                
-                {/* Unlock Button - Scaled down */}
-                <button 
-                  onClick={handleUnlock}
-                  disabled={loadingAd}
-                  className="px-5 py-2 bg-saffron text-white rounded-full font-bold shadow-lg flex items-center gap-2 mx-auto hover:bg-saffron-light active:scale-95 transition-all disabled:opacity-50 disabled:cursor-wait text-sm"
-                >
-                  {loadingAd ? (
-                    <span className="animate-pulse">Unlocking...</span>
-                  ) : (
-                    <>
-                      <PlayCircle size={16} fill="currentColor" className="text-white/20" /> 
-                      <span>Unlock Card {data.id}</span>
-                    </>
-                  )}
-                </button>
+           {/* Sanskrit Content */}
+           <div className="text-center z-10 relative w-full px-4">
+             <span className="text-amber-600 text-[10px] font-bold tracking-[0.3em] uppercase mb-6 block">
+               {data.chapter}
+             </span>
+             
+             <h2 className="font-serif text-2xl md:text-4xl leading-relaxed font-bold text-stone-800 mb-8 drop-shadow-sm whitespace-pre-line">
+               {data.sanskrit}
+             </h2>
+             
+             <div className="flex items-center justify-center gap-2 text-stone-400 text-[10px] uppercase tracking-widest animate-pulse">
+                <RotateCw size={14} />
+                <span>Tap for Wisdom</span>
              </div>
-           ) : (
-             <div className="text-center z-10 relative w-full px-8">
-               {/* Unlocked Badge */}
-               <div className="absolute -top-8 left-0 right-0 flex justify-center">
-                 <div className="text-green-600/60 flex items-center gap-1 text-[9px] uppercase font-bold tracking-widest bg-green-50 px-2 py-0.5 rounded-full border border-green-100">
-                    <CheckCircle2 size={10} /> Unlocked
-                 </div>
-               </div>
-
-               <span className="text-saffron text-[9px] font-bold tracking-[0.3em] uppercase mb-3 block">
-                 Sanskrit Text
-               </span>
-               {/* CHANGED: Reduced font size from text-3xl/5xl to text-2xl/3xl */}
-               <h2 className="font-serif text-2xl md:text-3xl leading-snug font-bold text-stone-800 mb-4 drop-shadow-sm line-clamp-4">
-                 {data.sanskrit}
-               </h2>
-               
-               <div className="flex items-center justify-center gap-2 text-stone-400 text-[9px] uppercase tracking-widest animate-pulse mt-2">
-                  <RotateCw size={12} />
-                  <span>Tap to Flip</span>
-               </div>
-             </div>
-           )}
+           </div>
         </div>
 
         {/* ==============================
-            BACK SIDE (Translation) 
+            BACK SIDE (Meaning)
+            Fix: Added solid bg-stone-900 to ensure opacity
            ============================== */}
-        {/* CHANGED: Reduced padding from p-10 to p-6 */}
         <div 
-          className="absolute inset-0 backface-hidden rounded-r-2xl rounded-l-md bg-spiritual-card p-6 flex flex-col items-center justify-center shadow-glow border border-white/10"
-          style={{ transform: 'rotateY(180deg)' }}
+          className="absolute inset-0 backface-hidden rounded-2xl bg-stone-900 p-8 flex flex-col shadow-glow border border-white/10 overflow-hidden"
+          style={{ 
+            transform: 'rotateY(180deg)', 
+            backfaceVisibility: 'hidden', 
+            WebkitBackfaceVisibility: 'hidden' 
+          }}
         >
-          {/* Back Side Counter Badge */}
-          <div className="absolute top-4 right-4 text-[9px] font-bold text-parchment-dim uppercase tracking-widest border border-white/10 px-2 py-0.5 rounded-full">
-             Card {data.id} / {total}
-          </div>
+          {/* Scrollable Content */}
+          <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar text-left">
+            <div className="mb-6">
+               {formatContent(data.translation)}
+            </div>
 
-          <span className="text-saffron text-[9px] font-bold tracking-[0.3em] uppercase mb-3 block">
-            Translation
-          </span>
+            <div className="mt-4 pt-4 border-t border-white/10 text-center">
+               <div className="inline-flex items-center justify-center gap-2 mb-2 opacity-70">
+                 <Sparkles size={12} className="text-saffron" />
+               </div>
+               <p className="font-serif text-stone-300 text-base italic leading-relaxed">
+                 {data.nuance}
+               </p>
+            </div>
+          </div>
           
-          {/* CHANGED: Reduced font size from text-2xl/3xl to text-lg/xl */}
-          <p className="font-serif text-lg md:text-xl leading-relaxed text-parchment text-center font-light line-clamp-5 px-4">
-            "{data.translation}"
-          </p>
-          
-          <div className="mt-4 pt-3 border-t border-white/5 w-full text-center">
-             <p className="text-parchment-dim text-xs italic">
-               💡 {data.nuance}
-             </p>
+          {/* Footer */}
+          <div className="pt-4 mt-auto border-t border-white/5 flex justify-between items-center text-[9px] text-stone-500 uppercase tracking-widest">
+            <span>Shloki Wisdom</span>
+            <span>Tap to flip back</span>
           </div>
         </div>
       </motion.div>
