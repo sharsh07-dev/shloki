@@ -1,25 +1,51 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-spiritual-bg text-parchment font-sans antialiased;
-  overflow-x: hidden;
+/* === THEME VARIABLES === */
+@layer base {
+  :root {
+    /* DEFAULT (LIGHT MODE) COLORS */
+    /* Warm Cream Background */
+    --color-bg: 253 251 247; 
+    /* Dark Stone Text */
+    --color-text: 41 37 36; 
+    /* Dim Text (Gray) */
+    --color-text-dim: 87 83 78; 
+    /* White Card */
+    --color-card: 255 255 255; 
+    /* Saffron (Amber-600) */
+    --color-saffron: 217 119 6; 
+  }
+
+  /* DARK MODE COLORS (The Original Look) */
+  .dark {
+    /* Very Dark Stone Background */
+    --color-bg: 12 10 9; 
+    /* Light Parchment Text */
+    --color-text: 231 229 228; 
+    /* Dim Text */
+    --color-text-dim: 168 162 158; 
+    /* Dark Card */
+    --color-card: 28 25 23; 
+    /* Saffron (Amber-500) */
+    --color-saffron: 245 158 11; 
+  }
+
+  body {
+    @apply bg-spiritual-bg text-parchment transition-colors duration-300;
+  }
 }
 
-/* Elegant Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #0c0a09; 
-}
-::-webkit-scrollbar-thumb {
-  background: #292524; 
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #d97706; 
+/* Scrollbar Styling */
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-stone-700/50 rounded-full;
+  }
 }
