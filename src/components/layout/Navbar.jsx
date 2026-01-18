@@ -18,19 +18,9 @@ export default function Navbar() {
         </Link>
         
         {/* Buttons */}
-        <div className="flex gap-2">
-          <button 
-            onClick={toggleFeedback}
-            className="p-2 text-parchment-dim hover:text-saffron transition-colors relative group"
-            title="Feedback"
-          >
-            <MessageSquarePlus size={20} />
-            {/* Tooltip */}
-            <span className="absolute top-full right-0 mt-2 text-[10px] bg-stone-800 text-parchment px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-              Feedback
-            </span>
-          </button>
-        </div>
+      
+   
+        
       </div>
     </nav>
   );

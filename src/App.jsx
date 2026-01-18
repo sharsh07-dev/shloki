@@ -3,16 +3,19 @@ import { ArrowRight } from 'lucide-react';
 import Navbar from './components/layout/Navbar';
 import BookCard from './components/ui/BookCard';
 import Reader from './features/flashcards/Reader';
-import FullLibrary from './features/library/FullLibrary'; // <--- Import
+import FullLibrary from './features/library/FullLibrary';
 import FeedbackModal from './components/ui/FeedbackModal';
-import { HERO_BOOKS } from './lib/data'; // <--- Import HERO_BOOKS only for home
+import FloatingFeedback from './components/ui/FloatingFeedback'; // <--- NEW IMPORT
+import { HERO_BOOKS } from './lib/data';
 
 function App() {
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-spiritual-bg pb-20 selection:bg-saffron selection:text-white font-sans">
         
+        {/* Global Components */}
         <FeedbackModal />
+        <FloatingFeedback /> {/* <--- ADDED HERE (Visible on all pages) */}
         
         <Routes>
           {/* === Home Route === */}
