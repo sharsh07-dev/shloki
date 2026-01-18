@@ -30,7 +30,7 @@ export default function Navbar() {
                 SHLOKI
               </span>
               <span className="text-[9px] text-stone-500 uppercase tracking-[0.3em] font-medium group-hover:text-parchment-dim transition-colors">
-                Timeless Wisdom
+               Sacred texts  Simple learning
               </span>
             </div>
           </Link>
