@@ -5,7 +5,7 @@ import BookCard from './components/ui/BookCard';
 import Reader from './features/flashcards/Reader';
 import FullLibrary from './features/library/FullLibrary';
 import FeedbackModal from './components/ui/FeedbackModal';
-import FloatingFeedback from './components/ui/FloatingFeedback'; // <--- NEW IMPORT
+ // <--- NEW IMPORT
 import { HERO_BOOKS } from './lib/data';
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
         
         {/* Global Components */}
         <FeedbackModal />
-        <FloatingFeedback /> {/* <--- ADDED HERE (Visible on all pages) */}
+        {/* <--- ADDED HERE (Visible on all pages) */}
         
         <Routes>
           {/* === Home Route === */}

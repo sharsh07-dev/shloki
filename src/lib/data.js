@@ -51,7 +51,56 @@ const EXTRA_COVERS = [
   'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800',
   'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=800'
 ];
+// ... (Keep existing BOOKS and generateShlokas code) ...
 
+// === EMOTION MAPPING FOR GITA (Expanded) ===
+export const GITA_EMOTIONS = [
+  // ROW 1: Intense Emotions
+  { id: 'anger', label: 'Anger', icon: '🔥', shlokaId: 2 },
+  { id: 'fear', label: 'Fear', icon: '😨', shlokaId: 3 },
+  { id: 'ego', label: 'Ego', icon: '🦁', shlokaId: 18 },
+  { id: 'desire', label: 'Power of Desire', icon: '🍷', shlokaId: 4 },
+
+  // ROW 2: Mental States
+  { id: 'depression', label: 'Depression', icon: '🌧️', shlokaId: 5 },
+  { id: 'jealousy', label: 'Jealousy', icon: '🐍', shlokaId: 6 },
+  { id: 'doubt', label: 'Self-Doubt', icon: '🤔', shlokaId: 7 },
+  { id: 'attachment', label: 'Attachment', icon: '🔗', shlokaId: 2 },
+
+  // ROW 3: Forgiveness & Discipline
+  { id: 'forgive', label: 'Inability to Forgive', icon: '🤲', shlokaId: 8 },
+  { id: 'discipline', label: 'Lack of Discipline', icon: '🥋', shlokaId: 9 },
+  { id: 'focus', label: 'Lack of Focus', icon: '🎯', shlokaId: 10 },
+  { id: 'anxiety', label: 'Fear & Anxiety', icon: '😰', shlokaId: 11 },
+
+  // ROW 4: Confusion & Thinking
+  { id: 'confusion', label: 'Confusion in Life', icon: '🌀', shlokaId: 1 },
+  { id: 'overthinking', label: 'Overthinking', icon: '🧠', shlokaId: 12 },
+  { id: 'motivation', label: 'Lack of Motivation', icon: '🔋', shlokaId: 13 },
+  { id: 'lonely', label: 'Feeling Lonely', icon: '🌑', shlokaId: 14 },
+
+  // ROW 5: Mastery
+  { id: 'mind', label: 'Control the Mind', icon: '🧘', shlokaId: 6 },
+  { id: 'fail', label: 'Fear of Failure', icon: '📉', shlokaId: 3 },
+  { id: 'result', label: 'Attachment to Result', icon: '🎁', shlokaId: 2 },
+  { id: 'stress', label: 'Work Stress', icon: '💼', shlokaId: 5 },
+
+  // ROW 6: Career & Expectations
+  { id: 'loss', label: 'Business Loss', icon: '💸', shlokaId: 15 },
+  { id: 'givingup', label: 'Giving Up Early', icon: '🏳️', shlokaId: 18 },
+  { id: 'expect', label: 'Expectations', icon: '🎭', shlokaId: 12 },
+  { id: 'betrayal', label: 'Betrayal', icon: '💔', shlokaId: 16 },
+
+  // ROW 7: Deep Fears
+  { id: 'surrender', label: 'Fear of Surrender', icon: '🙏', shlokaId: 18 },
+  { id: 'future', label: 'Fear of Future', icon: '🔮', shlokaId: 11 },
+  { id: 'insecure', label: 'Feeling Insecure', icon: '🛡️', shlokaId: 10 },
+  { id: 'suffering', label: 'Suffering', icon: '🩹', shlokaId: 13 },
+
+  // ROW 8: Life Path
+  { id: 'judgment', label: 'Fear of Judgment', icon: '👀', shlokaId: 17 },
+  { id: 'stuck', label: 'Feeling Stuck', icon: '⚓', shlokaId: 1 },
+];
 const MOCK_BOOKS = Array.from({ length: 22 }, (_, i) => ({
   id: `vol-${i + 1}`,
   title: `Sacred Volume ${i + 1}`,

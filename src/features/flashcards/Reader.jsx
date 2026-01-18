@@ -1,63 +1,155 @@
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, MoreVertical } from 'lucide-react';
+import { ArrowLeft, MoreVertical, Sparkles, LayoutGrid } from 'lucide-react';
 import Flashcard from './Flashcard';
-import BookReviews from '../../components/ui/BookReviews'; // <--- IMPORT THIS
-import { SHLOKAS, ALL_BOOKS } from '../../lib/data';
+import BookReviews from '../../components/ui/BookReviews';
+import { SHLOKAS, ALL_BOOKS, GITA_EMOTIONS } from '../../lib/data';
 
 export default function Reader() {
   const { bookId } = useParams();
   const navigate = useNavigate();
   
-  const cards = SHLOKAS[bookId] || SHLOKAS['gita']; 
+  // Logic to find cards
+  const allCards = SHLOKAS[bookId] || SHLOKAS['gita']; 
   const bookInfo = ALL_BOOKS.find(b => b.id === bookId);
+  
+  // STATE: Specific to Gita's "How do you feel" feature
+  const isGita = bookId === 'gita';
+  const [selectedEmotion, setSelectedEmotion] = useState(null);
+  const [viewMode, setViewMode] = useState(isGita ? 'emotions' : 'reader'); 
+
+  // Filter cards based on selection
+  const cardsToDisplay = selectedEmotion 
+    ? allCards.filter(c => c.id === selectedEmotion.shlokaId)
+    : allCards;
+
+  const handleEmotionClick = (emotion) => {
+    setSelectedEmotion(emotion);
+    setViewMode('reader');
+  };
+
+  const handleReset = () => {
+    setSelectedEmotion(null);
+    setViewMode('emotions');
+  };
 
   return (
-    <div className="min-h-screen bg-spiritual-bg flex flex-col overflow-y-auto"> {/* Enable vertical scroll */}
+    <div className="min-h-screen bg-spiritual-bg flex flex-col overflow-y-auto">
       
       {/* Header */}
       <div className="pt-6 px-6 flex items-center justify-between bg-spiritual-bg z-50 sticky top-0 pb-4 border-b border-white/5">
         <button 
-          onClick={() => navigate(-1)} 
+          onClick={() => {
+            if (viewMode === 'reader' && isGita && selectedEmotion) {
+              handleReset(); // Go back to emotions
+            } else {
+              navigate(-1); // Go back home
+            }
+          }} 
           className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-parchment hover:bg-white/10 transition-colors"
         >
           <ArrowLeft size={20} />
         </button>
+        
         <div className="text-center">
           <h2 className="font-serif text-parchment font-bold tracking-wide">{bookInfo?.title || 'Scripture'}</h2>
           <p className="text-[10px] text-saffron uppercase tracking-widest font-bold">
-            {cards.length} Verses
+            {selectedEmotion ? `Prescription: ${selectedEmotion.label}` : (isGita && viewMode === 'emotions' ? 'Emotional Guide' : `${allCards.length} Verses`)}
           </p>
         </div>
-        <button className="w-10 h-10 rounded-full flex items-center justify-center text-parchment-dim">
-          <MoreVertical size={20} />
+        
+        <button 
+           onClick={() => {
+             if(isGita) {
+               setSelectedEmotion(null);
+               setViewMode(viewMode === 'emotions' ? 'reader' : 'emotions');
+             }
+           }}
+           className="w-10 h-10 rounded-full flex items-center justify-center text-parchment-dim hover:text-saffron transition-colors"
+        >
+          {viewMode === 'emotions' ? <LayoutGrid size={20} /> : <Sparkles size={20} />}
         </button>
       </div>
       
-      {/* Card Container (Horizontal Scroll) */}
-      <div className="flex-none py-8">
-        <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 px-4 md:px-20 hide-scrollbar items-center pb-8">
-          {cards && cards.map((card) => (
-            <div key={card.id} className="min-w-full md:min-w-[600px] snap-center flex items-center justify-center px-2">
-              <Flashcard 
-                  data={card} 
-                  bookId={bookId || 'gita'} 
-                  total={cards.length} 
-              />
-            </div>
-          ))}
-        </div>
-        
-        {/* Helper Text */}
-        <div className="text-center">
-          <p className="text-[10px] text-parchment-dim uppercase tracking-widest opacity-50">
-            Swipe cards left/right
-          </p>
-        </div>
-      </div>
+      {/* === CONDITIONAL RENDERING === */}
 
-      {/* === REVIEWS SECTION (New) === */}
-      {/* Passing the ID so reviews are unique to this book */}
-      <BookReviews bookId={bookId} bookTitle={bookInfo?.title} />
+      {/* 1. EMOTION GRID (Compact & Professional) */}
+      {isGita && viewMode === 'emotions' ? (
+        <div className="flex-1 max-w-5xl mx-auto px-6 py-12 animate-fade-in">
+          
+          <div className="text-center mb-10">
+            <h3 className="font-serif text-3xl text-parchment mb-2">How are you feeling?</h3>
+            <p className="text-parchment-dim text-sm">Select an emotion to find the guiding verse.</p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+            {GITA_EMOTIONS.map((emotion) => (
+              <button
+                key={emotion.id}
+                onClick={() => handleEmotionClick(emotion)}
+                className="group flex items-center gap-3 bg-stone-900/60 border border-white/5 hover:border-saffron/40 hover:bg-stone-800 rounded-lg p-3 transition-all duration-200 text-left hover:shadow-lg hover:-translate-y-0.5"
+              >
+                <span className="text-xl group-hover:scale-110 transition-transform duration-200">
+                  {emotion.icon}
+                </span>
+                <span className="font-sans text-xs md:text-sm text-parchment font-medium group-hover:text-saffron transition-colors">
+                  {emotion.label}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <button 
+              onClick={() => setViewMode('reader')}
+              className="text-xs text-stone-500 hover:text-parchment uppercase tracking-widest border-b border-transparent hover:border-parchment transition-all pb-1"
+            >
+              Skip & Read All Verses
+            </button>
+          </div>
+        </div>
+      ) : (
+        
+        /* 2. FLASHCARD READER (With Centering Logic) */
+        <div className="flex-none py-8 animate-fade-in">
+          {selectedEmotion && (
+             <div className="text-center mb-6">
+               <span className="inline-block bg-saffron/10 text-saffron px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest border border-saffron/20 shadow-glow-sm">
+                 Prescription for {selectedEmotion.label}
+               </span>
+             </div>
+          )}
+
+          {/* CENTERING LOGIC IS HERE */}
+          <div className={`flex gap-6 px-4 md:px-20 hide-scrollbar items-center pb-8 ${
+              selectedEmotion 
+                ? 'justify-center' 
+                : 'overflow-x-auto snap-x snap-mandatory'
+            }`}
+          >
+            {cardsToDisplay && cardsToDisplay.map((card) => (
+              <div key={card.id} className="min-w-full md:min-w-[600px] snap-center flex items-center justify-center px-2">
+                <Flashcard 
+                    data={card} 
+                    bookId={bookId || 'gita'} 
+                    total={allCards.length} 
+                />
+              </div>
+            ))}
+          </div>
+          
+          <div className="text-center">
+            <p className="text-[10px] text-parchment-dim uppercase tracking-widest opacity-50">
+              {selectedEmotion ? "Unlock to heal" : "Swipe cards left/right"}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* === REVIEWS SECTION === */}
+      {viewMode === 'reader' && (
+        <BookReviews bookId={bookId} bookTitle={bookInfo?.title} />
+      )}
 
     </div>
   );
