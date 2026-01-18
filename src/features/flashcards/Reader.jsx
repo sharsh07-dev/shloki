@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, MoreVertical, Sparkles, LayoutGrid } from 'lucide-react';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { ArrowLeft, Sparkles, LayoutGrid } from 'lucide-react';
 import Flashcard from './Flashcard';
 import BookReviews from '../../components/ui/BookReviews';
 import { SHLOKAS, ALL_BOOKS, GITA_EMOTIONS } from '../../lib/data';
@@ -8,15 +8,23 @@ import { SHLOKAS, ALL_BOOKS, GITA_EMOTIONS } from '../../lib/data';
 export default function Reader() {
   const { bookId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation(); // <--- IMPORT THIS to catch the data
   
   // Logic to find cards
   const allCards = SHLOKAS[bookId] || SHLOKAS['gita']; 
   const bookInfo = ALL_BOOKS.find(b => b.id === bookId);
-  
-  // STATE: Specific to Gita's "How do you feel" feature
   const isGita = bookId === 'gita';
-  const [selectedEmotion, setSelectedEmotion] = useState(null);
-  const [viewMode, setViewMode] = useState(isGita ? 'emotions' : 'reader'); 
+
+  // === NEW LOGIC: CHECK FOR DIRECT NAVIGATION ===
+  const initialEmotionId = location.state?.initialEmotionId;
+  const initialEmotion = initialEmotionId 
+    ? GITA_EMOTIONS.find(e => e.id === initialEmotionId) 
+    : null;
+  
+  // Initialize state: If we came from Recommender, start with emotion selected
+  const [selectedEmotion, setSelectedEmotion] = useState(initialEmotion || null);
+  // If we have an emotion, go straight to 'reader' mode. Otherwise show grid.
+  const [viewMode, setViewMode] = useState((initialEmotion || !isGita) ? 'reader' : 'emotions'); 
 
   // Filter cards based on selection
   const cardsToDisplay = selectedEmotion 
@@ -41,9 +49,9 @@ export default function Reader() {
         <button 
           onClick={() => {
             if (viewMode === 'reader' && isGita && selectedEmotion) {
-              handleReset(); // Go back to emotions
+              handleReset(); 
             } else {
-              navigate(-1); // Go back home
+              navigate(-1); 
             }
           }} 
           className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-parchment hover:bg-white/10 transition-colors"
@@ -73,7 +81,7 @@ export default function Reader() {
       
       {/* === CONDITIONAL RENDERING === */}
 
-      {/* 1. EMOTION GRID (Compact & Professional) */}
+      {/* 1. EMOTION GRID */}
       {isGita && viewMode === 'emotions' ? (
         <div className="flex-1 max-w-5xl mx-auto px-6 py-12 animate-fade-in">
           
@@ -110,7 +118,7 @@ export default function Reader() {
         </div>
       ) : (
         
-        /* 2. FLASHCARD READER (With Centering Logic) */
+        /* 2. FLASHCARD READER */
         <div className="flex-none py-8 animate-fade-in">
           {selectedEmotion && (
              <div className="text-center mb-6">
@@ -120,7 +128,6 @@ export default function Reader() {
              </div>
           )}
 
-          {/* CENTERING LOGIC IS HERE */}
           <div className={`flex gap-6 px-4 md:px-20 hide-scrollbar items-center pb-8 ${
               selectedEmotion 
                 ? 'justify-center' 
@@ -140,7 +147,7 @@ export default function Reader() {
           
           <div className="text-center">
             <p className="text-[10px] text-parchment-dim uppercase tracking-widest opacity-50">
-              {selectedEmotion ? "Unlock to heal" : "Swipe cards left/right"}
+              {selectedEmotion ? "Read to heal" : "Swipe cards left/right"}
             </p>
           </div>
         </div>

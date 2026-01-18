@@ -16,6 +16,7 @@ const KEYWORD_MAP = [
   { keys: ['jealous', 'envy', 'compare', 'others'], id: 'jealousy' },
   { keys: ['cheat', 'betray', 'lie', 'hurt', 'breakup'], id: 'betrayal' },
   { keys: ['lazy', 'motivat', 'procrastinat', 'tired', 'bore'], id: 'motivation' },
+  { keys: ['doubt', 'self', 'confidence', 'trust'], id: 'self_doubt' },
 ];
 
 export default function MoodRecommender() {
@@ -45,7 +46,7 @@ export default function MoodRecommender() {
     // Map matched IDs to actual Card Data
     const foundCards = matches
       .map(match => gitaCards.find(card => card.id === match.id))
-      .filter(Boolean); // Remove undefined if id not found
+      .filter(Boolean); 
 
     // Remove duplicates and limit to 3
     const uniqueCards = [...new Set(foundCards)].slice(0, 3);
@@ -53,11 +54,8 @@ export default function MoodRecommender() {
   };
 
   const navigateToCard = (cardId) => {
-    // Navigate to Gita Reader and open specific emotion logic if needed
-    // For now, we just go to the reader. 
-    // Ideally, the Reader would accept a ?cardId=X query param, 
-    // but simply opening the book is a good start.
-    navigate(`/read/gita`);
+    // UPDATED: Pass the ID in 'state' so Reader knows what to open
+    navigate(`/read/gita`, { state: { initialEmotionId: cardId } });
   };
 
   return (
@@ -76,7 +74,7 @@ export default function MoodRecommender() {
             type="text"
             value={input}
             onChange={handleSearch}
-            placeholder="How are you feeling? (e.g. anxious, work stress, lonely)..."
+            placeholder="How are you feeling? (e.g. anxious, betrayal, self doubt)..."
             className="w-full bg-transparent border-none text-parchment placeholder:text-stone-500 px-4 py-3 focus:outline-none text-lg font-serif"
           />
           
@@ -108,7 +106,7 @@ export default function MoodRecommender() {
                     </div>
                     <div>
                       <h4 className="text-parchment font-serif font-bold text-lg group-hover:text-saffron transition-colors">
-                        {card.id.replace('_', ' ').toUpperCase()}
+                        {card.id.replace(/_/g, ' ').toUpperCase()}
                       </h4>
                       <p className="text-stone-500 text-xs uppercase tracking-wider mb-2">
                         {card.chapter}
@@ -131,7 +129,7 @@ export default function MoodRecommender() {
                <p className="text-stone-500 text-sm italic">
                  "Seeking guidance for the soul..." <br/>
                  <span className="text-xs not-italic mt-2 block opacity-50">
-                   Try keywords like: Fear, Stress, Lonely, Anger
+                   Try: Anxiety, Betrayal, Overthinking
                  </span>
                </p>
             </div>

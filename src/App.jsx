@@ -34,15 +34,15 @@ function App() {
                   </div>
                   
                   <h1 className="font-serif text-5xl md:text-6xl leading-tight text-parchment mb-6">
-                    Ancient Texts, <br />
-                    <span className="text-saffron text-glow">Modern Spirit.</span>
+                   Ancient answers <br />
+                    <span className="text-saffron text-glow">for modern minds</span>
                   </h1>
                   <MoodRecommender />
                 </div>
 
                 {/* Most Used Section Heading */}
                 <div className="flex items-center justify-between mb-8 border-b border-white/5 pb-4">
-                  <h2 className="font-serif text-2xl text-parchment">Most Read Scriptures</h2>
+                  <h2 className="font-serif text-2xl text-parchment">Start with what most people found helpful</h2>
                   <span className="text-xs text-stone-500 uppercase tracking-widest hidden md:block">
                     Top Selections
                   </span>
