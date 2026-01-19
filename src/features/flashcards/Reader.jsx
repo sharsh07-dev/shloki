@@ -132,12 +132,12 @@ export default function Reader() {
           )}
 
           {/* Card Carousel - Optimized for Mobile Swiping */}
-          <div className={`flex gap-4 md:gap-6 px-4 md:px-20 hide-scrollbar items-center pb-4 md:pb-8 ${
-              selectedEmotion 
-                ? 'justify-center' 
-                : 'overflow-x-auto snap-x snap-mandatory touch-pan-x'
-            }`}
-          >
+         <div className={`flex gap-4 px-4 md:px-20 hide-scrollbar items-center pb-4 min-h-[65vh] ${
+      selectedEmotion 
+        ? 'justify-center' 
+        : 'overflow-x-auto snap-x snap-mandatory touch-pan-x'
+    }`}
+  >
             {cardsToDisplay && cardsToDisplay.map((card) => (
               <div key={card.id} className="min-w-[95vw] md:min-w-[600px] snap-center flex items-center justify-center">
                 <Flashcard 

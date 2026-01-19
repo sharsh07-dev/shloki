@@ -1,49 +1,58 @@
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Flame } from 'lucide-react'; // Import Flame icon
+import { ArrowRight, Book } from 'lucide-react';
 
 export default function BookCard({ book }) {
   return (
-    <Link to={`/read/${book.id}`} className="group relative perspective-1000 block h-full">
-      <motion.div
-        whileHover={{ y: -10, rotateY: -5 }}
-        transition={{ type: "spring", stiffness: 300 }}
-        className="relative w-full aspect-[2/3] rounded-r-lg shadow-2xl transition-all duration-500 cursor-pointer"
-      >
-        {/* === 3D Spine Effect === */}
-        <div className="absolute left-0 top-1 bottom-1 w-3 bg-white/10 z-20 rounded-l-sm shadow-[inset_-2px_0_5px_rgba(0,0,0,0.5)]" />
-
-        {/* === Book Cover === */}
-        <div className="absolute inset-0 rounded-lg overflow-hidden bg-spiritual-card border-r-4 border-b-4 border-black/40">
-           {/* "Most Used" Badge */}
-           {book.isPopular && (
-             <div className="absolute top-0 right-4 z-30 bg-saffron text-white text-[10px] font-bold uppercase tracking-widest px-2 py-4 rounded-b-lg shadow-lg flex flex-col items-center gap-1">
-               <Flame size={14} fill="currentColor" />
-               <span>Top</span>
-             </div>
-           )}
-
-           <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10" />
-           <img 
-             src={book.cover} 
-             alt={book.title}
-             className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
-           />
-           
-           {/* Title Overlay */}
-           <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 via-black/60 to-transparent z-20 text-center pt-20">
-             <h3 className="font-serif text-xl md:text-2xl text-parchment font-bold shadow-black drop-shadow-md leading-tight">
-               {book.title}
-             </h3>
-             <p className="text-[10px] text-saffron font-bold uppercase tracking-[0.2em] mt-2 text-shadow">
-               {book.subtitle}
-             </p>
-           </div>
+    <Link 
+      to={`/read/${book.id}`}
+      // RESPONSIVE LAYOUT: 
+      // Mobile: 'flex-row' (Horizontal List) 
+      // Desktop: 'flex-col' (Vertical Card)
+      className="group flex flex-row md:flex-col bg-white dark:bg-white/5 border border-stone-200 dark:border-white/10 rounded-xl overflow-hidden hover:border-saffron/40 transition-all duration-300 hover:-translate-y-1 shadow-sm dark:shadow-none"
+    >
+      {/* IMAGE CONTAINER */}
+      {/* Mobile: Fixed width w-28, Full height of card
+          Desktop: Full width w-full, Height h-64 */}
+      <div className="w-28 md:w-full h-auto md:h-64 relative overflow-hidden flex-shrink-0">
+        <div className="absolute inset-0 bg-stone-200 dark:bg-stone-800 animate-pulse" /> {/* Placeholder */}
+        <img 
+          src={book.cover} 
+          alt={book.title}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
+        />
+        {/* Overlay only visible on desktop hover */}
+        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity hidden md:flex items-center justify-center">
+          <div className="bg-white/10 backdrop-blur-md border border-white/20 p-3 rounded-full text-white">
+            <Book size={20} />
+          </div>
         </div>
+      </div>
 
-        {/* Glow Effect */}
-        <div className="absolute inset-0 rounded-lg ring-1 ring-white/10 group-hover:ring-saffron/50 transition-all duration-500" />
-      </motion.div>
+      {/* TEXT CONTENT */}
+      {/* Mobile: Padding p-4, justifies center */}
+      <div className="flex-1 p-4 md:p-6 flex flex-col justify-center md:justify-start">
+        <div className="flex items-start justify-between mb-1 md:mb-2">
+           <h3 className="font-serif text-lg md:text-2xl font-bold text-stone-800 dark:text-parchment leading-tight">
+             {book.title}
+           </h3>
+           {/* Icon only on mobile */}
+           <ArrowRight size={16} className="text-saffron -rotate-45 md:hidden opacity-50" />
+        </div>
+        
+        <p className="text-[10px] md:text-xs text-saffron font-bold uppercase tracking-widest mb-2 md:mb-3">
+          {book.subtitle}
+        </p>
+        
+        <p className="text-stone-500 dark:text-parchment-dim text-xs md:text-sm line-clamp-2 md:line-clamp-3 leading-relaxed">
+          {book.description}
+        </p>
+        
+        {/* Desktop Footer (Hidden on Mobile to save space) */}
+        <div className="hidden md:flex items-center gap-2 mt-4 pt-4 border-t border-stone-100 dark:border-white/5 text-[10px] font-bold uppercase tracking-wider text-stone-400 dark:text-stone-500 group-hover:text-saffron transition-colors">
+          <span>Start Reading</span>
+          <ArrowRight size={12} />
+        </div>
+      </div>
     </Link>
   );
 }
