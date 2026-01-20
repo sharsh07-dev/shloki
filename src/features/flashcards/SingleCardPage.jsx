@@ -1,11 +1,12 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ArrowLeft, Home, Share2 } from 'lucide-react';
-import { Helmet } from 'react-helmet-async'; // <--- Added missing import
-import Flashcard from '../../components/ui/Flashcard'; // Ensure path is correct
-import Navbar from '../../components/layout/Navbar';
+import { Helmet } from 'react-helmet-async'; 
 
-// ⚠️ Check your data.js exports. If you use 'SHLOKAS', ensure it exists there.
+// 👇👇 THE FIX: Changed from '../../components/ui/Flashcard' to './Flashcard'
+import Flashcard from './Flashcard'; 
+
+import Navbar from '../../components/layout/Navbar';
 import { SHLOKAS } from '../../lib/data'; 
 
 export default function SingleCardPage() {
@@ -15,11 +16,10 @@ export default function SingleCardPage() {
   const [bookId, setBookId] = useState('gita');
 
   useEffect(() => {
-    // Safety Check: Ensure data exists before searching
+    // Safety Check
     if (!SHLOKAS) return;
 
     // 1. Search in Gita
-    // (Using Optional Chaining ?. to prevent crashes if 'gita' key is missing)
     let found = SHLOKAS['gita']?.find(c => c.id == cardId);
     let foundBook = 'gita';
 
@@ -33,13 +33,10 @@ export default function SingleCardPage() {
       setCardData(found);
       setBookId(foundBook);
     } else {
-      // If no card found, wait a moment then go home (avoids instant flicker)
       console.warn(`Card ${cardId} not found.`);
-      // navigate('/'); // Uncomment if you want auto-redirect
     }
   }, [cardId, navigate]);
 
-  // Loading State (Prevents crash while searching)
   if (!cardData) {
     return (
       <div className="min-h-screen bg-spiritual-bg flex items-center justify-center">
@@ -50,7 +47,6 @@ export default function SingleCardPage() {
 
   return (
     <div className="min-h-screen bg-spiritual-bg flex flex-col">
-      {/* SEO META TAGS (Must be inside return) */}
       <Helmet>
         <title>{cardData ? `${cardData.chapter} - Shloki` : 'Shloki Wisdom'}</title>
         <meta 
