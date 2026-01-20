@@ -1,46 +1,63 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ArrowLeft, Home, Share2 } from 'lucide-react';
-import Flashcard from './Flashcard';
+import { Helmet } from 'react-helmet-async'; // <--- Added missing import
+import Flashcard from '../../components/ui/Flashcard'; // Ensure path is correct
 import Navbar from '../../components/layout/Navbar';
-// IMPORT BOTH DATA SETS
-import { SHLOKAS, HERO_BOOKS } from '../../lib/data'; 
+// ⚠️ Check your data.js exports. If you use 'SHLOKAS', ensure it exists there.
+import { SHLOKAS } from '../../lib/data'; 
 
 export default function SingleCardPage() {
-  const { cardId } = useParams(); // e.g. "anger" or "law-1"
+  const { cardId } = useParams();
   const navigate = useNavigate();
   const [cardData, setCardData] = useState(null);
   const [bookId, setBookId] = useState('gita');
-<Helmet>
-  <title>{cardData ? `${cardData.chapter} - Shloki Wisdom` : 'Shloki Flashcards'}</title>
-  <meta name="description" content={cardData ? cardData.translation.substring(0, 150) : 'Learn ancient wisdom.'} />
-</Helmet>
+
   useEffect(() => {
+    // Safety Check: Ensure data exists before searching
+    if (!SHLOKAS) return;
+
     // 1. Search in Gita
-    let found = SHLOKAS['gita'].find(c => c.id === cardId);
+    // (Using Optional Chaining ?. to prevent crashes if 'gita' key is missing)
+    let found = SHLOKAS['gita']?.find(c => c.id == cardId);
     let foundBook = 'gita';
 
     // 2. If not found, Search in 48 Laws
     if (!found) {
-       found = SHLOKAS['48laws'].find(c => c.id === cardId);
+       found = SHLOKAS['48laws']?.find(c => c.id == cardId);
        foundBook = '48laws';
     }
 
     if (found) {
       setCardData(found);
       setBookId(foundBook);
-      // SEO Title Update
-      document.title = `${found.sanskrit || found.chapter} - Shloki Wisdom`;
     } else {
-      // If mostly invalid, default to home
-      navigate('/'); 
+      // If no card found, wait a moment then go home (avoids instant flicker)
+      console.warn(`Card ${cardId} not found.`);
+      // navigate('/'); // Uncomment if you want auto-redirect
     }
   }, [cardId, navigate]);
 
-  if (!cardData) return null;
+  // Loading State (Prevents crash while searching)
+  if (!cardData) {
+    return (
+      <div className="min-h-screen bg-spiritual-bg flex items-center justify-center">
+         <div className="text-saffron animate-pulse">Loading Wisdom...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-spiritual-bg flex flex-col">
+      {/* SEO META TAGS (Must be inside return) */}
+      <Helmet>
+        <title>{cardData ? `${cardData.chapter} - Shloki` : 'Shloki Wisdom'}</title>
+        <meta 
+          name="description" 
+          content={cardData.translation ? cardData.translation.substring(0, 150) : 'Ancient wisdom for modern life.'} 
+        />
+      </Helmet>
+
       <Navbar />
 
       <main className="flex-1 flex flex-col items-center justify-center pt-20 pb-10 px-4">
@@ -61,7 +78,7 @@ export default function SingleCardPage() {
           </div>
         </div>
 
-        {/* Intro Text for SEO / Context */}
+        {/* Intro Text */}
         <div className="text-center mb-8 max-w-xl animate-fade-in">
            <h1 className="font-serif text-2xl md:text-4xl text-parchment mb-2">
              {cardData.chapter}
