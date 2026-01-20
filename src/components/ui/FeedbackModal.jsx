@@ -1,116 +1,113 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Star, Send } from 'lucide-react';
+import { X, Send, CheckCircle, Loader } from 'lucide-react';
 import useStore from '../../store/useStore';
+import { supabase } from '../../lib/supabaseClient'; // <--- IMPORT THIS
 
 export default function FeedbackModal() {
   const { isFeedbackOpen, toggleFeedback } = useStore();
-  const [rating, setRating] = useState(0);
-  const [hoverRating, setHoverRating] = useState(0);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState('');
+  const [rating, setRating] = useState(null); // Optional: if you want star ratings
+  const [status, setStatus] = useState('idle'); // idle | submitting | success | error
 
-  const handleSubmit = (e) => {
+  if (!isFeedbackOpen) return null;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate Backend Call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      toggleFeedback();
-      setRating(0);
-      alert("Thank you. Your words have been received. 🙏");
-    }, 1500);
+    if (!message.trim()) return;
+
+    setStatus('submitting');
+
+    try {
+      // === 1. SEND DATA TO SUPABASE ===
+      const { error } = await supabase
+        .from('feedback')
+        .insert([{ message: message, rating: rating }]);
+
+      if (error) throw error;
+
+      // === 2. SUCCESS STATE ===
+      setStatus('success');
+      setTimeout(() => {
+        toggleFeedback();
+        setStatus('idle');
+        setMessage('');
+        setRating(null);
+      }, 2000);
+
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+      setStatus('error');
+    }
   };
 
   return (
-    <AnimatePresence>
-      {isFeedbackOpen && (
-        <>
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={toggleFeedback}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60]"
-          />
+    <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
+      {/* Backdrop */}
+      <div 
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onClick={toggleFeedback}
+      />
 
-          {/* Modal Container */}
-          <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 pointer-events-none">
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="w-full max-w-sm bg-spiritual-card border border-white/10 rounded-2xl shadow-2xl pointer-events-auto overflow-hidden"
-            >
-              {/* Header */}
-              <div className="p-6 pb-2 flex justify-between items-start">
-                <div>
-                  <h3 className="font-serif text-xl text-parchment font-bold">Divine Feedback</h3>
-                  <p className="text-parchment-dim text-xs mt-1">Help us improve the sanctuary.</p>
-                </div>
-                <button 
-                  onClick={toggleFeedback}
-                  className="p-1 rounded-full hover:bg-white/5 text-parchment-dim hover:text-white transition-colors"
-                >
-                  <X size={20} />
-                </button>
-              </div>
-
-              {/* Form */}
-              <form onSubmit={handleSubmit} className="p-6 pt-4 space-y-6">
-                
-                {/* Star Rating */}
-                <div className="flex justify-center gap-2">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <button
-                      key={star}
-                      type="button"
-                      onMouseEnter={() => setHoverRating(star)}
-                      onMouseLeave={() => setHoverRating(0)}
-                      onClick={() => setRating(star)}
-                      className="transition-transform hover:scale-110 focus:outline-none"
-                    >
-                      <Star 
-                        size={28} 
-                        fill={(hoverRating || rating) >= star ? "#d97706" : "transparent"} 
-                        className={(hoverRating || rating) >= star ? "text-saffron" : "text-stone-600"}
-                      />
-                    </button>
-                  ))}
-                </div>
-
-                {/* Text Area */}
-                <div className="relative">
-                  <textarea 
-                    placeholder="Share your thoughts..."
-                    required
-                    rows="4"
-                    className="w-full bg-black/30 border border-white/5 rounded-xl p-4 text-parchment text-sm placeholder:text-stone-600 focus:outline-none focus:border-saffron/50 transition-colors resize-none"
-                  ></textarea>
-                </div>
-
-                {/* Submit Button */}
-                <button 
-                  type="button"
-                  onClick={handleSubmit}
-                  disabled={isSubmitting || rating === 0}
-                  className="w-full py-3 bg-saffron text-white rounded-xl font-bold text-sm tracking-wide uppercase shadow-glow hover:bg-saffron-light disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all"
-                >
-                  {isSubmitting ? (
-                    <span className="animate-pulse">Sending...</span>
-                  ) : (
-                    <>
-                      <span>Submit Review</span>
-                      <Send size={16} />
-                    </>
-                  )}
-                </button>
-              </form>
-            </motion.div>
+      {/* Modal Content */}
+      <div className="relative w-full max-w-md bg-stone-900 border border-white/10 rounded-2xl p-6 shadow-2xl animate-in zoom-in-95 duration-200">
+        
+        {/* Header */}
+        <div className="flex justify-between items-start mb-6">
+          <div>
+            <h2 className="text-xl font-serif text-parchment font-bold">Your Thoughts Matter</h2>
+            <p className="text-stone-500 text-xs mt-1">Help us improve Shloki.</p>
           </div>
-        </>
-      )}
-    </AnimatePresence>
+          <button 
+            onClick={toggleFeedback}
+            className="text-stone-500 hover:text-white transition-colors p-1"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Success View */}
+        {status === 'success' ? (
+          <div className="flex flex-col items-center justify-center py-8 text-center animate-in fade-in">
+            <CheckCircle size={48} className="text-green-500 mb-4" />
+            <h3 className="text-lg text-white font-bold">Thank You!</h3>
+            <p className="text-stone-400 text-sm">Your wisdom has been received.</p>
+          </div>
+        ) : (
+          /* Form View */
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <textarea
+              className="w-full h-32 bg-black/20 border border-white/10 rounded-xl p-4 text-parchment placeholder:text-stone-600 focus:border-saffron focus:ring-1 focus:ring-saffron/50 outline-none resize-none transition-all"
+              placeholder="What feature would you like to see next? Or found a bug?"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              disabled={status === 'submitting'}
+            />
+
+            {/* Error Message */}
+            {status === 'error' && (
+              <p className="text-red-400 text-xs text-center">Failed to send. Please try again.</p>
+            )}
+
+            <button
+              type="submit"
+              disabled={!message.trim() || status === 'submitting'}
+              className="w-full py-3 bg-saffron hover:bg-amber-600 text-white font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            >
+              {status === 'submitting' ? (
+                <>
+                  <Loader size={18} className="animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  <Send size={18} />
+                  Send Feedback
+                </>
+              )}
+            </button>
+          </form>
+        )}
+      </div>
+    </div>
   );
 }
