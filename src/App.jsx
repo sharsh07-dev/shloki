@@ -1,5 +1,7 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import ReactGA from 'react-ga4'; 
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import BookCard from './components/ui/BookCard';
@@ -17,20 +19,37 @@ import { useContentProtection } from './hooks/useContentProtection';
 import { Helmet } from 'react-helmet-async';
 import { HERO_BOOKS } from './lib/data';
 
+// === 1. Initialize Google Analytics with YOUR ID ===
+ReactGA.initialize("G-MJHSE6R27Y");
+
+// === 2. Create Page Tracker Component ===
+function PageTracker() {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Send pageview to Google Analytics whenever route changes
+    ReactGA.send({ hitType: "pageview", page: location.pathname + location.search });
+  }, [location]);
+
+  return null;
+}
+
 function App() {
   const isBlurry = useContentProtection();
 
   return (
     <BrowserRouter>
-      {/* 1. SEO SECTION (Must be inside return) */}
+      {/* 3. ACTIVATE THE TRACKER INSIDE ROUTER */}
+      <PageTracker />
+
+      {/* SEO SECTION */}
       <Helmet>
         <title>Shloki</title>
         <meta name="description" content="Master the 48 Laws of Power and Bhagavad Gita wisdom with interactive daily flashcards. The modern way to learn ancient strategy." />
         <meta name="keywords" content="shloki, 48 laws of power flashcards, gita flashcards, wisdom cards, spiritual learning, strategy cards, flashcards, easyreading, simple words, bhagavadgita in short." />
-        {/* Add your Google Verification tag here if you have one */}
       </Helmet>
 
-      {/* 2. MAIN APP CONTAINER */}
+      {/* MAIN APP CONTAINER */}
       <div 
         className={`min-h-screen bg-spiritual-bg font-sans select-none flex flex-col relative transition-filter duration-300 ${isBlurry ? 'blur-xl grayscale' : ''}`}
         onContextMenu={(e) => e.preventDefault()}
