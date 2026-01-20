@@ -24,7 +24,7 @@ function App() {
     <BrowserRouter>
       {/* 1. SEO SECTION (Must be inside return) */}
       <Helmet>
-        <title>Shloki | Ancient Wisdom & 48 Laws of Power Flashcards</title>
+        <title>Shloki</title>
         <meta name="description" content="Master the 48 Laws of Power and Bhagavad Gita wisdom with interactive daily flashcards. The modern way to learn ancient strategy." />
         <meta name="keywords" content="shloki, 48 laws of power flashcards, gita flashcards, wisdom cards, spiritual learning, strategy cards, flashcards, easyreading, simple words, bhagavadgita in short." />
         {/* Add your Google Verification tag here if you have one */}
