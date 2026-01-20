@@ -4,7 +4,7 @@ import { ArrowLeft, Home, Share2 } from 'lucide-react';
 import { Helmet } from 'react-helmet-async'; // <--- Added missing import
 import Flashcard from '../../components/ui/Flashcard'; // Ensure path is correct
 import Navbar from '../../components/layout/Navbar';
-import { Helmet } from 'react-helmet-async';
+
 // ⚠️ Check your data.js exports. If you use 'SHLOKAS', ensure it exists there.
 import { SHLOKAS } from '../../lib/data'; 
 
