@@ -21,7 +21,7 @@ export default function Flashcard({ data, total }) {
       // Bullet Points
       if (line.trim().startsWith('•')) {
         return (
-          <div key={index} className="flex items-start gap-2 mb-2 pl-1 md:pl-2">
+          <div key={index} className="flex items-start gap-2 mb-1.5 md:mb-2 pl-1 md:pl-2">
             <span className="text-saffron mt-1.5 text-[6px]">●</span>
             <p className="text-stone-300 text-sm leading-relaxed text-left">
               {line.replace('•', '').trim()}
@@ -30,7 +30,7 @@ export default function Flashcard({ data, total }) {
         );
       }
       // Regular Text
-      if (line.trim() === '') return <div key={index} className="h-2" />;
+      if (line.trim() === '') return <div key={index} className="h-1 md:h-2" />;
       return (
         <p key={index} className="text-stone-200 text-sm mb-2 text-left">
           {line}
@@ -40,12 +40,11 @@ export default function Flashcard({ data, total }) {
   };
 
   return (
-    // === CRITICAL FIX ===
-    // 1. h-[60vh]: Fixed height prevents collapsing. 'min-h' does not work well with absolute children.
-    // 2. w-[85vw]: Keeps it nicely centered with margins.
-    // 3. Desktop remains w-full max-w-3xl h-[500px].
+    // === RESPONSIVE HEIGHT FIX ===
+    // Mobile: h-[75vh] (Taller, fits more text)
+    // Desktop: h-[500px] (Standard)
     <div 
-      className="perspective-1000 w-[85vw] h-[60vh] md:w-full md:max-w-3xl md:h-[500px] relative mt-4 cursor-pointer group mx-auto mb-8" 
+      className="perspective-1000 w-[85vw] h-[75vh] md:w-full md:max-w-3xl md:h-[500px] relative mt-4 cursor-pointer group mx-auto mb-4" 
       onClick={() => setIsFlipped(!isFlipped)}
     >
       <motion.div
@@ -64,7 +63,7 @@ export default function Flashcard({ data, total }) {
            
            <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/aged-paper.png')] pointer-events-none" />
            
-           {/* HEADER (Absolute to stay at top) */}
+           {/* HEADER */}
            <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-start z-20 bg-gradient-to-b from-[#f5f5f0] via-[#f5f5f0]/80 to-transparent h-20">
               <div className="text-stone-400 opacity-50">
                  <BookOpen size={20} />
@@ -76,14 +75,13 @@ export default function Flashcard({ data, total }) {
               </div>
            </div>
 
-           {/* CONTENT (Scrollable) */}
-           <div className="flex-1 overflow-y-auto flex flex-col items-center justify-center p-6 md:p-8 mt-14 mb-8 z-10 custom-scrollbar w-full">
+           {/* CONTENT (Centered) */}
+           <div className="flex-1 overflow-y-auto flex flex-col items-center justify-center p-5 md:p-8 mt-14 mb-8 z-10 custom-scrollbar w-full">
              
              <span className="text-amber-600 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-4 shrink-0">
                {data.chapter}
              </span>
              
-             {/* TEXT SIZE FIX: text-xl for mobile readability */}
              <h2 className="font-serif text-xl sm:text-2xl md:text-4xl leading-relaxed font-bold text-stone-800 mb-6 drop-shadow-sm whitespace-pre-line text-center w-full">
                {data.sanskrit}
              </h2>
@@ -114,13 +112,13 @@ export default function Flashcard({ data, total }) {
               </div>
            </div>
 
-          {/* Scrollable Content */}
-          <div className="flex-1 overflow-y-auto p-6 md:p-8 custom-scrollbar text-left w-full">
-            <div className="mb-6">
+          {/* Scrollable Content - Reduced Padding to p-5 for more space */}
+          <div className="flex-1 overflow-y-auto p-5 md:p-8 custom-scrollbar text-left w-full">
+            <div className="mb-4">
                {formatContent(data.translation)}
             </div>
 
-            <div className="mt-4 pt-4 border-t border-white/10 text-center pb-4">
+            <div className="mt-3 pt-3 border-t border-white/10 text-center pb-2">
                <p className="font-serif text-stone-300 text-sm md:text-base italic leading-relaxed">
                  {data.nuance}
                </p>
