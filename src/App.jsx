@@ -19,28 +19,30 @@ import { HERO_BOOKS } from './lib/data';
 
 function App() {
   const isBlurry = useContentProtection();
-<Helmet>
-  <title>Shloki | Ancient Wisdom & 48 Laws of Power Flashcards</title>
-  <meta name="description" content="Master the 48 Laws of Power and Bhagavad Gita wisdom with interactive daily flashcards. The modern way to learn ancient strategy." />
-  <meta name="keywords" content="shloki, 48 laws of power flashcards, gita flashcards, wisdom cards, spiritual learning" />
-</Helmet>
+
   return (
     <BrowserRouter>
-      {/* MAIN CONTAINER: Handles Background, Text Selection, and Right Click */}
+      {/* 1. SEO SECTION (Must be inside return) */}
+      <Helmet>
+        <title>Shloki | Ancient Wisdom & 48 Laws of Power Flashcards</title>
+        <meta name="description" content="Master the 48 Laws of Power and Bhagavad Gita wisdom with interactive daily flashcards. The modern way to learn ancient strategy." />
+        <meta name="keywords" content="shloki, 48 laws of power flashcards, gita flashcards, wisdom cards, spiritual learning, strategy cards, flashcards, easyreading, simple words, bhagavadgita in short." />
+        {/* Add your Google Verification tag here if you have one */}
+      </Helmet>
+
+      {/* 2. MAIN APP CONTAINER */}
       <div 
         className={`min-h-screen bg-spiritual-bg font-sans select-none flex flex-col relative transition-filter duration-300 ${isBlurry ? 'blur-xl grayscale' : ''}`}
         onContextMenu={(e) => e.preventDefault()}
       >
         
-        {/* --- WATERMARK REMOVED FOR CLEANER UI --- */}
-
         {/* === CONTENT === */}
         <FeedbackModal />
         
         {/* Wrap Routes in flex-1 to push Footer down */}
         <div className="flex-1">
           <Routes>
-            {/* === 1. HOME PAGE === */}
+            {/* === HOME PAGE === */}
             <Route path="/" element={
               <>
                 <Navbar />
@@ -96,15 +98,7 @@ function App() {
                 </main>
               </>
             } />
-<meta 
-          name="description" 
-          content="Master the 48 Laws of Power and Bhagavad Gita wisdom with interactive daily flashcards. The modern way to learn ancient strategy." 
-        />
 
-        <meta 
-          name="keywords" 
-          content="shloki, 48 laws of power flashcards, gita flashcards, wisdom cards, spiritual learning, strategy cards, flashcards, easyreading, simple words, bhagavadgita in short." 
-        />
             {/* === OTHER ROUTES === */}
             <Route path="/library" element={<FullLibrary />} />
             <Route path="/wisdom" element={<WisdomLibrary />} />
@@ -119,7 +113,7 @@ function App() {
         <Footer />
       </div>
 
-      {/* === SECURITY WARNING (Only visible if user tries to copy/screenshot) === */}
+      {/* === SECURITY WARNING === */}
       {isBlurry && (
         <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/90 backdrop-blur-md">
           <div className="text-center animate-fade-in px-6">
