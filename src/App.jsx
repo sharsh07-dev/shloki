@@ -14,11 +14,16 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import { useContentProtection } from './hooks/useContentProtection';
+import { Helmet } from 'react-helmet-async';
 import { HERO_BOOKS } from './lib/data';
 
 function App() {
   const isBlurry = useContentProtection();
-
+<Helmet>
+  <title>Shloki | Ancient Wisdom & 48 Laws of Power Flashcards</title>
+  <meta name="description" content="Master the 48 Laws of Power and Bhagavad Gita wisdom with interactive daily flashcards. The modern way to learn ancient strategy." />
+  <meta name="keywords" content="shloki, 48 laws of power flashcards, gita flashcards, wisdom cards, spiritual learning" />
+</Helmet>
   return (
     <BrowserRouter>
       {/* MAIN CONTAINER: Handles Background, Text Selection, and Right Click */}

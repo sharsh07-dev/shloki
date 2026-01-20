@@ -11,7 +11,10 @@ export default function SingleCardPage() {
   const navigate = useNavigate();
   const [cardData, setCardData] = useState(null);
   const [bookId, setBookId] = useState('gita');
-
+<Helmet>
+  <title>{cardData ? `${cardData.chapter} - Shloki Wisdom` : 'Shloki Flashcards'}</title>
+  <meta name="description" content={cardData ? cardData.translation.substring(0, 150) : 'Learn ancient wisdom.'} />
+</Helmet>
   useEffect(() => {
     // 1. Search in Gita
     let found = SHLOKAS['gita'].find(c => c.id === cardId);
