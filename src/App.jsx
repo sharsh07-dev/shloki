@@ -96,7 +96,15 @@ function App() {
                 </main>
               </>
             } />
+<meta 
+          name="description" 
+          content="Master the 48 Laws of Power and Bhagavad Gita wisdom with interactive daily flashcards. The modern way to learn ancient strategy." 
+        />
 
+        <meta 
+          name="keywords" 
+          content="shloki, 48 laws of power flashcards, gita flashcards, wisdom cards, spiritual learning, strategy cards, flashcards, easyreading, simple words, bhagavadgita in short." 
+        />
             {/* === OTHER ROUTES === */}
             <Route path="/library" element={<FullLibrary />} />
             <Route path="/wisdom" element={<WisdomLibrary />} />
