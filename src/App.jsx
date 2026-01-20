@@ -148,6 +148,8 @@ function App() {
         </div>
       )}
 
+      {/* Vercel Web Analytics */}
+      <Analytics />
     </BrowserRouter>
   );
 }
