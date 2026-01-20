@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { RotateCw, BookOpen, Sparkles } from 'lucide-react';
+import { RotateCw, BookOpen, Sparkles, Crown } from 'lucide-react';
 
-export default function Flashcard({ data, total }) {
+export default function Flashcard({ data, total, bookId }) {
   const [isFlipped, setIsFlipped] = useState(false);
+  const isPowerLaw = bookId === '48laws';
 
-  // === HELPER: Format the text properly ===
-  const formatContent = (text) => {
+  // === HELPER: Format Standard Content (Gita) ===
+  const formatGitaContent = (text) => {
     if (!text) return null;
     const lines = text.split('\n');
     return lines.map((line, index) => {
-      // Headers
       if (line.includes('Shloka Insight:') || line.includes('Gita Solution:')) {
         return (
           <h4 key={index} className="font-serif text-saffron text-base md:text-lg font-bold mt-3 md:mt-4 mb-2 border-b border-white/10 pb-1">
@@ -18,7 +18,6 @@ export default function Flashcard({ data, total }) {
           </h4>
         );
       }
-      // Bullet Points
       if (line.trim().startsWith('•')) {
         return (
           <div key={index} className="flex items-start gap-2 mb-1.5 md:mb-2 pl-1 md:pl-2">
@@ -29,7 +28,6 @@ export default function Flashcard({ data, total }) {
           </div>
         );
       }
-      // Regular Text
       if (line.trim() === '') return <div key={index} className="h-1 md:h-2" />;
       return (
         <p key={index} className="text-stone-200 text-sm mb-2 text-left">
@@ -39,12 +37,48 @@ export default function Flashcard({ data, total }) {
     });
   };
 
+  // === HELPER: Format Power Law Content ===
+  const renderPowerLawBack = () => (
+    <div className="flex-1 overflow-y-auto p-5 md:p-8 custom-scrollbar text-left w-full">
+      {/* 1. Explanation */}
+      <h4 className="font-serif text-white text-base md:text-lg font-bold mb-3">
+        {data.chapter}: {data.sanskrit}
+      </h4>
+      <p className="text-stone-300 text-sm leading-relaxed mb-6 whitespace-pre-line">
+        {data.translation}
+      </p>
+
+      {/* 2. Steps to Implement */}
+      {data.steps && (
+        <div className="mb-6">
+          <h5 className="font-sans text-saffron text-xs font-bold uppercase tracking-widest mb-3 border-l-2 border-saffron pl-3">
+            Steps to Implement in Real Life
+          </h5>
+          <ol className="list-decimal pl-5 space-y-2 text-stone-400 text-sm">
+            {data.steps.map((step, i) => (
+              <li key={i} className="pl-1 leading-relaxed">
+                <span className="text-stone-200">{step}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
+
+      {/* 3. Footer Punchline (Nuance) */}
+      <div className="mt-4 pt-4 border-t border-white/10 text-center">
+        <p className="font-serif text-white font-bold text-sm md:text-base leading-relaxed italic">
+          "{data.nuance}"
+        </p>
+      </div>
+    </div>
+  );
+
   return (
-    // === RESPONSIVE HEIGHT FIX ===
-    // Mobile: h-[75vh] (Taller, fits more text)
-    // Desktop: h-[500px] (Standard)
+    // === SIZE UPDATE ===
+    // Mobile: h-[80vh] (Taller)
+    // Desktop: h-[650px] (Much Taller to fit 48 Laws content)
     <div 
-      className="perspective-1000 w-[85vw] h-[75vh] md:w-full md:max-w-3xl md:h-[500px] relative mt-4 cursor-pointer group mx-auto mb-4" 
+      className="perspective-1000 w-[90vw] h-[80vh] md:w-full md:max-w-3xl md:h-[650px] relative mt-4 cursor-pointer group mx-auto mb-4" 
       onClick={() => setIsFlipped(!isFlipped)}
     >
       <motion.div
@@ -54,39 +88,38 @@ export default function Flashcard({ data, total }) {
         style={{ transformStyle: 'preserve-3d' }}
       >
         {/* ==============================
-            FRONT SIDE (Sanskrit) 
+            FRONT SIDE 
            ============================== */}
         <div 
           className="absolute inset-0 backface-hidden rounded-2xl bg-[#f5f5f0] text-stone-900 shadow-2xl border-r-4 md:border-r-8 border-b-4 border-stone-300 overflow-hidden flex flex-col"
           style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
         >
-           
            <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/aged-paper.png')] pointer-events-none" />
            
-           {/* HEADER */}
-           <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-start z-20 bg-gradient-to-b from-[#f5f5f0] via-[#f5f5f0]/80 to-transparent h-20">
+           {/* Header */}
+           <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-start z-20 bg-gradient-to-b from-[#f5f5f0] via-[#f5f5f0]/80 to-transparent h-24">
               <div className="text-stone-400 opacity-50">
-                 <BookOpen size={20} />
+                 {isPowerLaw ? <Crown size={24} /> : <BookOpen size={24} />}
               </div>
               <div className="flex items-center gap-2 px-3 py-1 rounded-full border border-stone-300 bg-stone-100/80 backdrop-blur-sm shadow-sm">
-                 <span className="text-[10px] font-bold text-stone-500 uppercase tracking-widest">
-                   Card {data.id}
+                 <span className="text-[10px] md:text-xs font-bold text-stone-500 uppercase tracking-widest">
+                   {data.chapter}
                  </span>
               </div>
            </div>
 
-           {/* CONTENT (Centered) */}
-           <div className="flex-1 overflow-y-auto flex flex-col items-center justify-center p-5 md:p-8 mt-14 mb-8 z-10 custom-scrollbar w-full">
-             
+           {/* Content */}
+           <div className="flex-1 overflow-y-auto flex flex-col items-center justify-center p-6 md:p-10 mt-16 mb-10 z-10 custom-scrollbar w-full">
              <span className="text-amber-600 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-4 shrink-0">
-               {data.chapter}
+               {isPowerLaw ? 'The Law' : data.chapter}
              </span>
              
-             <h2 className="font-serif text-xl sm:text-2xl md:text-4xl leading-relaxed font-bold text-stone-800 mb-6 drop-shadow-sm whitespace-pre-line text-center w-full">
+             {/* Title */}
+             <h2 className="font-serif text-2xl sm:text-3xl md:text-5xl leading-tight font-bold text-stone-800 mb-6 drop-shadow-sm whitespace-pre-line text-center w-full px-4">
                {data.sanskrit}
              </h2>
              
-             <div className="flex items-center justify-center gap-2 text-stone-400 text-[10px] uppercase tracking-widest animate-pulse shrink-0">
+             <div className="flex items-center justify-center gap-2 text-stone-400 text-[10px] uppercase tracking-widest animate-pulse shrink-0 mt-4">
                 <RotateCw size={14} />
                 <span>Tap to Reveal</span>
              </div>
@@ -94,7 +127,7 @@ export default function Flashcard({ data, total }) {
         </div>
 
         {/* ==============================
-            BACK SIDE (Meaning) 
+            BACK SIDE
            ============================== */}
         <div 
           className="absolute inset-0 backface-hidden rounded-2xl bg-stone-900 flex flex-col shadow-glow border border-white/10 overflow-hidden"
@@ -105,25 +138,28 @@ export default function Flashcard({ data, total }) {
           }}
         >
            {/* Header */}
-           <div className="p-4 flex justify-end border-b border-white/5 bg-black/20 shrink-0">
+           <div className="p-4 md:p-5 flex justify-end border-b border-white/5 bg-black/20 shrink-0">
               <div className="inline-flex items-center gap-2 opacity-70">
                  <Sparkles size={14} className="text-saffron" />
-                 <span className="text-[10px] font-bold text-parchment uppercase tracking-widest">Insight</span>
+                 <span className="text-[10px] font-bold text-parchment uppercase tracking-widest">
+                    {isPowerLaw ? 'Strategy' : 'Insight'}
+                 </span>
               </div>
            </div>
 
-          {/* Scrollable Content - Reduced Padding to p-5 for more space */}
-          <div className="flex-1 overflow-y-auto p-5 md:p-8 custom-scrollbar text-left w-full">
-            <div className="mb-4">
-               {formatContent(data.translation)}
+          {/* DYNAMIC CONTENT AREA */}
+          {isPowerLaw ? renderPowerLawBack() : (
+            <div className="flex-1 overflow-y-auto p-5 md:p-8 custom-scrollbar text-left w-full">
+              <div className="mb-4">
+                 {formatGitaContent(data.translation)}
+              </div>
+              <div className="mt-3 pt-3 border-t border-white/10 text-center pb-2">
+                 <p className="font-serif text-stone-300 text-sm md:text-base italic leading-relaxed">
+                   {data.nuance}
+                 </p>
+              </div>
             </div>
-
-            <div className="mt-3 pt-3 border-t border-white/10 text-center pb-2">
-               <p className="font-serif text-stone-300 text-sm md:text-base italic leading-relaxed">
-                 {data.nuance}
-               </p>
-            </div>
-          </div>
+          )}
           
           {/* Footer */}
           <div className="p-3 md:p-4 mt-auto border-t border-white/5 flex justify-between items-center text-[9px] text-stone-500 uppercase tracking-widest bg-black/20 shrink-0">

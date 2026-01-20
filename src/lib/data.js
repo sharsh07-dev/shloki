@@ -19,30 +19,22 @@ export const HERO_BOOKS = [
   {
     id: 'gita',
     title: 'Bhagavad Gita',
-    subtitle: 'The Song of God',
+    subtitle: 'Wisdom Cards',
     description: 'The eternal message of spiritual wisdom.',
     cover: 'https://res.cloudinary.com/do0rlgy7c/image/upload/v1768768264/gita_cpncew.png', 
     totalCards: 29, 
     isPopular: true
   },
   {
-    id: 'yogasutra',
-    title: 'Yoga Sutras',
-    subtitle: 'Patanjali',
-    description: 'The science of mind and consciousness.',
-    cover: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop', 
-    totalCards: 20,
-    isPopular: true
-  },
-  {
-    id: 'upanishads',
-    title: 'The Upanishads',
-    subtitle: 'Vedic Wisdom',
-    description: 'Philosophical essence of the Vedas.',
-    cover: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=800&auto=format&fit=crop', 
-    totalCards: 22,
+    id: '48laws',
+    title: '48 Laws of Power',
+    subtitle: 'Strategy Cards',
+    description: 'The definitive manual for modern manipulation and control.',
+    cover: 'https://res.cloudinary.com/do0rlgy7c/image/upload/v1768904708/48_laws_of_power_iuggyg.jpg', 
+    totalCards: 48,
     isPopular: true
   }
+  
 ];
 
 // === 2. GENERATE EXTRA MOCK BOOKS (The Library) ===
@@ -66,7 +58,443 @@ const MOCK_BOOKS = Array.from({ length: 22 }, (_, i) => ({
 // === 3. EXPORT COMBINED LISTS ===
 export const ALL_BOOKS = [...HERO_BOOKS, ...MOCK_BOOKS];
 
-// === 4. REAL GITA DATA (Corrected Mappings) ===
+// === 4. 48 LAWS OF POWER DATA (Fully Populated) ===
+const POWER_LAWS_DATA = [
+  {
+    id: "law-1",
+    chapter: "Law 1",
+    sanskrit: "Never Outshine the Master",
+    translation: "When you appear smarter, more talented, or more powerful than those above you, their ego feels threatened.\nInstead of rewarding you, they may resist or block your growth.\nReal power comes from making superiors feel secure while you improve silently.",
+    steps: ["Respect hierarchy before displaying talent", "Share success and give credit generously", "Avoid public correction or comparison", "Display excellence subtly, not loudly", "Grow patiently while staying humble"],
+    nuance: "Control your brilliance today, so you can rise freely tomorrow.",
+    locked: false
+  },
+  {
+    id: "law-2",
+    chapter: "Law 2",
+    sanskrit: "Never Put Too Much Trust in Friends, Learn How to Use Enemies",
+    translation: "Friends may act from emotion, jealousy, or familiarity, which can lead to betrayal or disappointment.\nEnemies, however, are more predictable because they must prove their loyalty if they align with you.\nWise people stay emotionally balanced and judge others by actions, not closeness.",
+    steps: ["Do not share all plans, even with close friends", "Observe actions more than words or promises", "Keep professional distance in important matters", "Use rivalry to understand weaknesses and strengths", "Stay calm and objective in relationships"],
+    nuance: "Trust actions, not labels, and power will remain in your hands.",
+    locked: false
+  },
+  {
+    id: "law-3",
+    chapter: "Law 3",
+    sanskrit: "Conceal Your Intentions",
+    translation: "When people know your true plans, they can prepare, resist, or sabotage you.\nBy keeping intentions hidden, you stay unpredictable and in control.\nSilence and ambiguity protect your goals until the right moment arrives.",
+    steps: ["Share goals only with those who truly need to know", "Speak generally, not specifically, about future plans", "Let actions reveal outcomes, not intentions", "Avoid emotional oversharing", "Move decisively when the time is right"],
+    nuance: "Power grows strongest when your next move remains unseen.",
+    locked: false
+  },
+  {
+    id: "law-4",
+    chapter: "Law 4",
+    sanskrit: "Always Say Less Than Necessary",
+    translation: "Speaking more than required weakens your authority and exposes your thinking.\nThe more you talk, the more control you give away.\nSilence creates mystery, confidence, and respect, making others value your words more.",
+    steps: ["Speak only when your words have purpose", "Avoid over-explaining or justifying yourself", "Pause before responding to maintain control", "Keep emotions out of conversations", "Let silence create pressure, not fear"],
+    nuance: "Silence turns restraint into power.",
+    locked: false
+  },
+  {
+    id: "law-5",
+    chapter: "Law 5",
+    sanskrit: "So Much Depends on Reputation — Guard It with Your Life",
+    translation: "Reputation shapes how people judge you before you act or speak. A strong reputation builds trust and influence automatically.\nOnce damaged, reputation is difficult to restore and easy to exploit.",
+    steps: ["Act consistently in all situations", "Avoid gossip and unnecessary conflicts", "Respond quickly to false accusations", "Align with people who strengthen your image", "Let your results reinforce your name"],
+    nuance: "Protect your reputation, and it will protect your power.",
+    locked: false
+  },
+  {
+    id: "law-6",
+    chapter: "Law 6",
+    sanskrit: "Court Attention at All Costs",
+    translation: "Being ignored makes you powerless. Attention creates presence, influence, and opportunity. It is better to be noticed than forgotten.",
+    steps: ["Make your work visible, not just correct", "Develop a recognizable style or voice", "Speak at moments that matter", "Use storytelling to attract interest", "Stay active where decisions are made"],
+    nuance: "Visibility creates power.",
+    locked: false
+  },
+  {
+    id: "law-7",
+    chapter: "Law 7",
+    sanskrit: "Get Others to Do the Work for You, but Always Take the Credit",
+    translation: "Using the efforts of others saves time and multiplies your strength. People respect results, not the process behind them.\nSmart leaders delegate wisely and own the outcome.",
+    steps: ["Delegate tasks based on others’ strengths", "Focus your energy on strategy, not execution", "Reward contributors privately", "Present outcomes confidently as a leader", "Build a reputation for delivering results"],
+    nuance: "Leadership is measured by results, not effort.",
+    locked: false
+  },
+  {
+    id: "law-8",
+    chapter: "Law 8",
+    sanskrit: "Make Other People Come to You — Use Bait if Necessary",
+    translation: "When you chase others, you give away control. Power shifts to you when people seek your attention.\nBy offering value or opportunity, you draw others into your terms.",
+    steps: ["Create something others want or need", "Let opportunities attract people to you", "Avoid chasing approval or validation", "Stay calm and patient in negotiations", "Set conditions only after interest is shown"],
+    nuance: "Those who control attraction control the situation.",
+    locked: false
+  },
+  {
+    id: "law-9",
+    chapter: "Law 9",
+    sanskrit: "Win Through Your Actions, Never Through Argument",
+    translation: "Arguments rarely change minds and often create enemies. Actions speak louder and leave no room for denial.\nResults silence opposition more effectively than words.",
+    steps: ["Prove your point through results", "Avoid wasting energy on debates", "Let success answer criticism", "Stay composed under challenge", "Act decisively instead of explaining"],
+    nuance: "Results end arguments.",
+    locked: false
+  },
+  {
+    id: "law-10",
+    chapter: "Law 10",
+    sanskrit: "Infection: Avoid the Unhappy and Unlucky",
+    translation: "Emotions and attitudes are contagious. Constant exposure to negativity drains energy and luck. Distance from such people protects your progress.",
+    steps: ["Limit time with negative individuals", "Choose environments that encourage growth", "Do not try to rescue those who resist change", "Protect your mental and emotional space", "Surround yourself with positive, driven people"],
+    nuance: "Protect your energy to protect your future.",
+    locked: false
+  },
+  {
+    id: "law-11",
+    chapter: "Law 11",
+    sanskrit: "Learn to Keep People Dependent on You",
+    translation: "Power grows when others rely on your skills, knowledge, or resources.\nIf people need you, they are less likely to oppose or replace you. Independence gives freedom, but dependency gives control.",
+    steps: ["Develop unique skills others cannot easily replace", "Become a key problem-solver in your environment", "Share help, but not everything", "Avoid making yourself unnecessary", "Stay valuable in critical areas"],
+    nuance: "Power lasts when others cannot function without you.",
+    locked: false
+  },
+  {
+    id: "law-12",
+    chapter: "Law 12",
+    sanskrit: "Use Selective Honesty and Generosity to Disarm Your Victim",
+    translation: "A small act of honesty builds trust quickly. Unexpected generosity lowers defenses.\nPeople drop their guard when they feel safe and respected.",
+    steps: ["Be honest at strategic moments", "Use generosity to create goodwill", "Do not reveal everything at once", "Choose timing carefully", "Let trust work in your favor"],
+    nuance: "A little honesty can open many doors.",
+    locked: false
+  },
+  {
+    id: "law-13",
+    chapter: "Law 13",
+    sanskrit: "When Asking for Help, Appeal to People’s Self-Interest",
+    translation: "People help more willingly when they see personal benefit. Appeals to kindness fade, but self-interest lasts.\nAlign your request with what they want.",
+    steps: ["Understand what motivates the other person", "Frame requests around mutual benefit", "Avoid emotional pressure", "Be clear about outcomes", "Respect their interests"],
+    nuance: "Make others win, and they will help you win.",
+    locked: false
+  },
+  {
+    id: "law-14",
+    chapter: "Law 14",
+    sanskrit: "Pose as a Friend, Work as a Spy",
+    translation: "People reveal more when they feel safe. By appearing friendly, you gain access to real thoughts and intentions.\nInformation gives you advantage before action begins.",
+    steps: ["Build trust through friendliness", "Listen more than you speak", "Observe behavior, not just words", "Keep your intentions private", "Use knowledge wisely, not emotionally"],
+    nuance: "Information is quiet power.",
+    locked: false
+  },
+  {
+    id: "law-15",
+    chapter: "Law 15",
+    sanskrit: "Crush Your Enemy Totally",
+    translation: "Leaving an enemy partially defeated invites revenge. Unfinished conflicts return stronger. Total resolution removes future threats.",
+    steps: ["Address problems completely, not partially", "Do not leave room for retaliation", "Stay firm once action is taken", "Avoid unnecessary mercy in power struggles", "End conflicts decisively"],
+    nuance: "Half victories create full enemies.",
+    locked: false
+  },
+  {
+    id: "law-16",
+    chapter: "Law 16",
+    sanskrit: "Use Absence to Increase Respect and Honor",
+    translation: "Constant presence reduces value. Absence creates demand and appreciation. Scarcity makes people respect you more.",
+    steps: ["Do not always be available", "Step back after strong performance", "Let others feel your absence", "Avoid overexposure", "Return with purpose, not need"],
+    nuance: "Scarcity creates value.",
+    locked: false
+  },
+  {
+    id: "law-17",
+    chapter: "Law 17",
+    sanskrit: "Keep Others in Suspended Terror: Cultivate an Air of Unpredictability",
+    translation: "Predictability makes you easy to control. Uncertainty keeps others alert and cautious. Unpredictability shifts power in your favor.",
+    steps: ["Avoid repeating the same patterns", "Change routines occasionally", "Control emotional reactions", "Keep decisions unexpected", "Stay calm while others guess"],
+    nuance: "Uncertainty keeps you untouchable.",
+    locked: false
+  },
+  {
+    id: "law-18",
+    chapter: "Law 18",
+    sanskrit: "Do Not Build Fortresses to Protect Yourself — Isolation Is Dangerous",
+    translation: "Isolation cuts you off from information, support, and opportunity. Power comes from connection, not withdrawal.\nThose who isolate themselves become easy targets.",
+    steps: ["Stay socially and professionally connected", "Build diverse relationships", "Remain visible and engaged", "Gather information through people", "Avoid emotional withdrawal"],
+    nuance: "Connection is protection.",
+    locked: false
+  },
+  {
+    id: "law-19",
+    chapter: "Law 19",
+    sanskrit: "Know Who You’re Dealing With — Do Not Offend the Wrong Person",
+    translation: "Not everyone reacts the same way to pressure or disrespect. Some forgive, others never forget. Understanding people prevents costly mistakes.",
+    steps: ["Observe personality and background carefully", "Identify egos and sensitivities", "Adjust your approach to each person", "Avoid unnecessary provocation", "Respect power dynamics"],
+    nuance: "Misjudgment creates enemies.",
+    locked: false
+  },
+  {
+    id: "law-20",
+    chapter: "Law 20",
+    sanskrit: "Do Not Commit to Anyone",
+    translation: "Commitment limits flexibility and power. Independence keeps options open. Those who stay neutral often gain the upper hand.",
+    steps: ["Avoid taking permanent sides", "Keep multiple options available", "Let others compete for your support", "Delay final decisions", "Maintain strategic neutrality"],
+    nuance: "Freedom of choice is power.",
+    locked: false
+  },
+  {
+    id: "law-21",
+    chapter: "Law 21",
+    sanskrit: "Play a Sucker to Catch a Sucker — Seem Dumber Than Your Mark",
+    translation: "Appearing less capable lowers others’ defenses. People reveal more when they feel superior. Deception works best when unnoticed.",
+    steps: ["Do not display full intelligence", "Let others underestimate you", "Ask simple questions", "Observe reactions quietly", "Act only when advantage is clear"],
+    nuance: "Underestimation is an advantage.",
+    locked: false
+  },
+  {
+    id: "law-22",
+    chapter: "Law 22",
+    sanskrit: "Use the Surrender Tactic: Transform Weakness into Power",
+    translation: "When resistance makes you weaker, surrender buys time and control. Appearing weak can lower opposition and create new openings.\nTrue strength lies in choosing when to yield and when to act.",
+    steps: ["Step back when direct conflict harms you", "Use patience to regain strength", "Let opponents lower their guard", "Observe and plan during surrender", "Act decisively at the right moment"],
+    nuance: "Yielding today can lead to victory tomorrow.",
+    locked: false
+  },
+  {
+    id: "law-23",
+    chapter: "Law 23",
+    sanskrit: "Concentrate Your Forces",
+    translation: "Scattered energy weakens impact. Focused effort creates unstoppable momentum. Power grows where attention is concentrated.",
+    steps: ["Focus on one goal at a time", "Avoid unnecessary distractions", "Direct resources toward key priorities", "Strengthen core skills", "Eliminate weak commitments"],
+    nuance: "Focus multiplies power.",
+    locked: false
+  },
+  {
+    id: "law-24",
+    chapter: "Law 24",
+    sanskrit: "Play the Perfect Courtier",
+    translation: "Success depends on navigating people and power gracefully. Tact and charm open doors that force cannot.\nUnderstanding social dynamics protects influence.",
+    steps: ["Adapt behavior to the environment", "Control emotions in public", "Flatter subtly, not excessively", "Avoid open conflict", "Learn to read people"],
+    nuance: "Grace sustains power.",
+    locked: false
+  },
+  {
+    id: "law-25",
+    chapter: "Law 25",
+    sanskrit: "Re-Create Yourself",
+    translation: "Do not let others define who you are. Reinvention keeps you ahead and unpredictable.\nPower belongs to those who shape their own identity.",
+    steps: ["Let go of outdated roles", "Design a new personal image", "Learn new skills continuously", "Control how others perceive you", "Evolve with changing situations"],
+    nuance: "Reinvention keeps you in control.",
+    locked: false
+  },
+  {
+    id: "law-26",
+    chapter: "Law 26",
+    sanskrit: "Keep Your Hands Clean",
+    translation: "Power is weakened when you are directly linked to mistakes or wrongdoing.\nLet others handle unpleasant tasks while you remain respected. A clean image preserves authority and trust.",
+    steps: ["Avoid direct involvement in dirty work", "Delegate risky or unpleasant actions", "Protect your public image", "Take credit, not blame", "Stay calm and detached"],
+    nuance: "A clean image sustains power.",
+    locked: false
+  },
+  {
+    id: "law-27",
+    chapter: "Law 27",
+    sanskrit: "Play on People’s Need to Believe to Create a Cultlike Following",
+    translation: "People crave meaning and belief. A strong vision attracts loyalty and devotion. Belief binds people more than logic.",
+    steps: ["Offer a clear and inspiring idea", "Speak with confidence and certainty", "Create simple, repeatable messages", "Build a sense of belonging", "Reinforce belief through symbols and stories"],
+    nuance: "Belief creates loyalty.",
+    locked: false
+  },
+  {
+    id: "law-28",
+    chapter: "Law 28",
+    sanskrit: "Enter Action with Boldness",
+    translation: "Hesitation invites resistance and doubt. Bold action commands respect and momentum. Confidence makes others follow.",
+    steps: ["Act decisively", "Avoid showing uncertainty", "Take calculated risks", "Move quickly when opportunity appears", "Commit fully once action begins"],
+    nuance: "Boldness overcomes fear.",
+    locked: false
+  },
+  {
+    id: "law-29",
+    chapter: "Law 29",
+    sanskrit: "Plan All the Way to the End",
+    translation: "Many fail by thinking only of the beginning. Clear planning prevents surprises and mistakes.\nSeeing the full path keeps you in control.",
+    steps: ["Visualize the final outcome", "Anticipate obstacles early", "Prepare alternatives", "Stay disciplined throughout execution", "Adjust without losing sight of the end"],
+    nuance: "Foresight secures success.",
+    locked: false
+  },
+  {
+    id: "law-30",
+    chapter: "Law 30",
+    sanskrit: "Make Your Accomplishments Seem Effortless",
+    translation: "When success looks easy, people assume you are naturally powerful and capable.\nStruggle, effort, and hardship reduce the magic of achievement and invite comparison.\nBy hiding the hard work behind your success, you appear confident, superior, and in control.",
+    steps: ["Do the hard work privately and present only the final result", "Avoid complaining about difficulties or workload", "Speak calmly about achievements without exaggeration", "Let others discover your success rather than announcing it", "Maintain composure even under pressure"],
+    nuance: "Ease creates admiration, struggle invites judgment.",
+    locked: false
+  },
+  {
+    id: "law-31",
+    chapter: "Law 31",
+    sanskrit: "Control the Options — Get Others to Play with the Cards You Deal",
+    translation: "People feel powerful when they believe they are choosing freely. By controlling the available options, you guide decisions without force.\nTrue power lies in shaping choices so every outcome benefits you.",
+    steps: ["Offer limited options instead of open choices", "Present choices where all outcomes favor you", "Let others feel they decided on their own", "Avoid direct commands; guide indirectly", "Stay flexible while controlling the framework"],
+    nuance: "The one who sets the choices controls the result.",
+    locked: false
+  },
+  {
+    id: "law-32",
+    chapter: "Law 32",
+    sanskrit: "Play to People’s Fantasies",
+    translation: "Reality is often disappointing; fantasies are comforting and inspiring. People prefer dreams over harsh truths.\nThose who sell hope, vision, and possibility gain loyalty and influence.",
+    steps: ["Understand what people desire emotionally", "Present ideas with optimism and imagination", "Avoid focusing only on harsh facts", "Frame opportunities as exciting and meaningful", "Keep the dream alive through words and actions"],
+    nuance: "Those who feed dreams gain followers.",
+    locked: false
+  },
+  {
+    id: "law-33",
+    chapter: "Law 33",
+    sanskrit: "Discover Each Man’s Thumbscrew",
+    translation: "Everyone has a weakness, desire, fear, or need. Finding it gives you leverage and understanding.\nPower comes from knowing what moves people internally.",
+    steps: ["Observe behavior carefully over time", "Listen for repeated desires or complaints", "Identify fears, ambitions, or insecurities", "Be patient and subtle in discovery", "Use knowledge responsibly and strategically"],
+    nuance: "Understanding weakness creates silent control.",
+    locked: false
+  },
+  {
+    id: "law-34",
+    chapter: "Law 34",
+    sanskrit: "Be Royal in Your Own Fashion — Act Like a King to Be Treated Like One",
+    translation: "People treat you according to how you treat yourself. Confidence, self-respect, and dignity signal authority without words.\nIf you appear unsure or small, others will reflect that back to you.\nPower begins with inner belief expressed through calm behavior.",
+    steps: ["Carry yourself with confidence, not arrogance", "Set boundaries and enforce them calmly", "Value your time and energy", "Speak and act with self-respect", "Never beg for attention or approval"],
+    nuance: "Self-respect commands respect.",
+    locked: false
+  },
+  {
+    id: "law-35",
+    chapter: "Law 35",
+    sanskrit: "Master the Art of Timing",
+    translation: "The right action at the wrong time fails. Patience allows situations to reveal themselves fully. Those who rush lose control;\nthose who wait gain advantage.",
+    steps: ["Observe before acting", "Wait for emotions to cool", "Recognize moments of weakness or opportunity", "Do not force outcomes", "Act decisively when timing is right"],
+    nuance: "Timing turns effort into success.",
+    locked: false
+  },
+  {
+    id: "law-36",
+    chapter: "Law 36",
+    sanskrit: "Disdain Things You Cannot Have — Ignoring Them Is the Best Revenge",
+    translation: "Showing desire gives others power over you. Indifference weakens what you cannot control.\nIgnoring denies others the satisfaction of your reaction.",
+    steps: ["Do not react emotionally to loss", "Redirect focus to what you can control", "Avoid chasing unavailable people or things", "Maintain emotional discipline", "Let silence speak"],
+    nuance: "Indifference removes their power.",
+    locked: false
+  },
+  {
+    id: "law-37",
+    chapter: "Law 37",
+    sanskrit: "Create Compelling Spectacles",
+    translation: "Humans respond strongly to visuals and drama. Memorable actions leave deeper impact than logic. Well-crafted moments build authority and attention.",
+    steps: ["Present ideas visually when possible", "Use symbolism and storytelling", "Make key moments memorable", "Avoid dull or routine presentation", "Stand out with intention"],
+    nuance: "What is seen is remembered.",
+    locked: false
+  },
+  {
+    id: "law-38",
+    chapter: "Law 38",
+    sanskrit: "Think as You Like but Behave Like Others",
+    translation: "Standing out mentally is powerful; standing out socially can be dangerous. Too much difference attracts resistance.\nBlend in outwardly while thinking independently.",
+    steps: ["Respect social norms publicly", "Keep unconventional ideas private", "Observe before expressing opinions", "Avoid unnecessary confrontation", "Choose carefully when to stand apart"],
+    nuance: "Blend in to survive, think freely to rise.",
+    locked: false
+  },
+  {
+    id: "law-39",
+    chapter: "Law 39",
+    sanskrit: "Stir Up Waters to Catch Fish",
+    translation: "Emotional reactions reveal weaknesses. Calm opponents think clearly; emotional ones make mistakes. Controlled disruption gives advantage.",
+    steps: ["Stay calm while others react", "Apply pressure subtly", "Use silence or ambiguity strategically", "Watch reactions closely", "Act when imbalance appears"],
+    nuance: "Emotion clouds judgment.",
+    locked: false
+  },
+  {
+    id: "law-40",
+    chapter: "Law 40",
+    sanskrit: "Despise the Free Lunch",
+    translation: "What comes free often comes with hidden cost. Dependence weakens independence. Paying your way preserves freedom and respect.",
+    steps: ["Be cautious of favors", "Understand hidden obligations", "Maintain self-reliance", "Pay fairly for value", "Avoid long-term dependence"],
+    nuance: "Freedom has a price worth paying.",
+    locked: false
+  },
+  {
+    id: "law-41",
+    chapter: "Law 41",
+    sanskrit: "Avoid Stepping into a Great Man’s Shoes",
+    translation: "Comparison invites failure. Following legends limits originality. Create your own identity and path.",
+    steps: ["Respect predecessors without copying them", "Define your own style", "Avoid constant comparison", "Innovate rather than imitate", "Build your own legacy"],
+    nuance: "Originality creates authority.",
+    locked: false
+  },
+  {
+    id: "law-42",
+    chapter: "Law 42",
+    sanskrit: "Strike the Shepherd and the Sheep Will Scatter",
+    translation: "Groups draw strength from leaders. Removing the source of direction dissolves resistance. Power shifts when leadership collapses.",
+    steps: ["Identify key influencers", "Focus efforts on leadership, not followers", "Reduce their credibility calmly", "Act strategically, not emotionally", "Let structure fall naturally"],
+    nuance: "Remove the head, and control follows.",
+    locked: false
+  },
+  {
+    id: "law-43",
+    chapter: "Law 43",
+    sanskrit: "Work on the Hearts and Minds of Others",
+    translation: "Force creates resistance; persuasion creates loyalty. Emotions drive decisions more than logic. Influence lasts longer than control.",
+    steps: ["Understand emotional needs", "Show empathy strategically", "Align goals with their interests", "Communicate respectfully", "Build trust before action"],
+    nuance: "Hearts won last longer than battles won.",
+    locked: false
+  },
+  {
+    id: "law-44",
+    chapter: "Law 44",
+    sanskrit: "Disarm and Infuriate with the Mirror Effect",
+    translation: "Mirroring exposes behavior without confrontation. People become uncomfortable when faced with themselves. Reflection weakens manipulation.",
+    steps: ["Reflect behavior calmly", "Avoid emotional reaction", "Let others see their actions", "Stay neutral and composed", "Use silence as a mirror"],
+    nuance: "Reflection reveals truth.",
+    locked: false
+  },
+  {
+    id: "law-45",
+    chapter: "Law 45",
+    sanskrit: "Preach the Need for Change, but Never Reform Too Much at Once",
+    translation: "Sudden change creates fear and resistance. Gradual change feels safe and acceptable. People accept what they can adjust to slowly.",
+    steps: ["Introduce change step by step", "Respect traditions initially", "Gain trust before reform", "Avoid shocking systems", "Let people adapt naturally"],
+    nuance: "Slow change lasts.",
+    locked: false
+  },
+  {
+    id: "law-46",
+    chapter: "Law 46",
+    sanskrit: "Never Appear Too Perfect",
+    translation: "Perfection invites envy and hostility. Small flaws humanize you. Approachability protects influence.",
+    steps: ["Show controlled imperfections", "Avoid constant superiority", "Share minor struggles selectively", "Let others shine sometimes", "Stay humble publicly"],
+    nuance: "Humanity protects power.",
+    locked: false
+  },
+  {
+    id: "law-47",
+    chapter: "Law 47",
+    sanskrit: "Do Not Go Past the Mark You Aimed For; In Victory, Learn When to Stop",
+    translation: "Overreaching destroys success. Knowing when to stop preserves gains. Excess creates downfall.",
+    steps: ["Define clear limits", "Stop once the goal is achieved", "Avoid unnecessary dominance", "Consolidate success", "Leave room for stability"],
+    nuance: "Control includes knowing when to stop.",
+    locked: false
+  },
+  {
+    id: "law-48",
+    chapter: "Law 48",
+    sanskrit: "Assume Formlessness",
+    translation: "Rigid structures break under pressure. Flexibility adapts and survives. Power flows where form does not trap it.",
+    steps: ["Stay adaptable to change", "Avoid fixed identities", "Adjust strategy as situations shift", "Remain unpredictable", "Flow rather than resist"],
+    nuance: "Flexibility is ultimate power.",
+    locked: false
+  }
+];
+
+// === 5. REAL GITA DATA (Corrected Mappings) ===
 const GITA_DATA = [
   {
     id: 'anger',
@@ -76,7 +504,6 @@ const GITA_DATA = [
     nuance: "“Pause, breathe, and respond with awareness instead of reacting with emotion.”",
     locked: false 
   },
-  // NEW: Dedicated Ego Card (Same Content, Correct ID)
   {
     id: 'ego',
     chapter: "Chapter 2, Shloka 62–63",
@@ -141,7 +568,6 @@ const GITA_DATA = [
     nuance: "“Bring the mind back gently each time — this is discipline.”",
     locked: false
   },
-  // NEW: Dedicated Fear Card (Based on "Fear and Anxiety")
   {
     id: 'fear',
     chapter: "Chapter 6, Shloka 15",
@@ -304,23 +730,12 @@ const GITA_DATA = [
   }
 ];
 
-// === 5. GENERATE CARDS FOR ALL BOOKS ===
-export const SHLOKAS = {
-  gita: GITA_DATA, 
-  yogasutra: generateShlokas(20, 'YS'),
-  upanishads: generateShlokas(22, 'UP'),
-};
-
-MOCK_BOOKS.forEach(book => {
-  SHLOKAS[book.id] = generateShlokas(25, `VOL-${book.id}`);
-});
-
 // === 6. EMOTION MAPPING FOR GITA ===
 export const GITA_EMOTIONS = [
   // ROW 1
   { id: 'anger', label: 'Anger', icon: '🔥', shlokaId: 'anger' },
-  { id: 'fear', label: 'Fear', icon: '😨', shlokaId: 'fear' }, // <--- CHANGED: Now points to dedicated Fear card
-  { id: 'ego', label: 'Ego', icon: '🦁', shlokaId: 'ego' }, // <--- CHANGED: Now points to dedicated Ego card
+  { id: 'fear', label: 'Fear', icon: '😨', shlokaId: 'fear' },
+  { id: 'ego', label: 'Ego', icon: '🦁', shlokaId: 'ego' },
   { id: 'desire', label: 'Power of Desire', icon: '🍷', shlokaId: 'desire' },
   // ROW 2
   { id: 'depression', label: 'Depression', icon: '🌧️', shlokaId: 'depression' },
@@ -355,3 +770,23 @@ export const GITA_EMOTIONS = [
   // ROW 8
   { id: 'stuck', label: 'Feeling Stuck', icon: '⚓', shlokaId: 'stuck' },
 ];
+
+// === 7. GENERATE CARDS FOR ALL BOOKS ===
+export const SHLOKAS = {
+  gita: GITA_DATA, 
+  '48laws': POWER_LAWS_DATA, // Added 48 Laws mapping
+  yogasutra: generateShlokas(20, 'YS'),
+  upanishads: generateShlokas(22, 'UP'),
+};
+
+MOCK_BOOKS.forEach(book => {
+  SHLOKAS[book.id] = generateShlokas(25, `VOL-${book.id}`);
+});
+
+// === 8. BOOK CONTENT EXPORT FOR READER ===
+export const BOOK_CONTENT = {
+    'gita': GITA_DATA,
+    '48laws': POWER_LAWS_DATA,
+    'yogasutra': generateShlokas(20, 'YS'),
+    'upanishads': generateShlokas(22, 'UP'),
+};
