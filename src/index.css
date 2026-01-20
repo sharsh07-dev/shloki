@@ -49,3 +49,38 @@
     @apply bg-stone-700/50 rounded-full;
   }
 }
+body {
+  user-select: none;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* IE/Edge */
+}
+img {
+  pointer-events: none;      /* Disables "Right Click -> Save Image" & Dragging */
+  -webkit-user-drag: none;
+}@media print {
+  body {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Force the watermark to be 100% visible and black on paper/PDF */
+  body::after {
+    content: "PROPERTY OF SHLOKI - DO NOT DISTRIBUTE";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    font-size: 4rem;
+    color: black !important;
+    opacity: 0.8 !important; /* Make it very dark */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: white; /* Hides the content behind it */
+    transform: rotate(-45deg);
+  }
+}

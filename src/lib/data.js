@@ -19,22 +19,43 @@ export const HERO_BOOKS = [
   {
     id: 'gita',
     title: 'Bhagavad Gita',
-    subtitle: 'Wisdom Cards',
-    description: 'The eternal message of spiritual wisdom.',
+    subtitle: 'Wisdom Deck',
+    description: 'Swipe through the eternal message of spiritual wisdom, one card at a time.',
     cover: 'https://res.cloudinary.com/do0rlgy7c/image/upload/v1768768264/gita_cpncew.png', 
     totalCards: 29, 
-    isPopular: true
+    isPopular: true,
+    comingSoon: false // <--- ACTIVE
   },
   {
     id: '48laws',
     title: '48 Laws of Power',
     subtitle: 'Strategy Cards',
-    description: 'The definitive manual for modern manipulation and control.',
+    description: 'Master the art of manipulation and control with 48 actionable flashcards.',
     cover: 'https://res.cloudinary.com/do0rlgy7c/image/upload/v1768904708/48_laws_of_power_iuggyg.jpg', 
     totalCards: 48,
-    isPopular: true
+    isPopular: true,
+    comingSoon: false // <--- ACTIVE
+  },
+  {
+    id: 'yogasutra',
+    title: 'Yoga Sutras',
+    subtitle: 'Mind Science Deck',
+    description: 'Decode the science of consciousness with simple, focused cards.',
+    cover: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop', 
+    totalCards: 20,
+    isPopular: false,
+    comingSoon: true // <--- LOCKED
+  },
+  {
+    id: 'upanishads',
+    title: 'The Upanishads',
+    subtitle: 'Vedic Essence Cards',
+    description: 'The philosophical core of the Vedas condensed into daily wisdom.',
+    cover: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=800&auto=format&fit=crop', 
+    totalCards: 22,
+    isPopular: false,
+    comingSoon: true // <--- LOCKED
   }
-  
 ];
 
 // === 2. GENERATE EXTRA MOCK BOOKS (The Library) ===
@@ -45,6 +66,7 @@ const EXTRA_COVERS = [
   'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=800'
 ];
 
+// === UPDATED: NOW ALL MOCK BOOKS ARE 'COMING SOON' ===
 const MOCK_BOOKS = Array.from({ length: 22 }, (_, i) => ({
   id: `vol-${i + 1}`,
   title: `Sacred Volume ${i + 1}`,
@@ -52,13 +74,14 @@ const MOCK_BOOKS = Array.from({ length: 22 }, (_, i) => ({
   description: 'Recovered wisdom from the archives.',
   cover: EXTRA_COVERS[i % EXTRA_COVERS.length], 
   totalCards: 25,
-  isPopular: false
+  isPopular: false,
+  comingSoon: true // <--- THIS LOCKS THEM
 }));
 
 // === 3. EXPORT COMBINED LISTS ===
 export const ALL_BOOKS = [...HERO_BOOKS, ...MOCK_BOOKS];
 
-// === 4. 48 LAWS OF POWER DATA (Fully Populated) ===
+// === 4. 48 LAWS OF POWER DATA (Full Data) ===
 const POWER_LAWS_DATA = [
   {
     id: "law-1",
@@ -494,7 +517,7 @@ const POWER_LAWS_DATA = [
   }
 ];
 
-// === 5. REAL GITA DATA (Corrected Mappings) ===
+// === 5. REAL GITA DATA ===
 const GITA_DATA = [
   {
     id: 'anger',

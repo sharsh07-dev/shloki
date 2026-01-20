@@ -59,7 +59,7 @@ export default function Navbar() {
               className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 hover:border-saffron/30 transition-all group"
             >
               <MessageSquarePlus size={16} className="text-saffron md:w-[18px]" />
-              <span className="hidden md:inline text-xs font-bold text-parchment uppercase tracking-wider">Feedback</span>
+              <span className="hidden md:inline text-xs font-bold text-parchment uppercase tracking-wider">FeedBack</span>
             </button>
           </div>
 
