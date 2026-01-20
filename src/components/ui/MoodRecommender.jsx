@@ -1,125 +1,139 @@
 import { useState } from 'react';
+import { Sparkles, X, ArrowRight, BookOpen, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Sparkles, ArrowRight, BookOpen } from 'lucide-react';
-import { SHLOKAS } from '../../lib/data';
-
-const KEYWORD_MAP = [
-  { keys: ['anxi', 'worry', 'nervous', 'panic', 'future', 'scared'], id: 'anxiety' },
-  { keys: ['work', 'job', 'career', 'boss', 'pressure', 'burnout'], id: 'work_stress' },
-  { keys: ['sad', 'depress', 'low', 'cry', 'hopeless', 'grief'], id: 'depression' },
-  { keys: ['angry', 'mad', 'rage', 'furious', 'irritated'], id: 'anger' },
-  { keys: ['think', 'mind', 'noise', 'head', 'thoughts'], id: 'overthinking' },
-  { keys: ['lone', 'alone', 'isolat', 'friend'], id: 'lonely' },
-  { keys: ['confus', 'lost', 'decide', 'choice', 'direction'], id: 'confusion' },
-  { keys: ['fail', 'los', 'mistake', 'guilt'], id: 'fear_failure' },
-  { keys: ['jealous', 'envy', 'compare', 'others'], id: 'jealousy' },
-  { keys: ['cheat', 'betray', 'lie', 'hurt', 'breakup'], id: 'betrayal' },
-  { keys: ['lazy', 'motivat', 'procrastinat', 'tired', 'bore'], id: 'motivation' },
-  { keys: ['doubt', 'self', 'confidence', 'trust'], id: 'self_doubt' },
-];
+import { ALL_EMOTIONS, SHLOKAS } from '../../lib/data'; // <--- Import SHLOKAS to get details
 
 export default function MoodRecommender() {
-  const [input, setInput] = useState('');
-  const [results, setResults] = useState([]);
+  const [query, setQuery] = useState('');
   const navigate = useNavigate();
-  const gitaCards = SHLOKAS['gita'];
 
-  const handleSearch = (e) => {
-    const text = e.target.value;
-    setInput(text);
-    if (text.length < 3) {
-      setResults([]);
-      return;
-    }
-    const lowerText = text.toLowerCase();
-    const matches = KEYWORD_MAP.filter(item => 
-      item.keys.some(key => lowerText.includes(key))
-    );
-    const foundCards = matches
-      .map(match => gitaCards.find(card => card.id === match.id))
-      .filter(Boolean); 
-    const uniqueCards = [...new Set(foundCards)].slice(0, 3);
-    setResults(uniqueCards);
+  // 1. FILTER LOGIC
+  const displayedMoods = query
+    ? ALL_EMOTIONS.filter(m => m.label.toLowerCase().includes(query.toLowerCase())).slice(0, 4)
+    : []; 
+
+  // Helper to get extra details (Chapter, Nuance) for a mood
+  const getCardDetails = (mood) => {
+    const bookKey = mood.type === 'power' ? '48laws' : 'gita';
+    const data = SHLOKAS[bookKey]?.find(d => d.id === mood.shlokaId);
+    return data || {};
   };
 
- const navigateToCard = (cardId) => {
-  navigate(`/wisdom/${cardId}`);
-};
-
   return (
-    <div className="w-full max-w-4xl mx-auto mb-8 md:mb-16 animate-fade-in px-0 md:px-4">
+    <div className="w-full max-w-5xl mx-auto z-40 relative">
       
-      {/* Input Container */}
-      <div className="relative group z-20">
-        <div className="absolute inset-0 bg-saffron/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+      {/* === SEARCH BAR (Strong Hover Restored) === */}
+      <div 
+        className="
+          flex items-center gap-3 
+          bg-stone-900/80 backdrop-blur-xl
+          border border-white/10 
+          rounded-full px-6 py-4 
+          cursor-text group 
+          transition-all duration-300 ease-out
+          
+          /* Strong Hover State */
+          hover:border-saffron 
+          hover:bg-stone-900 
+          hover:shadow-[0_0_25px_rgba(234,179,8,0.15)]
+          hover:scale-[1.01]
+
+          /* Focus State */
+          focus-within:border-saffron 
+          focus-within:bg-black 
+          focus-within:ring-1 
+          focus-within:ring-saffron/50
+          focus-within:shadow-[0_0_40px_rgba(234,179,8,0.25)]
+          focus-within:scale-[1.02]
+          
+          mb-10 max-w-2xl mx-auto shadow-2xl
+        "
+      >
+        <Sparkles 
+          size={20} 
+          className="text-stone-500 group-hover:text-saffron group-focus-within:text-saffron transition-colors duration-300" 
+        />
         
-        <div className="relative bg-black/5 dark:bg-black/40 backdrop-blur-md border border-black/10 dark:border-white/10 rounded-xl md:rounded-2xl p-1.5 md:p-2 flex items-center shadow-lg transition-all focus-within:border-saffron/50">
-          <div className="pl-3 md:pl-4 text-saffron animate-pulse">
-            <Sparkles size={16} className="md:w-5 md:h-5" />
-          </div>
-          
-          <input 
-            type="text"
-            value={input}
-            onChange={handleSearch}
-            placeholder="How do you feel? (e.g. anxious)..."
-            // MOBILE OPTIMIZATION:
-            // text-base: Prevents iOS zoom
-            // py-2: Smaller vertical padding
-            className="w-full bg-transparent border-none text-parchment placeholder:text-stone-500 px-3 md:px-4 py-2.5 md:py-3 focus:outline-none text-base md:text-lg font-serif"
-          />
-          
-          <div className="pr-1 md:pr-2">
-            <button className="bg-black/5 dark:bg-white/10 p-2 rounded-lg md:rounded-xl text-stone-400 hover:text-saffron transition-colors">
-              <Search size={16} className="md:w-5 md:h-5" />
-            </button>
-          </div>
-        </div>
+        <input
+          type="text"
+          className="bg-transparent border-none outline-none text-parchment placeholder:text-stone-500 text-base md:text-lg w-full group-focus-within:placeholder:text-stone-600 font-serif tracking-wide"
+          placeholder="How do you feel? (e.g. anxious, ignored)..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+
+        {query && (
+           <button 
+             onClick={() => setQuery('')} 
+             className="text-stone-500 hover:text-white transition-colors hover:rotate-90 duration-200"
+           >
+             <X size={20} />
+           </button>
+        )}
       </div>
 
-      {/* Results Dropdown */}
-      {input.length > 2 && (
-        <div className="mt-4 md:mt-6">
-          {results.length > 0 ? (
-            <div>
-              <p className="text-stone-500 text-[10px] md:text-xs uppercase tracking-widest mb-3 pl-1 text-left">
-                Recommended:
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-                {results.map((card) => (
+      {/* === RESULTS GRID === */}
+      {query && (
+        <div className="animate-fade-in px-4">
+          
+          <div className="text-center mb-6">
+             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10">
+               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400">
+                 {displayedMoods.length > 0 ? 'Wisdom Found' : 'No matches found'}
+               </span>
+             </div>
+          </div>
+
+          {displayedMoods.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
+              {displayedMoods.map((mood) => {
+                const details = getCardDetails(mood);
+                const isPower = mood.type === 'power';
+
+                return (
                   <button
-                    key={card.id}
-                    onClick={() => navigateToCard(card.id)}
-                    className="flex items-start gap-3 md:gap-4 bg-white dark:bg-spiritual-card border border-stone-200 dark:border-white/10 p-4 rounded-xl text-left shadow-sm active:scale-95 transition-transform"
+                    key={mood.id}
+                    onClick={() => navigate(`/wisdom/${mood.shlokaId}`)}
+                    className="group relative flex flex-col p-6 bg-stone-900/60 border border-white/10 rounded-xl hover:border-saffron/50 hover:bg-stone-900 transition-all duration-300 hover:-translate-y-1 overflow-hidden text-left shadow-lg hover:shadow-saffron/10"
                   >
-                    <div className="w-8 h-8 rounded-full bg-stone-100 dark:bg-stone-900 flex items-center justify-center text-saffron border border-stone-200 dark:border-white/5 flex-shrink-0">
-                      <BookOpen size={14} />
+                    {/* Header: Icon + Book Label */}
+                    <div className="flex justify-between items-start mb-4">
+                      <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300 border border-white/5 group-hover:border-saffron/20">
+                        {mood.icon}
+                      </div>
+                      <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-black/40 border border-white/5 text-[9px] font-bold uppercase tracking-wider text-stone-500">
+                        {isPower ? <Shield size={10} /> : <BookOpen size={10} />}
+                        <span>{isPower ? '48 Laws' : 'Bhagavad Gita'}</span>
+                      </div>
                     </div>
-                    <div className="min-w-0">
-                      <h4 className="text-stone-800 dark:text-parchment font-serif font-bold text-base truncate">
-                        {card.id.replace(/_/g, ' ').toUpperCase()}
-                      </h4>
-                      <p className="text-stone-500 text-[10px] uppercase tracking-wider mb-1">
-                        {card.chapter}
+
+                    {/* Content: Title + Reference */}
+                    <div className="mb-4">
+                      <h3 className="font-serif text-xl text-parchment leading-tight group-hover:text-white transition-colors mb-1">
+                        {mood.label}
+                      </h3>
+                      <p className="text-xs text-saffron/80 font-medium uppercase tracking-wide">
+                        {isPower ? details.chapter?.split(':')[0] : details.chapter?.split(',')[0]}
                       </p>
-                      <p className="text-stone-600 dark:text-parchment-dim text-xs line-clamp-2">
-                        {card.nuance.replace(/"/g, '')}
-                      </p>
+                    </div>
+
+                    {/* Nuance / Quote Snippet */}
+                    <p className="text-stone-400 text-xs leading-relaxed italic border-l-2 border-white/10 pl-3 mb-4 line-clamp-2 group-hover:border-saffron/50 transition-colors">
+                      "{details.nuance || 'Ancient wisdom awaits...'}"
+                    </p>
+
+                    {/* Footer */}
+                    <div className="flex items-center gap-2 mt-auto text-[10px] font-bold uppercase tracking-widest text-stone-600 group-hover:text-saffron transition-colors">
+                       <span>Read Chapter</span>
+                       <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
                     </div>
                   </button>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div className="text-center py-4 opacity-60">
-               <p className="text-stone-500 text-xs italic">
-                 "No match found..."
-               </p>
+                );
+              })}
             </div>
           )}
         </div>
       )}
-
     </div>
   );
 }

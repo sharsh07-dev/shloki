@@ -24,7 +24,7 @@ export const HERO_BOOKS = [
     cover: 'https://res.cloudinary.com/do0rlgy7c/image/upload/v1768768264/gita_cpncew.png', 
     totalCards: 29, 
     isPopular: true,
-    comingSoon: false // <--- ACTIVE
+    comingSoon: false 
   },
   {
     id: '48laws',
@@ -34,7 +34,7 @@ export const HERO_BOOKS = [
     cover: 'https://res.cloudinary.com/do0rlgy7c/image/upload/v1768904708/48_laws_of_power_iuggyg.jpg', 
     totalCards: 48,
     isPopular: true,
-    comingSoon: false // <--- ACTIVE
+    comingSoon: false 
   },
   {
     id: 'yogasutra',
@@ -44,18 +44,9 @@ export const HERO_BOOKS = [
     cover: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop', 
     totalCards: 20,
     isPopular: false,
-    comingSoon: true // <--- LOCKED
+    comingSoon: true // Locked
   },
-  {
-    id: 'upanishads',
-    title: 'The Upanishads',
-    subtitle: 'Vedic Essence Cards',
-    description: 'The philosophical core of the Vedas condensed into daily wisdom.',
-    cover: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=800&auto=format&fit=crop', 
-    totalCards: 22,
-    isPopular: false,
-    comingSoon: true // <--- LOCKED
-  }
+  
 ];
 
 // === 2. GENERATE EXTRA MOCK BOOKS (The Library) ===
@@ -66,7 +57,7 @@ const EXTRA_COVERS = [
   'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=800'
 ];
 
-// === UPDATED: NOW ALL MOCK BOOKS ARE 'COMING SOON' ===
+// All extra books are set to "Coming Soon"
 const MOCK_BOOKS = Array.from({ length: 22 }, (_, i) => ({
   id: `vol-${i + 1}`,
   title: `Sacred Volume ${i + 1}`,
@@ -75,13 +66,12 @@ const MOCK_BOOKS = Array.from({ length: 22 }, (_, i) => ({
   cover: EXTRA_COVERS[i % EXTRA_COVERS.length], 
   totalCards: 25,
   isPopular: false,
-  comingSoon: true // <--- THIS LOCKS THEM
+  comingSoon: true 
 }));
 
-// === 3. EXPORT COMBINED LISTS ===
 export const ALL_BOOKS = [...HERO_BOOKS, ...MOCK_BOOKS];
 
-// === 4. 48 LAWS OF POWER DATA (Full Data) ===
+// === 3. 48 LAWS OF POWER DATA (Complete) ===
 const POWER_LAWS_DATA = [
   {
     id: "law-1",
@@ -517,7 +507,7 @@ const POWER_LAWS_DATA = [
   }
 ];
 
-// === 5. REAL GITA DATA ===
+// === 4. REAL GITA DATA ===
 const GITA_DATA = [
   {
     id: 'anger',
@@ -753,51 +743,65 @@ const GITA_DATA = [
   }
 ];
 
-// === 6. EMOTION MAPPING FOR GITA ===
-export const GITA_EMOTIONS = [
-  // ROW 1
-  { id: 'anger', label: 'Anger', icon: '🔥', shlokaId: 'anger' },
-  { id: 'fear', label: 'Fear', icon: '😨', shlokaId: 'fear' },
-  { id: 'ego', label: 'Ego', icon: '🦁', shlokaId: 'ego' },
-  { id: 'desire', label: 'Power of Desire', icon: '🍷', shlokaId: 'desire' },
-  // ROW 2
-  { id: 'depression', label: 'Depression', icon: '🌧️', shlokaId: 'depression' },
-  { id: 'jealousy', label: 'Jealousy', icon: '🐍', shlokaId: 'jealousy' },
-  { id: 'doubt', label: 'Self-Doubt', icon: '🤔', shlokaId: 'self_doubt' },
-  { id: 'attachment', label: 'Attachment', icon: '🔗', shlokaId: 'attachment' },
-  // ROW 3
-  { id: 'forgive', label: 'Inability to Forgive', icon: '🤲', shlokaId: 'forgive' },
-  { id: 'discipline', label: 'Lack of Discipline', icon: '🥋', shlokaId: 'discipline' },
-  { id: 'anxiety', label: 'Fear & Anxiety', icon: '😰', shlokaId: 'anxiety' },
-  { id: 'confusion', label: 'Confusion', icon: '🌀', shlokaId: 'confusion' },
-  // ROW 4
-  { id: 'overthinking', label: 'Overthinking', icon: '🧠', shlokaId: 'overthinking' },
-  { id: 'motivation', label: 'No Motivation', icon: '🔋', shlokaId: 'motivation' },
-  { id: 'lonely', label: 'Feeling Lonely', icon: '🌑', shlokaId: 'lonely' },
-  { id: 'control_mind', label: 'Control Mind', icon: '🧘', shlokaId: 'control_mind' },
-  // ROW 5
-  { id: 'fear_failure', label: 'Fear of Failure', icon: '📉', shlokaId: 'fear_failure' },
-  { id: 'attach_result', label: 'Attach to Result', icon: '🎁', shlokaId: 'attach_result' },
-  { id: 'work_stress', label: 'Work Stress', icon: '💼', shlokaId: 'work_stress' },
-  { id: 'loss', label: 'Business Loss', icon: '💸', shlokaId: 'loss' },
-  // ROW 6
-  { id: 'giving_up', label: 'Giving Up', icon: '🏳️', shlokaId: 'giving_up' },
-  { id: 'expectations', label: 'Expectations', icon: '🎭', shlokaId: 'expectations' },
-  { id: 'betrayal', label: 'Betrayal', icon: '💔', shlokaId: 'betrayal' },
-  { id: 'surrender', label: 'Surrender', icon: '🙏', shlokaId: 'surrender' },
-  // ROW 7
-  { id: 'fear_future', label: 'Fear of Future', icon: '🔮', shlokaId: 'fear_future' },
-  { id: 'insecure', label: 'Insecure', icon: '🛡️', shlokaId: 'insecure' },
-  { id: 'suffering', label: 'Suffering', icon: '🩹', shlokaId: 'suffering' },
-  { id: 'judgement', label: 'Fear of Judgment', icon: '👀', shlokaId: 'judgement' },
-  // ROW 8
-  { id: 'stuck', label: 'Feeling Stuck', icon: '⚓', shlokaId: 'stuck' },
+// === 5. MOOD MAPPINGS ===
+
+// NEW: 48 Laws Moods
+export const POWER_MOODS = [
+  { id: 'ignored', label: 'Being Ignored', icon: '👻', shlokaId: 'law-6', type: 'power' },
+  { id: 'outshined', label: 'Feeling Outshined', icon: '🌟', shlokaId: 'law-1', type: 'power' },
+  { id: 'trust_issues', label: 'Trust Issues', icon: '🤝', shlokaId: 'law-2', type: 'power' },
+  { id: 'talk_too_much', label: 'Talked Too Much', icon: '🤐', shlokaId: 'law-4', type: 'power' },
+  { id: 'reputation', label: 'Reputation Risk', icon: '🛡️', shlokaId: 'law-5', type: 'power' },
+  { id: 'asking_help', label: 'Asking for Help', icon: '🆘', shlokaId: 'law-13', type: 'power' },
+  { id: 'rivalry', label: 'Dealing with Rivals', icon: '⚔️', shlokaId: 'law-15', type: 'power' },
+  { id: 'weak', label: 'Feeling Weak', icon: '🏳️', shlokaId: 'law-22', type: 'power' },
+  { id: 'overwhelmed', label: 'Overwhelmed', icon: '🎯', shlokaId: 'law-23', type: 'power' },
+  { id: 'stuck_habit', label: 'Stuck in Habit', icon: '🔄', shlokaId: 'law-45', type: 'power' },
+  { id: 'angry_conflict', label: 'Angry/Conflict', icon: '🤬', shlokaId: 'law-39', type: 'power' },
+  { id: 'waiting', label: 'Impatient', icon: '⏳', shlokaId: 'law-35', type: 'power' },
+  { id: 'manipulated', label: 'Manipulated', icon: '🎭', shlokaId: 'law-44', type: 'power' },
+  { id: 'boss_issues', label: 'Boss Issues', icon: '👔', shlokaId: 'law-1', type: 'power' }
 ];
 
-// === 7. GENERATE CARDS FOR ALL BOOKS ===
+// GITA Moods
+export const GITA_EMOTIONS = [
+  { id: 'anger', label: 'Anger', icon: '🔥', shlokaId: 'anger', type: 'gita' },
+  { id: 'fear', label: 'Fear', icon: '😨', shlokaId: 'fear', type: 'gita' },
+  { id: 'ego', label: 'Ego', icon: '🦁', shlokaId: 'ego', type: 'gita' },
+  { id: 'desire', label: 'Power of Desire', icon: '🍷', shlokaId: 'desire', type: 'gita' },
+  { id: 'depression', label: 'Depression', icon: '🌧️', shlokaId: 'depression', type: 'gita' },
+  { id: 'jealousy', label: 'Jealousy', icon: '🐍', shlokaId: 'jealousy', type: 'gita' },
+  { id: 'doubt', label: 'Self-Doubt', icon: '🤔', shlokaId: 'self_doubt', type: 'gita' },
+  { id: 'attachment', label: 'Attachment', icon: '🔗', shlokaId: 'attachment', type: 'gita' },
+  { id: 'forgive', label: 'Inability to Forgive', icon: '🤲', shlokaId: 'forgive', type: 'gita' },
+  { id: 'discipline', label: 'Lack of Discipline', icon: '🥋', shlokaId: 'discipline', type: 'gita' },
+  { id: 'anxiety', label: 'Fear & Anxiety', icon: '😰', shlokaId: 'anxiety', type: 'gita' },
+  { id: 'confusion', label: 'Confusion', icon: '🌀', shlokaId: 'confusion', type: 'gita' },
+  { id: 'overthinking', label: 'Overthinking', icon: '🧠', shlokaId: 'overthinking', type: 'gita' },
+  { id: 'motivation', label: 'No Motivation', icon: '🔋', shlokaId: 'motivation', type: 'gita' },
+  { id: 'lonely', label: 'Feeling Lonely', icon: '🌑', shlokaId: 'lonely', type: 'gita' },
+  { id: 'control_mind', label: 'Control Mind', icon: '🧘', shlokaId: 'control_mind', type: 'gita' },
+  { id: 'fear_failure', label: 'Fear of Failure', icon: '📉', shlokaId: 'fear_failure', type: 'gita' },
+  { id: 'attach_result', label: 'Attach to Result', icon: '🎁', shlokaId: 'attach_result', type: 'gita' },
+  { id: 'work_stress', label: 'Work Stress', icon: '💼', shlokaId: 'work_stress', type: 'gita' },
+  { id: 'loss', label: 'Business Loss', icon: '💸', shlokaId: 'loss', type: 'gita' },
+  { id: 'giving_up', label: 'Giving Up', icon: '🏳️', shlokaId: 'giving_up', type: 'gita' },
+  { id: 'expectations', label: 'Expectations', icon: '🎭', shlokaId: 'expectations', type: 'gita' },
+  { id: 'betrayal', label: 'Betrayal', icon: '💔', shlokaId: 'betrayal', type: 'gita' },
+  { id: 'surrender', label: 'Surrender', icon: '🙏', shlokaId: 'surrender', type: 'gita' },
+  { id: 'fear_future', label: 'Fear of Future', icon: '🔮', shlokaId: 'fear_future', type: 'gita' },
+  { id: 'insecure', label: 'Insecure', icon: '🛡️', shlokaId: 'insecure', type: 'gita' },
+  { id: 'suffering', label: 'Suffering', icon: '🩹', shlokaId: 'suffering', type: 'gita' },
+  { id: 'judgement', label: 'Fear of Judgment', icon: '👀', shlokaId: 'judgement', type: 'gita' },
+  { id: 'stuck', label: 'Feeling Stuck', icon: '⚓', shlokaId: 'stuck', type: 'gita' },
+];
+
+// === 6. EXPORTS ===
+export const ALL_EMOTIONS = [...GITA_EMOTIONS, ...POWER_MOODS];
+
 export const SHLOKAS = {
   gita: GITA_DATA, 
-  '48laws': POWER_LAWS_DATA, // Added 48 Laws mapping
+  '48laws': POWER_LAWS_DATA, 
   yogasutra: generateShlokas(20, 'YS'),
   upanishads: generateShlokas(22, 'UP'),
 };
@@ -806,7 +810,6 @@ MOCK_BOOKS.forEach(book => {
   SHLOKAS[book.id] = generateShlokas(25, `VOL-${book.id}`);
 });
 
-// === 8. BOOK CONTENT EXPORT FOR READER ===
 export const BOOK_CONTENT = {
     'gita': GITA_DATA,
     '48laws': POWER_LAWS_DATA,
