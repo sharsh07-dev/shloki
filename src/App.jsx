@@ -15,6 +15,7 @@ import WisdomLibrary from './features/library/WisdomLibrary';
 import PrivacyPolicy from './pages/PrivacyPolicy';  
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
+import { Analytics } from '@vercel/analytics/react';
 import { useContentProtection } from './hooks/useContentProtection';
 import { Helmet } from 'react-helmet-async';
 import { HERO_BOOKS } from './lib/data';
