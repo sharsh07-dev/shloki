@@ -42,9 +42,9 @@ export default function MoodRecommender() {
     setResults(uniqueCards);
   };
 
-  const navigateToCard = (cardId) => {
-    navigate(`/read/gita`, { state: { initialEmotionId: cardId } });
-  };
+ const navigateToCard = (cardId) => {
+  navigate(`/wisdom/${cardId}`);
+};
 
   return (
     <div className="w-full max-w-4xl mx-auto mb-8 md:mb-16 animate-fade-in px-0 md:px-4">
