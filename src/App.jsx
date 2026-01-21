@@ -52,7 +52,7 @@ function App() {
         onContextMenu={(e) => e.preventDefault()}
       >
     
-    \
+    
         
         {/* === CONTENT === */}
         <FeedbackModal />
