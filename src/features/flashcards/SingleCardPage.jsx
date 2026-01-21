@@ -1,11 +1,8 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ArrowLeft, Home, Share2 } from 'lucide-react';
-import { Helmet } from 'react-helmet-async'; 
 
-// 👇👇 THE FIX: Changed from '../../components/ui/Flashcard' to './Flashcard'
 import Flashcard from './Flashcard'; 
-
 import Navbar from '../../components/layout/Navbar';
 import { SHLOKAS } from '../../lib/data'; 
 
@@ -45,15 +42,37 @@ export default function SingleCardPage() {
     );
   }
 
+  // === SEO HELPERS ===
+  const cleanDescription = cardData.translation 
+    ? cardData.translation.replace(/\n/g, ' ').substring(0, 160) 
+    : 'Ancient wisdom for modern life.';
+
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "Article", 
+    "headline": `${cardData.chapter}: ${cardData.sanskrit || ''}`,
+    "description": cardData.translation, // FULL translation for Google to read
+    "author": {
+      "@type": "Organization",
+      "name": "Shloki"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Shloki",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://shloki.in/logo.png"
+      }
+    },
+    "isPartOf": {
+      "@type": "Book",
+      "name": bookId === '48laws' ? "The 48 Laws of Power" : "Bhagavad Gita"
+    }
+  };
+
   return (
     <div className="min-h-screen bg-spiritual-bg flex flex-col">
-      <Helmet>
-        <title>{cardData ? `${cardData.chapter} - Shloki` : 'Shloki Wisdom'}</title>
-        <meta 
-          name="description" 
-          content={cardData.translation ? cardData.translation.substring(0, 150) : 'Ancient wisdom for modern life.'} 
-        />
-      </Helmet>
+     
 
       <Navbar />
 

@@ -21,7 +21,7 @@ export default function HeroFlashcards() {
       <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-6 px-4 md:px-0 justify-center">
         <Sparkles size={12} className="text-saffron md:w-3.5 md:h-3.5" />
         <span className="text-saffron text-[10px] md:text-xs font-bold uppercase tracking-[0.2em]">
-          Wisdom for Right Now
+          Most Visited Questions
         </span>
         <Sparkles size={12} className="text-saffron md:w-3.5 md:h-3.5" />
       </div>

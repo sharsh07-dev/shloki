@@ -89,7 +89,10 @@ export default function FullLibrary() {
               <button 
                 onClick={() => setSearchQuery('')}
                 className="mt-4 text-saffron text-sm hover:underline uppercase tracking-widest font-bold"
-              >
+              ><SEO 
+  title="The Vault of Wisdom" 
+  description="Explore a curated library of ancient texts decoded for modern life. From Machiavelli to Krishna, find your strategy."
+/>
                 Clear Search
               </button>
             </div>

@@ -17,14 +17,14 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-spiritual-bg/95 backdrop-blur-md border-b border-black/5 dark:border-white/10 transition-all duration-300 h-14 md:h-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 h-full">
         <div className="flex items-center justify-between h-full">
-          
+
           {/* === LOGO === */}
           <Link to="/" className="flex items-center gap-2 md:gap-3 group">
-            <img 
-              src="https://res.cloudinary.com/do0rlgy7c/image/upload/v1768768394/Shloki-logo_fi3hjj.png" 
-              alt="Shloki Logo" 
+            <img
+              src="https://res.cloudinary.com/do0rlgy7c/image/upload/v1768768394/Shloki-logo_fi3hjj.png"
+              alt="Shloki Logo"
               // Mobile: w-8 (Tiny) | Desktop: w-12 (Big)
-              className="w-8 h-8 md:w-12 md:h-12 object-contain group-hover:scale-110 transition-transform duration-300 drop-shadow-lg" 
+              className="w-8 h-8 md:w-12 md:h-12 object-contain group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
             />
             <div className="flex flex-col">
               {/* Mobile: text-lg (Compact) | Desktop: text-2xl */}
@@ -40,7 +40,7 @@ export default function Navbar() {
 
           {/* === ACTIONS === */}
           <div className="flex items-center gap-2 md:gap-3">
-            
+
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
@@ -54,13 +54,18 @@ export default function Navbar() {
             </button>
 
             {/* Feedback: Icon only on Mobile */}
-            <button 
+            <button
               onClick={toggleFeedback}
               className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 hover:border-saffron/30 transition-all group"
             >
               <MessageSquarePlus size={16} className="text-saffron md:w-[18px]" />
               <span className="hidden md:inline text-xs font-bold text-parchment uppercase tracking-wider">FeedBack</span>
             </button>
+
+            {/* Blogs Link */}
+          <Link to="/blog/gita-wisdom" className="px-5 py-2 rounded-full border border-stone-700 text-[10px] md:text-xs font-bold text-stone-300 hover:text-white hover:border-saffron hover:bg-saffron/10 transition-all uppercase tracking-widest">
+  BLOGS
+</Link>
           </div>
 
         </div>

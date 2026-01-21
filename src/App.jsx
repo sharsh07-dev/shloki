@@ -15,11 +15,12 @@ import WisdomLibrary from './features/library/WisdomLibrary';
 import PrivacyPolicy from './pages/PrivacyPolicy';  
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
+
 import { Analytics } from '@vercel/analytics/react';
 import { useContentProtection } from './hooks/useContentProtection';
-import { Helmet } from 'react-helmet-async';
-import { HERO_BOOKS } from './lib/data';
 
+import { HERO_BOOKS } from './lib/data';
+import Blogs from './pages/Blogs';
 // === 1. Initialize Google Analytics with YOUR ID ===
 ReactGA.initialize("G-MJHSE6R27Y");
 
@@ -31,7 +32,6 @@ function PageTracker() {
     // Send pageview to Google Analytics whenever route changes
     ReactGA.send({ hitType: "pageview", page: location.pathname + location.search });
   }, [location]);
-
   return null;
 }
 
@@ -44,17 +44,15 @@ function App() {
       <PageTracker />
 
       {/* SEO SECTION */}
-      <Helmet>
-        <title>Shloki</title>
-        <meta name="description" content="Master the 48 Laws of Power and Bhagavad Gita wisdom with interactive daily flashcards. The modern way to learn ancient strategy." />
-        <meta name="keywords" content="shloki, 48 laws of power flashcards, gita flashcards, wisdom cards, spiritual learning, strategy cards, flashcards, easyreading, simple words, bhagavadgita in short." />
-      </Helmet>
+     
 
       {/* MAIN APP CONTAINER */}
       <div 
         className={`min-h-screen bg-spiritual-bg font-sans select-none flex flex-col relative transition-filter duration-300 ${isBlurry ? 'blur-xl grayscale' : ''}`}
         onContextMenu={(e) => e.preventDefault()}
       >
+    
+    \
         
         {/* === CONTENT === */}
         <FeedbackModal />
@@ -73,7 +71,7 @@ function App() {
                     <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 rounded-full border border-saffron/20 bg-saffron-dim mb-4 md:mb-6">
                       <div className="w-1.5 h-1.5 rounded-full bg-saffron animate-pulse" />
                       <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-widest text-saffron">
-                        Daily Wisdom
+                      Get Daily Bhagavad Gita Quotes & Wisdom Flashcards for free
                       </span>
                     </div>
                     
@@ -90,9 +88,9 @@ function App() {
 
                   {/* Books Section */}
                   <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-black/5 dark:border-white/5 pb-2 md:pb-4 mt-8 md:mt-12">
-                    <h2 className="font-serif text-lg md:text-2xl text-parchment">Sacred Library</h2>
+                    <h2 className="font-serif text-lg md:text-2xl text-parchment">FlashCards</h2>
                     <span className="text-[10px] md:text-xs text-stone-500 uppercase tracking-widest block">
-                      Select a Book
+                      Select a Deck
                     </span>
                   </div>
 
@@ -111,7 +109,7 @@ function App() {
                        to="/library"
                        className="inline-flex items-center gap-2 md:gap-3 px-6 py-3 md:px-8 md:py-4 rounded-full border border-saffron/30 text-saffron hover:bg-saffron hover:text-white transition-all duration-300 font-bold uppercase tracking-widest text-[10px] md:text-xs group active:scale-95"
                      >
-                       Explore Full Library
+                       Explore Full FlashCards Library
                        <ArrowRight size={14} className="md:w-4 md:h-4 group-hover:translate-x-1 transition-transform" />
                      </Link>
                   </div>
@@ -127,6 +125,7 @@ function App() {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/contact" element={<ContactUs />} />
+            <Route path="/blog/gita-wisdom" element={<Blogs />} />
           </Routes>
         </div>
 

@@ -14,7 +14,10 @@ export default function Library() {
         </h1>
         <p className="text-parchment-dim">Select a scripture to begin your journey.</p>
       </div>
-
+<SEO 
+  title="The Vault of Wisdom" 
+  description="Explore a curated library of ancient texts decoded for modern life. From Machiavelli to Krishna, find your strategy."
+/>
       <div className="space-y-4">
         {BOOKS.map(book => (
           <BookCard key={book.id} book={book} progress={0} />
