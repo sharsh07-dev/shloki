@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
+import Newsletter from '../ui/Newsletter';
 
 export default function Footer() {
   return (
