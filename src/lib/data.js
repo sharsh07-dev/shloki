@@ -2,28 +2,28 @@
 const generateShlokas = (count, prefix) => {
   return Array.from({ length: count }, (_, i) => ({
     id: i + 1,
-    chapter: `Chapter ${prefix}`, 
-    sanskrit: i === 0 
-      ? "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।" 
+    chapter: `Chapter ${prefix}`,
+    sanskrit: i === 0
+      ? "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।"
       : `अध्याय ${prefix} श्लोक ${i + 1} - (Sanskrit Text Placeholder)`,
-    
+
     // English
     translation: i === 0
       ? "You have a right to perform your prescribed duty, but you are not entitled to the fruits of action."
       : `This is the hidden wisdom of Verse ${i + 1}. Swipe to reveal the divine meaning.`,
-    
+
     // Hindi Placeholder
     translation_hi: i === 0
-        ? "तुम्हें अपना कर्तव्य करने का अधिकार है, लेकिन कर्म के फलों पर तुम्हारा अधिकार नहीं है।"
-        : `यह श्लोक ${i + 1} का छिपा हुआ ज्ञान है। दिव्य अर्थ जानने के लिए स्वाइप करें।`,
+      ? "तुम्हें अपना कर्तव्य करने का अधिकार है, लेकिन कर्म के फलों पर तुम्हारा अधिकार नहीं है।"
+      : `यह श्लोक ${i + 1} का छिपा हुआ ज्ञान है। दिव्य अर्थ जानने के लिए स्वाइप करें।`,
 
     // Marathi Placeholder
     translation_mr: i === 0
-        ? "तुला तुझे विहित कर्तव्य करण्याचा अधिकार आहे, परंतु कर्माच्या फळावर तुझा अधिकार नाही."
-        : `हे श्लोक ${i + 1} चे लपलेले ज्ञान आहे. दैवी अर्थ उघड करण्यासाठी स्वाइप करा.`,
+      ? "तुला तुझे विहित कर्तव्य करण्याचा अधिकार आहे, परंतु कर्माच्या फळावर तुझा अधिकार नाही."
+      : `हे श्लोक ${i + 1} चे लपलेले ज्ञान आहे. दैवी अर्थ उघड करण्यासाठी स्वाइप करा.`,
 
     nuance: "Ancient wisdom requires patience.",
-    locked: false 
+    locked: false
   }));
 };
 
@@ -34,27 +34,27 @@ export const HERO_BOOKS = [
     title: 'Bhagavad Gita',
     subtitle: 'Wisdom Deck',
     description: 'Swipe through the eternal message of spiritual wisdom, one card at a time.',
-    cover: 'https://res.cloudinary.com/do0rlgy7c/image/upload/v1768768264/gita_cpncew.png', 
-    totalCards: 29, 
+    cover: 'https://res.cloudinary.com/do0rlgy7c/image/upload/v1768768264/gita_cpncew.png',
+    totalCards: 29,
     isPopular: true,
-    comingSoon: false 
+    comingSoon: false
   },
   {
     id: '48laws',
     title: '48 Laws of Power',
     subtitle: 'Strategy Cards',
     description: 'Master the art of manipulation and control with 48 actionable flashcards.',
-    cover: 'https://res.cloudinary.com/do0rlgy7c/image/upload/v1768904708/48_laws_of_power_iuggyg.jpg', 
+    cover: 'https://res.cloudinary.com/do0rlgy7c/image/upload/v1768904708/48_laws_of_power_iuggyg.jpg',
     totalCards: 48,
     isPopular: true,
-    comingSoon: false 
+    comingSoon: false
   },
   {
     id: 'yogasutra',
     title: 'Yoga Sutras',
     subtitle: 'Mind Science Deck',
     description: 'Decode the science of consciousness with simple, focused cards.',
-    cover: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop', 
+    cover: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop',
     totalCards: 20,
     isPopular: false,
     comingSoon: true // Locked
@@ -70,16 +70,71 @@ const EXTRA_COVERS = [
 ];
 
 // All extra books are set to "Coming Soon"
-const MOCK_BOOKS = Array.from({ length: 22 }, (_, i) => ({
-  id: `vol-${i + 1}`,
-  title: `Sacred Volume ${i + 1}`,
-  subtitle: 'Ancient Manuscript',
-  description: 'Recovered wisdom from the archives.',
-  cover: EXTRA_COVERS[i % EXTRA_COVERS.length], 
-  totalCards: 25,
-  isPopular: false,
-  comingSoon: true 
-}));
+const COMING_SOON_BOOKS = [
+  {
+    id: 'shivaji-thoughts',
+    title: 'Thoughts of Chhatrapati Shivaji Maharaj',
+    subtitle: 'Leadership Wisdom',
+    description: 'Recovered wisdom from the archives.',
+    cover: '/Thaughts of chhatrapati shivaji maharaj.png',
+    totalCards: 30,
+    isPopular: false,
+    comingSoon: true
+  },
+  {
+    id: 'chanakya-niti',
+    title: 'Chanakya Niti',
+    subtitle: 'Political Science',
+    description: 'Recovered wisdom from the archives.',
+    cover: '/chankya niti.png',
+    totalCards: 40,
+    isPopular: false,
+    comingSoon: true
+  },
+  {
+    id: 'psychology-money',
+    title: 'Psychology of Money',
+    subtitle: 'Financial Wisdom',
+    description: 'Recovered wisdom from the archives.',
+    cover: '/psychology of money.png',
+    totalCards: 20,
+    isPopular: false,
+    comingSoon: true
+  },
+  {
+    id: 'subconscious-mind',
+    title: 'Power of Subconscious Mind',
+    subtitle: 'Mind Power',
+    description: 'Recovered wisdom from the archives.',
+    cover: '/power of subconsious mind.png',
+    totalCards: 25,
+    isPopular: false,
+    comingSoon: true
+  },
+  {
+    id: 'atomic-habits',
+    title: 'Atomic Habits',
+    subtitle: 'Self Improvement',
+    description: 'Recovered wisdom from the archives.',
+    cover: '/automic habits .png',
+    totalCards: 35,
+    isPopular: false,
+    comingSoon: true
+  }
+];
+
+const MOCK_BOOKS = [
+  ...COMING_SOON_BOOKS,
+  ...Array.from({ length: 17 }, (_, i) => ({
+    id: `vol-${i + 1}`,
+    title: `Sacred Volume ${i + 1}`,
+    subtitle: 'Ancient Manuscript',
+    description: 'Recovered wisdom from the archives.',
+    cover: EXTRA_COVERS[i % EXTRA_COVERS.length],
+    totalCards: 25,
+    isPopular: false,
+    comingSoon: true
+  }))];
 
 export const ALL_BOOKS = [...HERO_BOOKS, ...MOCK_BOOKS];
 
@@ -625,7 +680,7 @@ const GITA_DATA = [
     translation_hi: "श्लोक का अर्थ:\n• डर या इच्छाओं के बारे में बार-बार सोचने से लगाव पैदा होता है।\n• लगाव धीरे-धीरे अहंकार और क्रोध में बदल जाता है।\n• जब क्रोध हावी होता है, तो सही निर्णय लेने की क्षमता खो जाती है।\n\nगीता समाधान:\n• क्रोध और अहंकार स्थितियों से नहीं, बल्कि अनियंत्रित विचारों से पैदा होते हैं।\n• पीछे हटकर अपने विचारों को देखने से संतुलन वापस आता है।",
     translation_mr: "श्लोकाचा अर्थ:\n• भीती किंवा इच्छांबद्दल वारंवार विचार केल्याने आसक्ती निर्माण होते.\n• आसक्तीचे रूपांतर हळूहळू अहंकार आणि रागात होते.\n• जेव्हा राग ताबा मिळवतो, तेव्हा योग्य निर्णय घेण्याची क्षमता नष्ट होते.\n\nगीता उपाय:\n• राग आणि अहंकार परिस्थितीमुळे नाही, तर अनियंत्रित विचारांमुळे जन्माला येतात.\n• शांत राहून स्वतःच्या विचारांचे निरीक्षण केल्याने समतोल परत येतो.",
     nuance: "“Pause, breathe, and respond with awareness instead of reacting with emotion.”",
-    locked: false 
+    locked: false
   },
   {
     id: 'ego',
@@ -635,7 +690,7 @@ const GITA_DATA = [
     translation_hi: "श्लोक का अर्थ:\n• डर या इच्छाओं के बारे में बार-बार सोचने से लगाव पैदा होता है।\n• लगाव धीरे-धीरे अहंकार और क्रोध में बदल जाता है।\n• जब क्रोध हावी होता है, तो सही निर्णय लेने की क्षमता खो जाती है।\n\nगीता समाधान:\n• क्रोध और अहंकार स्थितियों से नहीं, बल्कि अनियंत्रित विचारों से पैदा होते हैं।\n• पीछे हटकर अपने विचारों को देखने से संतुलन वापस आता है।",
     translation_mr: "श्लोकाचा अर्थ:\n• भीती किंवा इच्छांबद्दल वारंवार विचार केल्याने आसक्ती निर्माण होते.\n• आसक्तीचे रूपांतर हळूहळू अहंकार आणि रागात होते.\n• जेव्हा राग ताबा मिळवतो, तेव्हा योग्य निर्णय घेण्याची क्षमता नष्ट होते.\n\nगीता उपाय:\n• राग आणि अहंकार परिस्थितीमुळे नाही, तर अनियंत्रित विचारांमुळे जन्माला येतात.\n• शांत राहून स्वतःच्या विचारांचे निरीक्षण केल्याने समतोल परत येतो.",
     nuance: "“Pause, breathe, and respond with awareness instead of reacting with emotion.”",
-    locked: false 
+    locked: false
   },
   {
     id: 'desire',
@@ -961,12 +1016,17 @@ export const GITA_EMOTIONS = [
   { id: 'stuck', label: 'Feeling Stuck', icon: '⚓', shlokaId: 'stuck', type: 'gita' },
 ];
 
+import { MOOD_KEYWORDS } from './keywords';
+
 // === 6. EXPORTS ===
-export const ALL_EMOTIONS = [...GITA_EMOTIONS, ...POWER_MOODS];
+export const ALL_EMOTIONS = [...GITA_EMOTIONS, ...POWER_MOODS].map(emotion => ({
+  ...emotion,
+  keywords: MOOD_KEYWORDS[emotion.id] || []
+}));
 
 export const SHLOKAS = {
-  gita: GITA_DATA, 
-  '48laws': POWER_LAWS_DATA, 
+  gita: GITA_DATA,
+  '48laws': POWER_LAWS_DATA,
   yogasutra: generateShlokas(20, 'YS'),
   upanishads: generateShlokas(22, 'UP'),
 };
@@ -976,8 +1036,8 @@ MOCK_BOOKS.forEach(book => {
 });
 
 export const BOOK_CONTENT = {
-    'gita': GITA_DATA,
-    '48laws': POWER_LAWS_DATA,
-    'yogasutra': generateShlokas(20, 'YS'),
-    'upanishads': generateShlokas(22, 'UP'),
+  'gita': GITA_DATA,
+  '48laws': POWER_LAWS_DATA,
+  'yogasutra': generateShlokas(20, 'YS'),
+  'upanishads': generateShlokas(22, 'UP'),
 };

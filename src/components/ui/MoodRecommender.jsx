@@ -8,9 +8,41 @@ export default function MoodRecommender() {
   const navigate = useNavigate();
 
   // 1. FILTER LOGIC
-  const displayedMoods = query
-    ? ALL_EMOTIONS.filter(m => m.label.toLowerCase().includes(query.toLowerCase())).slice(0, 4)
-    : []; 
+  const getDisplayedMoods = () => {
+    if (!query) return [];
+
+    const lowerQuery = query.toLowerCase();
+    const words = lowerQuery.split(/\s+/).filter(w => w.length > 2); // Filter out short words like 'i', 'am'
+
+    // Direct matches (label or keywords)
+    const matches = ALL_EMOTIONS.map(m => {
+      let score = 0;
+      const label = m.label.toLowerCase();
+      const keywords = m.keywords?.map(k => k.toLowerCase()) || [];
+
+      // Check for full query match first (highest priority)
+      if (label.includes(lowerQuery)) score += 10;
+
+      // Check word by word
+      words.forEach(word => {
+        if (label.includes(word)) score += 5;
+        if (keywords.some(k => k.includes(word))) score += 3;
+      });
+
+      return { ...m, score };
+    })
+      .filter(m => m.score > 0)
+      .sort((a, b) => b.score - a.score);
+
+    if (matches.length > 0) return matches.slice(0, 4);
+
+    // Fallback: Related wisdom (popular ones)
+    return ALL_EMOTIONS.filter(m =>
+      ['anger', 'fear', 'overthinking', 'doubt', 'motivation', 'anxiety'].includes(m.id)
+    ).slice(0, 4);
+  };
+
+  const displayedMoods = getDisplayedMoods();
 
   // Helper to get extra details (Chapter, Nuance) for a mood
   const getCardDetails = (mood) => {
@@ -21,9 +53,9 @@ export default function MoodRecommender() {
 
   return (
     <div className="w-full max-w-5xl mx-auto z-40 relative">
-      
+
       {/* === SEARCH BAR (Strong Hover Restored) === */}
-      <div 
+      <div
         className="
           flex items-center gap-3 
           bg-stone-900/80 backdrop-blur-xl
@@ -49,11 +81,11 @@ export default function MoodRecommender() {
           mb-10 max-w-2xl mx-auto shadow-2xl
         "
       >
-        <Sparkles 
-          size={20} 
-          className="text-stone-500 group-hover:text-saffron group-focus-within:text-saffron transition-colors duration-300" 
+        <Sparkles
+          size={20}
+          className="text-stone-500 group-hover:text-saffron group-focus-within:text-saffron transition-colors duration-300"
         />
-        
+
         <input
           type="text"
           className="bg-transparent border-none outline-none text-parchment placeholder:text-stone-500 text-base md:text-lg w-full group-focus-within:placeholder:text-stone-600 font-serif tracking-wide"
@@ -63,25 +95,25 @@ export default function MoodRecommender() {
         />
 
         {query && (
-           <button 
-             onClick={() => setQuery('')} 
-             className="text-stone-500 hover:text-white transition-colors hover:rotate-90 duration-200"
-           >
-             <X size={20} />
-           </button>
+          <button
+            onClick={() => setQuery('')}
+            className="text-stone-500 hover:text-white transition-colors hover:rotate-90 duration-200"
+          >
+            <X size={20} />
+          </button>
         )}
       </div>
 
       {/* === RESULTS GRID === */}
       {query && (
         <div className="animate-fade-in px-4">
-          
+
           <div className="text-center mb-6">
-             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10">
-               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400">
-                 {displayedMoods.length > 0 ? 'Wisdom Found' : 'No matches found'}
-               </span>
-             </div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10">
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400">
+                {displayedMoods.length > 0 ? 'Wisdom Found' : 'No matches found'}
+              </span>
+            </div>
           </div>
 
           {displayedMoods.length > 0 && (
@@ -124,8 +156,8 @@ export default function MoodRecommender() {
 
                     {/* Footer */}
                     <div className="flex items-center gap-2 mt-auto text-[10px] font-bold uppercase tracking-widest text-stone-600 group-hover:text-saffron transition-colors">
-                       <span>Read Chapter</span>
-                       <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                      <span>Read Chapter</span>
+                      <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
                     </div>
                   </button>
                 );
