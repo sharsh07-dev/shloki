@@ -1,10 +1,11 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { ArrowLeft, Home, Share2 } from 'lucide-react';
+import { ArrowLeft, Share2, ChevronDown } from 'lucide-react'; // 👈 Added ChevronDown
 
 import Flashcard from './Flashcard'; 
 import Navbar from '../../components/layout/Navbar';
 import { SHLOKAS } from '../../lib/data'; 
+
 
 export default function SingleCardPage() {
   const { cardId } = useParams();
@@ -13,7 +14,6 @@ export default function SingleCardPage() {
   const [bookId, setBookId] = useState('gita');
 
   useEffect(() => {
-    // Safety Check
     if (!SHLOKAS) return;
 
     // 1. Search in Gita
@@ -42,49 +42,20 @@ export default function SingleCardPage() {
     );
   }
 
-  // === SEO HELPERS ===
-  const cleanDescription = cardData.translation 
-    ? cardData.translation.replace(/\n/g, ' ').substring(0, 160) 
-    : 'Ancient wisdom for modern life.';
-
-  const schemaData = {
-    "@context": "https://schema.org",
-    "@type": "Article", 
-    "headline": `${cardData.chapter}: ${cardData.sanskrit || ''}`,
-    "description": cardData.translation, // FULL translation for Google to read
-    "author": {
-      "@type": "Organization",
-      "name": "Shloki"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Shloki",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://shloki.in/logo.png"
-      }
-    },
-    "isPartOf": {
-      "@type": "Book",
-      "name": bookId === '48laws' ? "The 48 Laws of Power" : "Bhagavad Gita"
-    }
-  };
-
   return (
     <div className="min-h-screen bg-spiritual-bg flex flex-col">
-     
-
       <Navbar />
 
-      <main className="flex-1 flex flex-col items-center justify-center pt-20 pb-10 px-4">
+      {/* Main Container */}
+      <main className="flex-1 flex flex-col items-center pt-24 pb-20 px-4">
         
         {/* Navigation Header */}
         <div className="w-full max-w-3xl flex items-center justify-between mb-6 animate-fade-in">
           <button 
-            onClick={() => navigate('/')}
-            className="flex items-center gap-2 text-stone-400 hover:text-saffron transition-colors text-sm font-bold uppercase tracking-widest"
+            onClick={() => navigate('/library')}
+            className="flex items-center gap-2 text-stone-400 hover:text-saffron transition-colors text-xs font-bold uppercase tracking-widest"
           >
-            <ArrowLeft size={16} /> Home
+            <ArrowLeft size={16} /> Library
           </button>
           
           <div className="flex gap-2">
@@ -99,18 +70,29 @@ export default function SingleCardPage() {
            <h1 className="font-serif text-2xl md:text-4xl text-parchment mb-2">
              {cardData.chapter}
            </h1>
-           <p className="text-stone-500 text-sm">
+           <p className="text-stone-500 text-sm uppercase tracking-widest">
              {bookId === '48laws' ? 'Strategic Mastery' : 'Ancient Wisdom'}
            </p>
         </div>
 
-        {/* The Card */}
-        <div className="w-full max-w-3xl flex justify-center">
+        {/* The Flashcard */}
+        <div className="w-full max-w-3xl flex justify-center mb-4">
            <Flashcard 
              data={cardData} 
              bookId={bookId} 
              total={1} 
            />
+        </div>
+
+        {/* 👇 1. SCROLL INDICATOR (Tells user to look down) */}
+        <div className="flex flex-col items-center justify-center mb-16 mt-8 animate-bounce opacity-50">
+           <span className="text-[10px] uppercase tracking-widest text-stone-500 mb-2">Scroll for Deep Meaning</span>
+           <ChevronDown className="text-saffron" size={24} />
+        </div>
+
+        {/* 👇 2. SEO CONTENT (This was missing!) */}
+        <div className="w-full flex justify-center pb-20">
+           <SEOContent data={cardData} bookId={bookId} />
         </div>
 
       </main>
