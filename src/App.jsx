@@ -72,8 +72,8 @@ function App() {
                       </div>
                       
                       <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl leading-tight text-parchment mb-6 md:mb-8">
-                        Ancient Texts, <br />
-                        <span className="text-saffron text-glow">Modern Spirit.</span>
+                       Bhagavad Gita Flashcards<br />
+                        <span className="text-saffron text-glow">Unlock Timeless Wisdom with Ease</span>
                       </h1>
 
                       <MoodRecommender />
