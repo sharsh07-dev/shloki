@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Sparkles, X, ArrowRight, BookOpen, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom'; // 👈 1. Import Link
 import { ALL_EMOTIONS, SHLOKAS } from '../../lib/data'; 
-
+import { MOOD_KEYWORDS } from '../../lib/keywords';
 export default function MoodRecommender() {
   const [query, setQuery] = useState('');
 

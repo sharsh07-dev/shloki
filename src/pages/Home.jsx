@@ -4,7 +4,7 @@ import HeroFlashcards from '../components/ui/HeroFlashcards';
 import MoodRecommender from '../components/ui/MoodRecommender';
 import Footer from '../components/layout/Footer';
 // 👇 importing safely
-import { SEO_KEYWORDS, PAGE_DESCRIPTION } from '../lib/searchKeywords';
+import { SEO_KEYWORDS, PAGE_DESCRIPTION } from '../lib/keywords';
 
 export default function Home() {
 

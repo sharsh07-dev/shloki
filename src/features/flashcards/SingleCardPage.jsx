@@ -1,9 +1,14 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { ArrowLeft, Share2, ChevronDown } from 'lucide-react'; // 👈 Added ChevronDown
+import { ArrowLeft, Share2, ChevronDown } from 'lucide-react';
+import { Helmet } from 'react-helmet-async'; // 👈 1. Added Helmet Import
 
 import Flashcard from './Flashcard'; 
 import Navbar from '../../components/layout/Navbar';
+// ✅ CORRECT (Default Import)
+// ✅ CORRECT (Default Import)
+import SEOContent from '../../components/SEOContent';
+import SEO from "../../components/SEO"; // 👈 2. Added missing SEOContent Import
 import { SHLOKAS } from '../../lib/data'; 
 
 
@@ -44,6 +49,16 @@ export default function SingleCardPage() {
 
   return (
     <div className="min-h-screen bg-spiritual-bg flex flex-col">
+      {/* 👇 3. Added Dynamic SEO Tags for Google */}
+      <Helmet>
+        <title>{cardData.chapter || 'Wisdom Card'} | Shloki</title>
+        <meta 
+          name="description" 
+          content={cardData.nuance || cardData.translation || 'Explore ancient wisdom decoded for modern life.'} 
+        />
+        <link rel="canonical" href={`https://shloki.com/card/${cardData.id}`} />
+      </Helmet>
+
       <Navbar />
 
       {/* Main Container */}
@@ -90,7 +105,7 @@ export default function SingleCardPage() {
            <ChevronDown className="text-saffron" size={24} />
         </div>
 
-        {/* 👇 2. SEO CONTENT (This was missing!) */}
+        {/* 👇 2. SEO CONTENT */}
         <div className="w-full flex justify-center pb-20">
            <SEOContent data={cardData} bookId={bookId} />
         </div>
