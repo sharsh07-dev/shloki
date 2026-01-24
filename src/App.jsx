@@ -19,6 +19,7 @@ import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import Letter from './components/ui/Newsletter'; // Newsletter Component
 import Blogs from './pages/Blogs'; // Blog Page
+import Home from './pages/Home';
 
 import { Analytics } from '@vercel/analytics/react';
 import { useContentProtection } from './hooks/useContentProtection';
@@ -131,7 +132,7 @@ function App() {
               
               {/* Blog Route */}
               <Route path="/blog/gita-wisdom" element={<Blogs />} />
-
+<Route path="/" element={<Home />} />
             </Routes>
           </div>
 
