@@ -1,33 +1,28 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import ReactGA from 'react-ga4'; 
-import { HelmetProvider } from 'react-helmet-async'; // 👈 1. IMPORT THIS
+import { HelmetProvider } from 'react-helmet-async';
+import { Analytics } from '@vercel/analytics/react';
 
+// Hooks
+import { useContentProtection } from './hooks/useContentProtection';
+
+// Components
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
-import BookCard from './components/ui/BookCard';
-import Reader from './features/flashcards/Reader';
-import FullLibrary from './features/library/FullLibrary';
 import FeedbackModal from './components/ui/FeedbackModal';
-import MoodRecommender from './components/ui/MoodRecommender';
-import HeroFlashcards from './components/ui/HeroFlashcards';
-import SingleCardPage from './features/flashcards/SingleCardPage';
+
+// Pages
+import Home from './pages/Home';
+import FullLibrary from './features/library/FullLibrary';
 import WisdomLibrary from './features/library/WisdomLibrary';   
+import SingleCardPage from './features/flashcards/SingleCardPage';
+import Reader from './features/flashcards/Reader';
 import PrivacyPolicy from './pages/PrivacyPolicy';  
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
-import Letter from './components/ui/Newsletter'; // Newsletter Component
-import Blogs from './pages/Blogs'; // Blog Page
-import Home from './pages/Home';
+import Blogs from './pages/Blogs';
 
-
-import { Analytics } from '@vercel/analytics/react';
-import { useContentProtection } from './hooks/useContentProtection';
-
-import { HERO_BOOKS } from './lib/data';
-
-// Initialize Google Analytics
 ReactGA.initialize("G-MJHSE6R27Y");
 
 function PageTracker() {
@@ -42,12 +37,9 @@ function App() {
   const isBlurry = useContentProtection();
 
   return (
-    // 👈 2. WRAP EVERYTHING IN HELMET PROVIDER
     <HelmetProvider>
       <BrowserRouter>
         <PageTracker />
-        
-        {/* Vercel Analytics */}
         <Analytics />
 
         <div 
@@ -57,72 +49,11 @@ function App() {
           <FeedbackModal />
           
           <div className="flex-1">
+            <Navbar />
             <Routes>
-              {/* === HOME PAGE === */}
-              <Route path="/" element={
-                <>
-                  <Navbar />
-                  <main className="pt-20 md:pt-32 px-4 md:px-8 max-w-6xl mx-auto">
-                    
-                    {/* Hero Section */}
-                    <div className="mb-8 md:mb-12 text-center animate-fade-in">
-                      <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 rounded-full border border-saffron/20 bg-saffron-dim mb-4 md:mb-6">
-                        <div className="w-1.5 h-1.5 rounded-full bg-saffron animate-pulse" />
-                        <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-widest text-saffron">
-                          Get Daily Bhagavad Gita Quotes & Wisdom Flashcards for free
-                        </span>
-                      </div>
-                      
-                      <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl leading-tight text-parchment mb-6 md:mb-8">
-                       Bhagavad Gita Flashcards<br />
-                        <span className="text-saffron text-glow">Unlock Timeless Wisdom with Ease</span>
-                      </h1>
+              {/* ✅ THIS IS THE ONLY HOME ROUTE NOW */}
+       <Route path="/home" element={<Home />} />
 
-                      <MoodRecommender />
-                    </div>
-
-                    {/* Flashcards Carousel */}
-                    <HeroFlashcards />
-
-                    {/* Newsletter (Added here) */}
-                   
-
-                    {/* Deck Selection Header */}
-                    <div className="flex items-center justify-between mb-4 md:mb-8 border-b border-black/5 dark:border-white/5 pb-2 md:pb-4 mt-8 md:mt-12">
-                      <h2 className="font-serif text-lg md:text-2xl text-parchment">FlashCards</h2>
-                      <span className="text-[10px] md:text-xs text-stone-500 uppercase tracking-widest block">
-                        Select a Deck
-                      </span>
-                    </div>
-
-                    {/* Book Cards Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-12 px-0 mb-12 md:mb-16">
-                      {HERO_BOOKS.map((book) => (
-                        <BookCard key={book.id} book={book} />
-                      ))}
-                    </div>
-
-                    {/* Footer Explore Link */}
-                    <div className="text-center pb-8 md:pb-10">
-                       <p className="text-stone-400 mb-4 md:mb-6 font-serif italic text-sm md:text-base">
-                         "Knowledge is an ocean. Dive deeper."
-                       </p>
-                       <Link 
-                         to="/library"
-                         className="inline-flex items-center gap-2 md:gap-3 px-6 py-3 md:px-8 md:py-4 rounded-full border border-saffron/30 text-saffron hover:bg-saffron hover:text-white transition-all duration-300 font-bold uppercase tracking-widest text-[10px] md:text-xs group active:scale-95"
-                       >
-                         Explore Full FlashCards Library
-                         <ArrowRight size={14} className="md:w-4 md:h-4 group-hover:translate-x-1 transition-transform" />
-                       </Link>
-                    </div>
-                     <div className="my-12 md:my-16">
-                      <Letter />
-                    </div>
-                  </main>
-                </>
-              } />
-
-              {/* === ALL ROUTES === */}
               <Route path="/library" element={<FullLibrary />} />
               <Route path="/wisdom" element={<WisdomLibrary />} />
               <Route path="/wisdom/:cardId" element={<SingleCardPage />} />
@@ -130,24 +61,19 @@ function App() {
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/about" element={<AboutUs />} />
               <Route path="/contact" element={<ContactUs />} />
-              
-              {/* Blog Route */}
               <Route path="/blog/gita-wisdom" element={<Blogs />} />
-<Route path="/" element={<Home />} />
+              
+              <Route path="*" element={<Home />} />
             </Routes>
           </div>
 
           <Footer />
         </div>
 
-        {/* Content Protection Overlay */}
         {isBlurry && (
           <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/90 backdrop-blur-md">
             <div className="text-center animate-fade-in px-6">
                 <h2 className="text-3xl md:text-4xl font-serif text-saffron mb-4">Protected Content</h2>
-                <p className="text-stone-400 text-sm md:text-base mb-6">
-                  Screenshots and recording are disabled for privacy.
-                </p>
                 <div className="inline-block px-4 py-2 border border-white/10 rounded-lg text-xs text-stone-500 uppercase tracking-widest">
                   Security Mode Active
                 </div>

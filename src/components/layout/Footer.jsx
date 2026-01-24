@@ -15,7 +15,12 @@ export default function Footer() {
 
         {/* Links */}
         <div className="flex flex-wrap justify-center gap-6 md:gap-8 mb-8 text-xs font-bold uppercase tracking-widest text-stone-500">
-          <Link to="/" className="hover:text-saffron transition-colors">Home</Link>
+        <button 
+  onClick={() => window.location.href = '/home'}
+  className="hover:text-saffron transition-colors cursor-pointer bg-transparent border-none p-0"
+>
+  Home
+</button>
           <Link to="/library" className="hover:text-saffron transition-colors">Library</Link>
 
           <Link to="/privacy-policy" className="hover:text-saffron transition-colors">Privacy Policy</Link>
