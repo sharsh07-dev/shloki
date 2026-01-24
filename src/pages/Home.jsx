@@ -3,16 +3,22 @@ import Navbar from '../components/layout/Navbar';
 import HeroFlashcards from '../components/ui/HeroFlashcards';
 import MoodRecommender from '../components/ui/MoodRecommender';
 import Footer from '../components/layout/Footer';
+// 👇 importing safely
 import { SEO_KEYWORDS, PAGE_DESCRIPTION } from '../lib/searchKeywords';
+
 export default function Home() {
 
-    const structuredData = {
+  // 🛡️ SAFETY CHECK: Default to empty array if import fails to prevent crash
+  const safeKeywords = Array.isArray(SEO_KEYWORDS) ? SEO_KEYWORDS : [];
+  const safeDescription = PAGE_DESCRIPTION || "Ancient Wisdom for Modern Life";
+
+  const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Shloki",
     "url": "https://shloki.in",
-    "description": PAGE_DESCRIPTION,
-    "keywords": SEO_KEYWORDS.join(", "), // 👈 Injects all your keywords here
+    "description": safeDescription,
+    "keywords": safeKeywords.join(", "), 
     "potentialAction": {
       "@type": "SearchAction",
       "target": "https://shloki.in/search?q={search_term_string}",
@@ -28,22 +34,23 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-spiritual-bg text-parchment font-sans selection:bg-saffron selection:text-white">
       
-      {/* 1. SEO Tags */}
       <Helmet>
         <title>Shloki - Ancient Wisdom for Modern Life</title>
         <meta name="description" content="Master ancient wisdom with Shloki. Read the Bhagavad Gita, Chanakya Niti, and 48 Laws of Power in flashcard format." />
         <link rel="canonical" href="https://shloki.in/" />
+        
+        {/* 👇 THIS WAS MISSING! You need this to actually output the SEO data */}
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
       </Helmet>
 
-      {/* 2. Navigation */}
       <Navbar />
 
       <main>
-        {/* 3. Your Main Content (Hero & Moods) */}
         <HeroFlashcards />
         <MoodRecommender />
 
-        {/* 4. THE NEW FAQ SECTION (Correctly Added) */}
         <div className="bg-neutral-900 py-16 px-4 border-t border-white/10">
           <div className="max-w-3xl mx-auto text-parchment">
             <h2 className="text-3xl font-serif text-saffron mb-8 text-center">Frequently Asked Questions</h2>
@@ -73,7 +80,6 @@ export default function Home() {
         </div>
       </main>
 
-      {/* 5. Footer */}
       <Footer />
     </div>
   );
