@@ -98,44 +98,251 @@ const Blogs = () => {
                 </div>
 
                 {/* Article Content */}
-                <article className="prose prose-invert prose-stone max-w-none text-stone-300">
-                    <p className="text-lg md:text-xl leading-relaxed mb-8 italic">
-                        In today’s fast-paced life, people struggle with stress, anxiety, fear of failure, confusion, loneliness, and lack of motivation. Even after reading self-help books, peace often feels temporary.
-                    </p>
+              {/* Article Content */}
+<article className="prose prose-invert prose-stone max-w-none text-stone-300">
 
-                    <p className="leading-relaxed mb-8">
-                        The Bhagavad Gita offers something deeper — lasting clarity and inner balance. It is not just a religious book; it is a practical guide for real-life problems.
-                    </p>
+  {/* INTRO */}
+  <p className="text-lg md:text-xl leading-relaxed mb-8 italic">
+    In today’s fast-moving world, life feels more complicated than ever. 
+    People struggle silently with stress, anxiety, fear of failure, 
+    emotional pain, loneliness, lack of motivation, overthinking, 
+    and confusion about what direction to take.
+  </p>
 
-                    <h2 className="font-serif text-2xl md:text-3xl text-saffron mt-12 mb-6">1. Stress and Anxiety</h2>
-                    <p className="mb-4">
-                        Most stress comes from worrying about results we cannot control. The Gita teaches us to focus on our efforts rather than the results.
-                    </p>
-                    <div className="bg-white/5 p-6 rounded-xl border-l-4 border-saffron italic mb-6">
-                        "You have a right to perform your duties, but you are not entitled to the fruits of your actions."
-                    </div>
-                    <p className="text-sm text-stone-400 mb-8"><strong>Practical Impact:</strong> When you work without obsession over the outcome, anxiety naturally fades.</p>
+  <p className="leading-relaxed mb-8">
+    Even though modern society offers endless technology, entertainment, 
+    and self-help resources, true peace often feels temporary. 
+    The mind remains restless, and the heart continues searching 
+    for something deeper.
+  </p>
 
-                    <h2 className="font-serif text-2xl md:text-3xl text-saffron mt-12 mb-6">2. Fear of Failure</h2>
-                    <p className="mb-6">
-                        Fear of failure stops people from trying. The Gita explains that fear comes from attachment. When you act without attachment, fear disappears and courage takes its place.
-                    </p>
+  <p className="leading-relaxed mb-8">
+    That is where the timeless wisdom of the Bhagavad Gita becomes 
+    incredibly relevant. The Gita is not just a spiritual scripture 
+    meant only for monks or religious people.  
+    It is a practical handbook for everyday living.
+  </p>
 
-                    <h2 className="font-serif text-2xl md:text-3xl text-saffron mt-12 mb-6">3. Overthinking</h2>
-                    <p className="mb-6">
-                        Overthinking keeps the mind trapped in the past or future. The Gita teaches gentle control of the mind through awareness ("Abhyasa"). A calm mind is your best friend; an uncontrolled mind is your worst enemy.
-                    </p>
+  <p className="leading-relaxed mb-8">
+    Through a conversation between Lord Krishna and Arjuna, 
+    the Gita teaches us how to handle real-life struggles: 
+    mental pressure, emotional pain, decision-making, purpose, 
+    and inner balance.
+  </p>
 
-                    <h2 className="font-serif text-2xl md:text-3xl text-saffron mt-12 mb-6">4. Feeling Stuck</h2>
-                    <p className="mb-6">
-                        When life feels directionless, doubt takes over. The Gita helps by clearing confusion ("Moha") through action. Taking one small step with clarity is better than years of hesitation.
-                    </p>
-                    
-                    <div className="mt-16 p-8 bg-saffron/10 rounded-2xl border border-saffron/20 text-center">
-                        <h3 className="font-serif text-xl text-parchment mb-2">A Simple Truth</h3>
-                        <p className="text-saffron text-lg italic">"Do your best today and let go. The future will take care of itself."</p>
-                    </div>
-                </article>
+  {/* SECTION 1 */}
+  <h2 className="font-serif text-2xl md:text-3xl text-saffron mt-12 mb-6">
+    1. Stress and Anxiety: Letting Go of What You Cannot Control
+  </h2>
+
+  <p className="mb-6">
+    Stress is one of the most common problems of modern life. 
+    People worry about jobs, relationships, money, health, 
+    and expectations from society.
+  </p>
+
+  <p className="mb-6">
+    The Bhagavad Gita explains that most anxiety comes from focusing 
+    too much on results rather than actions.  
+    We become obsessed with outcomes:  
+    “What if I fail?”  
+    “What will people think?”  
+    “Will I succeed?”
+  </p>
+
+  <div className="bg-white/5 p-6 rounded-xl border-l-4 border-saffron italic mb-6">
+    "You have the right to perform your duty, but not to the fruits of your actions."
+  </div>
+
+  <p className="text-sm text-stone-400 mb-8">
+    <strong>Practical Impact:</strong>  
+    When you focus only on doing your best today, 
+    the future becomes lighter and anxiety naturally reduces.
+  </p>
+
+  <p className="mb-8">
+    Imagine studying for an exam. If your only focus is the final score, 
+    stress increases. But if you focus on learning sincerely, 
+    the mind becomes calmer.  
+    This is Karma Yoga — the yoga of action.
+  </p>
+
+  {/* SECTION 2 */}
+  <h2 className="font-serif text-2xl md:text-3xl text-saffron mt-12 mb-6">
+    2. Fear of Failure: Courage Through Detachment
+  </h2>
+
+  <p className="mb-6">
+    Fear of failure stops countless people from even trying.  
+    Many dreams die not because people are incapable, 
+    but because they are afraid.
+  </p>
+
+  <p className="mb-6">
+    The Gita teaches that fear comes from attachment — attachment to success, 
+    to recognition, and to approval.
+  </p>
+
+  <p className="mb-6">
+    Krishna reminds Arjuna that success and failure are temporary, 
+    but your effort and character are permanent.
+  </p>
+
+  <p className="mb-8">
+    When you act with sincerity and leave the outcome to life, 
+    courage automatically replaces fear.  
+    You begin to realize:  
+    “I am here to grow, not just to win.”
+  </p>
+
+  {/* SECTION 3 */}
+  <h2 className="font-serif text-2xl md:text-3xl text-saffron mt-12 mb-6">
+    3. Overthinking: Mastering the Mind
+  </h2>
+
+  <p className="mb-6">
+    Overthinking is like a storm inside the head.  
+    The mind keeps replaying the past or worrying about the future.
+  </p>
+
+  <p className="mb-6">
+    The Gita explains that the mind can become either your greatest friend 
+    or your biggest enemy.
+  </p>
+
+  <p className="mb-6">
+    A controlled mind brings peace, focus, and happiness.  
+    An uncontrolled mind brings suffering.
+  </p>
+
+  <p className="mb-8">
+    Krishna teaches Abhyasa — practice and awareness.  
+    You do not control the mind in one day.  
+    You train it slowly, gently, like guiding a child.
+  </p>
+
+  <p className="mb-8">
+    Even simple habits such as meditation, mindful breathing, 
+    or reading one verse daily can calm the storm of thoughts.
+  </p>
+
+  {/* SECTION 4 */}
+  <h2 className="font-serif text-2xl md:text-3xl text-saffron mt-12 mb-6">
+    4. Feeling Stuck in Life: Clarity Through Action
+  </h2>
+
+  <p className="mb-6">
+    Many people experience phases where life feels directionless.  
+    You may ask yourself:
+  </p>
+
+  <ul className="mb-6 list-disc pl-6">
+    <li>What am I doing with my life?</li>
+    <li>Am I on the right path?</li>
+    <li>Why do I feel lost even after working hard?</li>
+  </ul>
+
+  <p className="mb-6">
+    Arjuna faced the same confusion on the battlefield.  
+    He felt stuck, overwhelmed, and unable to move forward.
+  </p>
+
+  <p className="mb-8">
+    Krishna’s solution was simple yet powerful:  
+    clarity comes not from avoiding action, but from taking the right action.
+  </p>
+
+  <p className="mb-8">
+    Even one small step with faith is better than years of hesitation.
+  </p>
+
+  {/* SECTION 5 */}
+  <h2 className="font-serif text-2xl md:text-3xl text-saffron mt-12 mb-6">
+    5. Loneliness and Emotional Pain: The Inner Companion
+  </h2>
+
+  <p className="mb-6">
+    Modern life often creates loneliness.  
+    Even with social media, many hearts feel disconnected.
+  </p>
+
+  <p className="mb-6">
+    The Bhagavad Gita teaches that true companionship begins within.
+  </p>
+
+  <p className="mb-6">
+    When you connect with your inner self, 
+    you stop depending completely on external validation.
+  </p>
+
+  <p className="mb-8">
+    Krishna reminds us that the soul is never alone, never broken, 
+    and never truly lost.  
+    Emotional pain becomes lighter when you remember your deeper identity.
+  </p>
+
+  {/* SECTION 6 */}
+  <h2 className="font-serif text-2xl md:text-3xl text-saffron mt-12 mb-6">
+    6. Anger and Impatience: Transforming Inner Fire
+  </h2>
+
+  <p className="mb-6">
+    Anger is one of the most destructive emotions.  
+    It damages relationships, health, and peace of mind.
+  </p>
+
+  <p className="mb-6">
+    The Gita explains that anger arises from unfulfilled desires 
+    and expectations.
+  </p>
+
+  <p className="mb-8">
+    When we accept life as it is, anger reduces.  
+    Patience becomes strength, not weakness.
+  </p>
+
+  {/* SECTION 7 */}
+  <h2 className="font-serif text-2xl md:text-3xl text-saffron mt-12 mb-6">
+    7. Purpose and Meaning: Living Beyond Survival
+  </h2>
+
+  <p className="mb-6">
+    Many people are not just struggling with problems — 
+    they are struggling with emptiness.
+  </p>
+
+  <p className="mb-6">
+    The Gita teaches that life becomes meaningful when you live with Dharma — 
+    your true responsibility and purpose.
+  </p>
+
+  <p className="mb-8">
+    When you align your actions with values, service, and growth, 
+    life feels fulfilling even during challenges.
+  </p>
+
+  {/* FINAL SECTION */}
+  <div className="mt-16 p-8 bg-saffron/10 rounded-2xl border border-saffron/20 text-center">
+    <h3 className="font-serif text-xl text-parchment mb-2">
+      Final Message from the Gita
+    </h3>
+    <p className="text-saffron text-lg italic">
+      "Do your duty with love, trust the process, and peace will follow."
+    </p>
+  </div>
+
+  <p className="mt-10 mb-6 leading-relaxed">
+    The Bhagavad Gita is not about escaping life — it is about mastering life.
+    Its teachings are timeless because human struggles remain the same across generations.
+  </p>
+
+  <p className="leading-relaxed">
+    If you apply even one principle — focusing on effort, calming the mind,
+    acting with courage, or finding purpose — your life will begin to transform.
+  </p>
+
+</article>
+
 
                 {/* ✨ NEW SHARE SECTION ✨ */}
                 <div className="mt-20 pt-10 border-t border-white/5 flex flex-col items-center">
