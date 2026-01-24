@@ -20,7 +20,7 @@ import ContactUs from './pages/ContactUs';
 import Letter from './components/ui/Newsletter'; // Newsletter Component
 import Blogs from './pages/Blogs'; // Blog Page
 import Home from './pages/Home';
-import { SEO_KEYWORDS, PAGE_DESCRIPTION } from '../lib/searchKeywords';
+
 
 import { Analytics } from '@vercel/analytics/react';
 import { useContentProtection } from './hooks/useContentProtection';
