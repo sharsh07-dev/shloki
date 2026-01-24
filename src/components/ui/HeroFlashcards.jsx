@@ -1,3 +1,4 @@
+
 import { useNavigate } from 'react-router-dom';
 import { Sparkles, ArrowRight, BookOpen } from 'lucide-react';
 import { GITA_EMOTIONS } from '../../lib/data';

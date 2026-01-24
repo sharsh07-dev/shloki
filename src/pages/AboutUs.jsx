@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { ArrowLeft, Heart, Zap, Globe, BookOpen } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async'; // 👈 1. Import Helmet
 import Navbar from '../components/layout/Navbar';
 
 export default function AboutUs() {
@@ -12,6 +13,16 @@ export default function AboutUs() {
 
   return (
     <div className="min-h-screen bg-spiritual-bg text-parchment font-sans selection:bg-saffron selection:text-white">
+      {/* 👇 2. SEO Tags for About Page */}
+      <Helmet>
+        <title>About Us | Shloki</title>
+        <meta 
+          name="description" 
+          content="Learn about Shloki's mission to decode 5,000-year-old ancient wisdom into bite-sized flashcards for the modern mind." 
+        />
+        <link rel="canonical" href="https://shloki.com/about" />
+      </Helmet>
+
       <Navbar />
 
       <main className="pt-20 md:pt-32 px-5 md:px-8 max-w-4xl mx-auto pb-20">

@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Search, X } from 'lucide-react';
+import { Helmet } from 'react-helmet-async'; // 👈 1. Added Helmet Import
+
 import BookCard from '../../components/ui/BookCard';
-import Navbar from '../../components/layout/Navbar'; // <--- Restored Navbar
+import Navbar from '../../components/layout/Navbar'; 
 import { ALL_BOOKS } from '../../lib/data';
 
 export default function FullLibrary() {
@@ -26,6 +28,16 @@ export default function FullLibrary() {
 
   return (
     <div className="min-h-screen bg-spiritual-bg text-parchment font-sans selection:bg-saffron selection:text-white">
+      {/* 👇 2. Added SEO Tags for Google */}
+      <Helmet>
+        <title>Grand Library | Shloki Timeless Wisdom</title>
+        <meta 
+          name="description" 
+          content="Explore a curated library of ancient texts decoded for modern life. From Machiavelli to Krishna, find your strategy." 
+        />
+        <link rel="canonical" href="https://shloki.com/library" />
+      </Helmet>
+
       <Navbar />
 
       <div className="min-h-screen pb-20 pt-24 px-6">
@@ -89,10 +101,7 @@ export default function FullLibrary() {
               <button 
                 onClick={() => setSearchQuery('')}
                 className="mt-4 text-saffron text-sm hover:underline uppercase tracking-widest font-bold"
-              ><SEO 
-  title="The Vault of Wisdom" 
-  description="Explore a curated library of ancient texts decoded for modern life. From Machiavelli to Krishna, find your strategy."
-/>
+              >
                 Clear Search
               </button>
             </div>

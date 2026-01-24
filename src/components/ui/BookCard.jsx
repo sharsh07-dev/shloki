@@ -42,10 +42,10 @@ export default function BookCard({ book }) {
     );
   }
 
-  // === 2. ACTIVE STATE (Original) ===
+  // === 2. ACTIVE STATE ===
   return (
     <Link 
-      to={`/read/${book.id}`}
+      to={`/book/${book.id}`} // 👈 FIXED: Changed from /read/ to /book/ to match your folder
       className="group flex flex-row md:flex-col bg-white dark:bg-white/5 border border-stone-200 dark:border-white/10 rounded-xl overflow-hidden hover:border-saffron/40 transition-all duration-300 hover:-translate-y-1 shadow-sm dark:shadow-none"
     >
       {/* IMAGE CONTAINER */}

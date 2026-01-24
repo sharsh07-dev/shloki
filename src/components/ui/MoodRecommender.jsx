@@ -1,29 +1,25 @@
 import { useState } from 'react';
 import { Sparkles, X, ArrowRight, BookOpen, Shield } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { ALL_EMOTIONS, SHLOKAS } from '../../lib/data'; // <--- Import SHLOKAS to get details
+import { Link } from 'react-router-dom'; // 👈 1. Import Link
+import { ALL_EMOTIONS, SHLOKAS } from '../../lib/data'; 
 
 export default function MoodRecommender() {
   const [query, setQuery] = useState('');
-  const navigate = useNavigate();
 
   // 1. FILTER LOGIC
   const getDisplayedMoods = () => {
     if (!query) return [];
 
     const lowerQuery = query.toLowerCase();
-    const words = lowerQuery.split(/\s+/).filter(w => w.length > 2); // Filter out short words like 'i', 'am'
+    const words = lowerQuery.split(/\s+/).filter(w => w.length > 2); 
 
-    // Direct matches (label or keywords)
     const matches = ALL_EMOTIONS.map(m => {
       let score = 0;
       const label = m.label.toLowerCase();
       const keywords = m.keywords?.map(k => k.toLowerCase()) || [];
 
-      // Check for full query match first (highest priority)
       if (label.includes(lowerQuery)) score += 10;
 
-      // Check word by word
       words.forEach(word => {
         if (label.includes(word)) score += 5;
         if (keywords.some(k => k.includes(word))) score += 3;
@@ -36,7 +32,7 @@ export default function MoodRecommender() {
 
     if (matches.length > 0) return matches.slice(0, 4);
 
-    // Fallback: Related wisdom (popular ones)
+    // Fallback
     return ALL_EMOTIONS.filter(m =>
       ['anger', 'fear', 'overthinking', 'doubt', 'motivation', 'anxiety'].includes(m.id)
     ).slice(0, 4);
@@ -44,7 +40,6 @@ export default function MoodRecommender() {
 
   const displayedMoods = getDisplayedMoods();
 
-  // Helper to get extra details (Chapter, Nuance) for a mood
   const getCardDetails = (mood) => {
     const bookKey = mood.type === 'power' ? '48laws' : 'gita';
     const data = SHLOKAS[bookKey]?.find(d => d.id === mood.shlokaId);
@@ -54,7 +49,7 @@ export default function MoodRecommender() {
   return (
     <div className="w-full max-w-5xl mx-auto z-40 relative">
 
-      {/* === SEARCH BAR (Strong Hover Restored) === */}
+      {/* === SEARCH BAR === */}
       <div
         className="
           flex items-center gap-3 
@@ -63,28 +58,12 @@ export default function MoodRecommender() {
           rounded-full px-6 py-4 
           cursor-text group 
           transition-all duration-300 ease-out
-          
-          /* Strong Hover State */
-          hover:border-saffron 
-          hover:bg-stone-900 
-          hover:shadow-[0_0_25px_rgba(234,179,8,0.15)]
-          hover:scale-[1.01]
-
-          /* Focus State */
-          focus-within:border-saffron 
-          focus-within:bg-black 
-          focus-within:ring-1 
-          focus-within:ring-saffron/50
-          focus-within:shadow-[0_0_40px_rgba(234,179,8,0.25)]
-          focus-within:scale-[1.02]
-          
+          hover:border-saffron hover:bg-stone-900 hover:shadow-[0_0_25px_rgba(234,179,8,0.15)] hover:scale-[1.01]
+          focus-within:border-saffron focus-within:bg-black focus-within:ring-1 focus-within:ring-saffron/50 focus-within:shadow-[0_0_40px_rgba(234,179,8,0.25)] focus-within:scale-[1.02]
           mb-10 max-w-2xl mx-auto shadow-2xl
         "
       >
-        <Sparkles
-          size={20}
-          className="text-stone-500 group-hover:text-saffron group-focus-within:text-saffron transition-colors duration-300"
-        />
+        <Sparkles size={20} className="text-stone-500 group-hover:text-saffron group-focus-within:text-saffron transition-colors duration-300" />
 
         <input
           type="text"
@@ -123,10 +102,12 @@ export default function MoodRecommender() {
                 const isPower = mood.type === 'power';
 
                 return (
-                  <button
+                  // 👇 2. Changed from <button> to <Link> for SEO
+                  // Note: 'block' class ensures it behaves like a container
+                  <Link
                     key={mood.id}
-                    onClick={() => navigate(`/wisdom/${mood.shlokaId}`)}
-                    className="group relative flex flex-col p-6 bg-stone-900/60 border border-white/10 rounded-xl hover:border-saffron/50 hover:bg-stone-900 transition-all duration-300 hover:-translate-y-1 overflow-hidden text-left shadow-lg hover:shadow-saffron/10"
+                    to={`/card/${mood.shlokaId}`} // 👈 3. Bot follows this href
+                    className="block group relative flex flex-col p-6 bg-stone-900/60 border border-white/10 rounded-xl hover:border-saffron/50 hover:bg-stone-900 transition-all duration-300 hover:-translate-y-1 overflow-hidden text-left shadow-lg hover:shadow-saffron/10"
                   >
                     {/* Header: Icon + Book Label */}
                     <div className="flex justify-between items-start mb-4">
@@ -159,7 +140,7 @@ export default function MoodRecommender() {
                       <span>Read Chapter</span>
                       <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
                     </div>
-                  </button>
+                  </Link>
                 );
               })}
             </div>
