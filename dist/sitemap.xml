@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
    <url>
-      <loc>https://shloki.com/</loc>
+      <loc>https://shloki.in/</loc>
       <lastmod>2026-01-25</lastmod>
       <priority>1.00</priority>
    </url>
    <url>
-      <loc>https://shloki.com/library</loc>
+      <loc>https://shloki.in/library</loc>
       <priority>0.80</priority>
    </url>
    <url>
-      <loc>https://shloki.com/read/48laws</loc>
+      <loc>https://shloki.in/read/48laws</loc>
       <priority>0.90</priority>
    </url>
    <url>
-      <loc>https://shloki.com/read/gita</loc>
+      <loc>https://shloki.in/read/gita</loc>
       <priority>0.90</priority>
    </url>
    <url>
-      <loc>https://shloki.com/about</loc>
+      <loc>https://shloki.in/about</loc>
       <priority>0.70</priority>
    </url>
 </urlset>
