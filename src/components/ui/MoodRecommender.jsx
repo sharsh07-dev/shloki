@@ -106,7 +106,7 @@ export default function MoodRecommender() {
                   // Note: 'block' class ensures it behaves like a container
                   <Link
                     key={mood.id}
-                    to={`/card/${mood.shlokaId}`} // 👈 3. Bot follows this href
+                  to={`/wisdom/${mood.shlokaId}`} // 👈 3. Bot follows this href
                     className="block group relative flex flex-col p-6 bg-stone-900/60 border border-white/10 rounded-xl hover:border-saffron/50 hover:bg-stone-900 transition-all duration-300 hover:-translate-y-1 overflow-hidden text-left shadow-lg hover:shadow-saffron/10"
                   >
                     {/* Header: Icon + Book Label */}
